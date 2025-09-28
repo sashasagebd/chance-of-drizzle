@@ -1,0 +1,1 @@
+My feature is the items and inventory in our game. This will involve designing many items and implementing them into the game. The inventory will contain all of the items the player has, and a seperate "equipped" class will track what is equipped and what stats/capabilities it adds to the player.
