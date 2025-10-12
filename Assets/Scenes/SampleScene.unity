@@ -270,7 +270,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -571,7 +571,7 @@ GameObject:
   m_Component:
   - component: {fileID: 540498925}
   - component: {fileID: 540498926}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: FP_WeaponRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +763,7 @@ GameObject:
   - component: {fileID: 776419638}
   - component: {fileID: 776419641}
   - component: {fileID: 776419642}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1338,7 +1338,7 @@ GameObject:
   - component: {fileID: 1168596126}
   - component: {fileID: 1168596128}
   - component: {fileID: 1168596129}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1601,7 +1601,7 @@ GameObject:
   - component: {fileID: 1415099923}
   - component: {fileID: 1415099922}
   - component: {fileID: 1415099926}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Gun 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2322,7 +2322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2004559125}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2353,7 +2353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2060220606}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2387,7 +2387,7 @@ GameObject:
   - component: {fileID: 2068681039}
   - component: {fileID: 2068681038}
   - component: {fileID: 2068681037}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: WeaponCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
