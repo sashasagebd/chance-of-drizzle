@@ -8,15 +8,21 @@ public class EnemyHub : MonoBehaviour{
   private float maxTerrainHeight = 20.0f;
   private float minTerrainHeight = -1.0f;
   private LayerMask rayMask;
-  private int terrainWidth = 3;
-  private int terrainDepth = 3;
+  private float terrainMinX = -17.0f;
+  private float terrainMaxX =  12.0f;
+  private float terrainMinZ = -12.0f;
+  private float terrainMaxZ =  12.0f;
+  private float terrainPartitionStepSize = 3.0f;
+
+  private const float SQRT3   = 1.7320508075688772f; // sqrt(3)
+  private const float SQRT3_2 = 0.8660254037844386f; // sqrt(3) / 2
 
   void Awake(){
     rayMask = LayerMask.GetMask("Terrain");
     // spawnEnemy(new Vector3(0, 0, 0));
     getTerrain();
 
-    spawnEnemyAtTerrainHeight(new Vector2(-16, 4));
+    // spawnEnemyAtTerrainHeight(new Vector2(-16, 4));
   }
   void Update(){
   }
@@ -34,16 +40,48 @@ public class EnemyHub : MonoBehaviour{
     }
   }
   private void getTerrain(){
+    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
+    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
+    
+    // Split the map into hexagons, and get the heights of each hexagon
     float[,] terrainHeights = new float[terrainWidth, terrainDepth];
-    int i = 0;
-    int j = 0;
-    float x = 0.0f;
-    float z = 2.0f;
-    terrainHeights[i, j] = getHeight(new Vector2(x, z));
-    if(terrainHeights[i, j] > -99f){
-      spawnEnemy(new Vector3(x, terrainHeights[i, j] + 1, z));
-    }else{
-      print("Error: The map parsing did not work (No ray intersection). Continuing as if unparsed section is wall");
+    for(int i = 0; i < terrainWidth; i++){
+      for(int j = 0; j < terrainDepth; j++){
+        float x = terrainMinX + i * terrainPartitionStepSize * SQRT3_2;
+        float z = terrainMinZ + (j + (i % 2 > 0 ? 0.5f : 0f)) * terrainPartitionStepSize;
+        terrainHeights[i, j] = -9e9f;
+        for(float angle = 0f; angle < Mathf.PI * 2; angle += Mathf.PI / 3){
+          terrainHeights[i, j] = Mathf.Max(
+            getHeight(new Vector2(x + 0.2f * terrainPartitionStepSize * Mathf.Cos(angle), z + 0.2f * terrainPartitionStepSize * Mathf.Sin(angle))),
+            terrainHeights[i, j]
+          );
+        }
+        if(terrainHeights[i, j] < -99f){
+          print("Error: The map parsing did not work (No ray intersection). Continuing as if unparsed section is wall");
+        }
+        
+        // TODO: delete
+        else{
+          if(Random.Range(0, 10) < 1)
+          spawnEnemy(new Vector3(x, terrainHeights[i, j] + 1, z));
+        }
+      }
+    }
+    string str = "";
+    for(int i = 0; i < terrainWidth; i++){
+      str += (i % 2 > 0 ? "\n " : "\n");
+      for(int j = 0; j < terrainDepth; j++){
+        str += Mathf.Floor(2 * terrainHeights[i, j]).ToString();
+      }
+    }
+    print(str);
+
+    // Organize hexagons into convex chunks
+    int[,] terrainGroups = new int[terrainWidth, terrainDepth];
+    for(int j = 0; j < terrainDepth; j++){
+      for(int i = 0; i < terrainWidth; i++){
+        
+      }
     }
   }
   private float getHeight(Vector2 position){
