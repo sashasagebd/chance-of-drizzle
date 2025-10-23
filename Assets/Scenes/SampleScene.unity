@@ -1477,6 +1477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9c33c9919d74994a6c8c73d2196427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController3D
+  maxSpeed: 15
   moveSpeed: 6
   jumpSpeed: 5.5
   gravity: -9.81
@@ -1486,6 +1487,7 @@ MonoBehaviour:
   maxPitch: 80
   inventory: {fileID: 540498926}
   muzzle: {fileID: 2004559125}
+  HealthComponent: {fileID: 0}
 --- !u!114 &1168596127
 MonoBehaviour:
   m_ObjectHideFlags: 0
