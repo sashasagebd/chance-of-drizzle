@@ -17,14 +17,26 @@ public class EnemyHub : MonoBehaviour{
   private const float SQRT3   = 1.7320508075688772f; // sqrt(3)
   private const float SQRT3_2 = 0.8660254037844386f; // sqrt(3) / 2
 
+  // Variables for debugging / testing
+  private bool debugVariableDisplayTerrain = false;
+  private bool debugVariablePrintHexagonalMap = false;
+  private bool debugVariableSpawnEnemiesContinuously = false;
+
+  private int enemyCount = 0;
+
   void Awake(){
     rayMask = LayerMask.GetMask("Terrain");
     // spawnEnemy(new Vector3(0, 0, 0));
-    getTerrain();
+    
+    //getTerrain();
 
     // spawnEnemyAtTerrainHeight(new Vector2(-16, 4));
+
+    runTests("PRINT_HEXAGONAL_MAP");
+    runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
   }
   void Update(){
+    runTestsEveryFrame();
   }
 
   private void spawnEnemy(Vector3 position){
@@ -58,23 +70,22 @@ public class EnemyHub : MonoBehaviour{
         }
         if(terrainHeights[i, j] < -99f){
           print("Error: The map parsing did not work (No ray intersection). Continuing as if unparsed section is wall");
-        }
-        
-        // TODO: delete
-        else{
-          if(Random.Range(0, 10) < 1)
+        }else if(debugVariableDisplayTerrain){
           spawnEnemy(new Vector3(x, terrainHeights[i, j] + 1, z));
         }
       }
     }
-    string str = "";
-    for(int i = 0; i < terrainWidth; i++){
-      str += (i % 2 > 0 ? "\n " : "\n");
-      for(int j = 0; j < terrainDepth; j++){
-        str += Mathf.Floor(2 * terrainHeights[i, j]).ToString();
+
+    if(debugVariablePrintHexagonalMap){
+      string str = "";
+      for(int i = 0; i < terrainWidth; i++){
+        str += (i % 2 > 0 ? "\n " : "\n");
+        for(int j = 0; j < terrainDepth; j++){
+          str += Mathf.Floor(2 * terrainHeights[i, j]).ToString();
+        }
       }
+      print(str);
     }
-    print(str);
 
     // Organize hexagons into convex chunks
     int[,] terrainGroups = new int[terrainWidth, terrainDepth];
@@ -91,6 +102,40 @@ public class EnemyHub : MonoBehaviour{
       return maxTerrainHeight - hit.distance;
     }else{
       return -100f;
+    }
+  }
+
+
+
+  public void runTests(string testName){
+    switch(testName){
+      case "SPAWN_ENEMIES_AT_TERRAIN_HEIGHT":
+        for(int i = 0; i < 10; i++){
+          spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+        }
+      break;
+      case "DISPLAY_TERRAIN_HEIGHTS":
+        debugVariableDisplayTerrain = true;
+        getTerrain();
+        debugVariableDisplayTerrain = false;
+      break;
+      case "PRINT_HEXAGONAL_MAP":
+        debugVariablePrintHexagonalMap = true;
+        getTerrain();
+        debugVariablePrintHexagonalMap = false;
+      break;
+      case "STRESS_TEST_ENEMY_SPAWN":
+        debugVariableSpawnEnemiesContinuously = true;
+      break;
+    }
+  }
+  private void runTestsEveryFrame(){
+    if(debugVariableSpawnEnemiesContinuously){
+      for(int i = 0; i < 4; i++){
+        enemyCount++;
+        spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+      }
+      print(enemyCount);
     }
   }
 }
