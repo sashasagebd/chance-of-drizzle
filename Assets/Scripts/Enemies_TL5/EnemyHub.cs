@@ -18,9 +18,7 @@ public class EnemyHub : MonoBehaviour{
   private const float SQRT3_2 = 0.8660254037844386f; // sqrt(3) / 2
 
   // Variables for debugging / testing
-  private bool debugVariableDisplayTerrain = false;
   private bool debugVariablePrintHexagonalMap = false;
-  private bool debugVariableSpawnEnemiesContinuously = false;
 
   private int enemyCount = 0;
 
@@ -36,20 +34,24 @@ public class EnemyHub : MonoBehaviour{
     runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
   }
   void Update(){
-    runTestsEveryFrame();
   }
 
-  private void spawnEnemy(Vector3 position){
+  private GameObject spawnEnemy(Vector3 position){
     // https://chamucode.com/unity-enemy-spawn/
-    Instantiate(enemy, position, Quaternion.identity);
+    return Instantiate(enemy, position, Quaternion.identity);
   }
-  public void spawnEnemyAtTerrainHeight(Vector2 position){
+  public int spawnEnemyAtTerrainHeight(Vector2 position){
     float height = getHeight(position);
     if(height > -99f){
-      spawnEnemy(new Vector3(position.x, height + 1, position.y));
+      GameObject enemyInstance = spawnEnemy(new Vector3(position.x, height + 1, position.y));
+      if(enemyInstance == null){
+        return 1;
+      }
     }else{
       print("Error: No terrain found at location. Is the map piece in layer terrain?");
+      return 1;
     }
+    return 0;
   }
   private void getTerrain(){
     int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
@@ -70,8 +72,6 @@ public class EnemyHub : MonoBehaviour{
         }
         if(terrainHeights[i, j] < -99f){
           print("Error: The map parsing did not work (No ray intersection). Continuing as if unparsed section is wall");
-        }else if(debugVariableDisplayTerrain){
-          spawnEnemy(new Vector3(x, terrainHeights[i, j] + 1, z));
         }
       }
     }
@@ -107,35 +107,19 @@ public class EnemyHub : MonoBehaviour{
 
 
 
-  public void runTests(string testName){
+  public int runTests(string testName){
     switch(testName){
       case "SPAWN_ENEMIES_AT_TERRAIN_HEIGHT":
-        for(int i = 0; i < 10; i++){
-          spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+        return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+      break;
+      case "CHECK_TERRAIN_EXISTS":
+        for(int i = 0; i < 100; i++){
+          if(getHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ))) < -99f){
+            return 1;
+          }
         }
       break;
-      case "DISPLAY_TERRAIN_HEIGHTS":
-        debugVariableDisplayTerrain = true;
-        getTerrain();
-        debugVariableDisplayTerrain = false;
-      break;
-      case "PRINT_HEXAGONAL_MAP":
-        debugVariablePrintHexagonalMap = true;
-        getTerrain();
-        debugVariablePrintHexagonalMap = false;
-      break;
-      case "STRESS_TEST_ENEMY_SPAWN":
-        debugVariableSpawnEnemiesContinuously = true;
-      break;
     }
-  }
-  private void runTestsEveryFrame(){
-    if(debugVariableSpawnEnemiesContinuously){
-      for(int i = 0; i < 4; i++){
-        enemyCount++;
-        spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
-      }
-      print(enemyCount);
-    }
+    return 0;
   }
 }
