@@ -9,13 +9,31 @@ public class Health : MonoBehaviour {
 
     void Awake() { Current = maxHp; }
 
-    public void ApplyDamage(int amount) {
+    public void ApplyDamage(int amount)
+    {
         Current = Mathf.Max(0, Current - Mathf.Max(0, amount));
         Debug.Log($"{name} took {amount} damage. TOTAL HP: {Current}");
         if (Current <= 0)
         {
-            if (destroyOnDeath) Destroy(gameObject); 
+            if (destroyOnDeath) Destroy(gameObject);
             OnDied?.Invoke();
         }
+    }
+
+    public void Heal(int amount)
+    {
+        if (Current + amount <= maxHp)
+        {
+            Current += amount;
+        }
+        else
+        {
+            Current = maxHp;
+        }
+    }
+    
+    public void SetHealth(int value)
+    {
+        Current = Mathf.Clamp(value, 1, maxHp);
     }
 }
