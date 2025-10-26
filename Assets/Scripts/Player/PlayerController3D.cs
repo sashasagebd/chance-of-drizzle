@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // << Input System
+using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
 public class PlayerController3D : MonoBehaviour
@@ -23,6 +25,7 @@ public class PlayerController3D : MonoBehaviour
     PlayerInput _playerInput;
     InputAction _moveAction, _lookAction, _jumpAction, _fireAction, _reloadAction, _nextAction, _prevAction;
     public Health HealthComponent; // needed right now for items to access health class easily
+    private Coroutine speedTimer;
 
     Vector3 _velocity; // for gravity
     float _pitch;      // camera pitch
@@ -115,14 +118,27 @@ public class PlayerController3D : MonoBehaviour
 
     public void ApplySpeed(float amount, int duration)
     {
-        if (moveSpeed + amount <= maxSpeed)
+        if (speedTimer != null)
         {
-            moveSpeed += amount; //no duration yet
+            StopCoroutine(speedTimer);
         }
         else
         {
-            Debug.Log("Speed can't be increased past the max speed");
+            moveSpeed += amount;
         }
+        speedTimer = StartCoroutine(SpeedBuffCoroutine(amount, duration)); //
+    }
+    
+    private IEnumerator SpeedBuffCoroutine(float amount, int duration)
+    {
+        // Wait for the duration time
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed -= amount;
+        
+        Debug.Log($"Temporary speed boost expired. Total speed reset to {moveSpeed}.");
+        
+        speedTimer = null;
     }
 
 }

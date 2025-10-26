@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System;
+using System.Diagnostics;
 
 public sealed class Inventory
 {
@@ -68,10 +69,42 @@ public sealed class Inventory
         }
     }
 
-    /*public bool Remove(Item item)
+    public bool Remove(Item item)
     {
         if (item == null)
+        {
             return false;
-        return items.Remove(item);
-    }*/
+        }
+
+        InventorySlot existingSlot = slots.FirstOrDefault(
+                s => s.ItemReference.Name == item.Name
+        );
+
+        if (item.CanStack)
+        {
+            if (existingSlot == null)
+            {
+                Debug.Log($"{item} can not be removed since it doesn't exist in inventory");
+                return false;
+            }
+            else
+            {
+                existingSlot.Count -= 1;
+                OnInventoryChanged();
+                return true;
+            }
+        }
+        else
+        {
+            if (existingSlot == null)
+            {
+                Debug.Log($"{item} can not be removed since it doesn't exist in inventory");
+                return false;
+            }
+            else
+            {
+                slots.Remove(existingSlot);
+            }
+        }  
+    }
 }
