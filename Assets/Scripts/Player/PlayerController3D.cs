@@ -24,8 +24,14 @@ public class PlayerController3D : MonoBehaviour
     CharacterController _controller;
     PlayerInput _playerInput;
     InputAction _moveAction, _lookAction, _jumpAction, _fireAction, _reloadAction, _nextAction, _prevAction;
+
+    [Header("Items")]
     public Health HealthComponent; // needed right now for items to access health class easily
-    private Coroutine speedTimer;
+    private Coroutine speedTimer; // time for temp speed buffs
+    public int baseDefense = 0;
+    public int currentDefense { get; private set; } = 0;
+    private readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
+    
 
     Vector3 _velocity; // for gravity
     float _pitch;      // camera pitch
@@ -128,17 +134,54 @@ public class PlayerController3D : MonoBehaviour
         }
         speedTimer = StartCoroutine(SpeedBuffCoroutine(amount, duration)); //
     }
-    
+
     private IEnumerator SpeedBuffCoroutine(float amount, int duration)
     {
         // Wait for the duration time
         yield return new WaitForSeconds(duration);
 
         moveSpeed -= amount;
-        
+
         Debug.Log($"Temporary speed boost expired. Total speed reset to {moveSpeed}.");
-        
+
         speedTimer = null;
     }
 
+    public bool EquipArmor(Armor newArmor)
+    {
+        string type = newArmor.ArmorType;
+
+        if (equippedArmor.ContainsKey(type))
+        {
+            Armor oldArmor = equippedArmor[type];
+
+            if (newArmor.Defense <= oldArmor.Defense)
+            {
+                Debug.Log($"{oldArmor.Name} is better or equal quality than {newArmor.Name}, so {newArmor.Name}was not equipped");
+                return false;
+            }
+
+            Debug.Log($"Discarded {oldArmor.Name} and equipped {newArmor.Name}");
+            equippedArmor.Remove(type);
+        }
+
+        equippedArmor.Add(type, newArmor);
+        CalculateDefense();
+        return true;
+
+    }
+    
+    private void CalculateDefense()
+    {
+        int total = baseDefense;
+        foreach (var armor in equippedArmor.Values)
+        {
+            total += armor.Defense;
+        }
+        currentDefense = total;
+        Debug.Log($"Total defense: {currentDefense}");
+    }
+
 }
+
+

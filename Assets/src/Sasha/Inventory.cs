@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System;
-using System.Diagnostics;
+
 
 public sealed class Inventory
 {
@@ -73,38 +73,41 @@ public sealed class Inventory
     {
         if (item == null)
         {
+            UnityEngine.Debug.LogWarning("Attempted to remove a null item.");
             return false;
         }
 
         InventorySlot existingSlot = slots.FirstOrDefault(
-                s => s.ItemReference.Name == item.Name
+            s => s.ItemReference != null && s.ItemReference.Name == item.Name
         );
+
+        if (existingSlot == null || existingSlot.Count <= 0)
+        {
+            UnityEngine.Debug.Log($"{item.Name} cannot be removed because it does not exist in the inventory.");
+            return false;
+        }
 
         if (item.CanStack)
         {
-            if (existingSlot == null)
-            {
-                Debug.Log($"{item} can not be removed since it doesn't exist in inventory");
-                return false;
-            }
-            else
-            {
-                existingSlot.Count -= 1;
-                OnInventoryChanged();
-                return true;
-            }
-        }
-        else
-        {
-            if (existingSlot == null)
-            {
-                Debug.Log($"{item} can not be removed since it doesn't exist in inventory");
-                return false;
-            }
-            else
+            existingSlot.Count -= 1;
+
+            if (existingSlot.Count <= 0)
             {
                 slots.Remove(existingSlot);
+                UnityEngine.Debug.Log($"Removed last stack of {item.Name}.");
             }
-        }  
+            else
+            {
+                UnityEngine.Debug.Log($"Removed one {item.Name}. Remaining: {existingSlot.Count}");
+            }
+        }
+        else 
+        {
+            slots.Remove(existingSlot);
+            UnityEngine.Debug.Log($"Removed unstackable item: {item.Name}.");
+        }
+        
+        OnInventoryChanged(); 
+        return true; 
     }
 }

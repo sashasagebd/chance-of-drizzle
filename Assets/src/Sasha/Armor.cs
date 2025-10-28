@@ -18,7 +18,7 @@ public class Armor : Item
     {
         if (target is PlayerController3D player)
         {
-            //need to make a armor method for player
+            player.EquipArmor(this);
         }
     }
 }

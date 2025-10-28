@@ -24,34 +24,34 @@ public static class ItemFactory
                     amount: 2f,
                     duration: 30
                 );
-            case "damagepotion":
+            /*case "damagepotion":
                 return new Consumable(
                     name: "Damage Potion",
                     description: "Temporarily increases damage.",
                     effect: "Damage",
                     amount: 1f,
                     duration: 30
-                );
+                );*/
             case "helmet":
                 return new Armor(
                     name: "Helmet",
                     description: "Protects the user's head",
                     armorType: "helmet",
-                    defense: 2
+                    defense: 1
                 );
             case "chestplate":
                 return new Armor(
                     name: "Chestplate",
                     description: "Protects the user's upper body",
                     armorType: "chestplate",
-                    defense: 5
+                    defense: 4
                 );
             case "pants":
                 return new Armor(
                     name: "Pants",
                     description: "Protects the user's legs",
                     armorType: "pants",
-                    defense: 4
+                    defense: 3
                 );
             
             default:
