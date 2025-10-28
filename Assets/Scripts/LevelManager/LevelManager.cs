@@ -16,7 +16,6 @@ public class LevelManager : MonoBehaviour
             ObjectSpawner spawnerScript = spawns.GetComponent<ObjectSpawner>();
 
             if (spawnerScript != null) spawnerScript.Initialize();
-            // spawns.Initialize();
         }
     }
 }

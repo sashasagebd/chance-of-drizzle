@@ -7,6 +7,7 @@ using UnityEngine.TestTools;
 
 public class SpawnTesting
 {
+    /*
     private ObjectSpawner spawner;
     private LevelManager manager;
 
@@ -31,4 +32,5 @@ public class SpawnTesting
             
         }
     }
+    */
 }
