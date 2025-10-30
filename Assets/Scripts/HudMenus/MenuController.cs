@@ -7,9 +7,22 @@ public class MenuController : MonoBehaviour
     public GameObject settingsPanel;
     public GameObject loadPanel;
 
-    private void Start()
+    // Awake just calls InitializeMenu if all panels are assigned
+    private void Awake()
     {
-        // Main menu visible by default
+        if (mainMenuPanel != null && settingsPanel != null && loadPanel != null)
+            InitializeMenu();
+    }
+
+    public void InitializeMenu()
+    {
+        // Safety check to avoid NullReferenceException
+        if (mainMenuPanel == null || settingsPanel == null || loadPanel == null)
+        {
+            Debug.LogWarning("MenuController panels not assigned!");
+            return;
+        }
+
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
         loadPanel.SetActive(false);
@@ -27,7 +40,7 @@ public class MenuController : MonoBehaviour
         loadPanel.SetActive(false);
     }
 
-        public void OnLoadClick()
+    public void OnLoadClick()
     {
         mainMenuPanel.SetActive(false);
         settingsPanel.SetActive(false);
