@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using System;
 
+
 public sealed class Inventory
 {
     private static readonly Inventory instance = new Inventory();
@@ -68,10 +69,45 @@ public sealed class Inventory
         }
     }
 
-    /*public bool Remove(Item item)
+    public bool Remove(Item item)
     {
         if (item == null)
+        {
+            UnityEngine.Debug.LogWarning("Attempted to remove a null item.");
             return false;
-        return items.Remove(item);
-    }*/
+        }
+
+        InventorySlot existingSlot = slots.FirstOrDefault(
+            s => s.ItemReference != null && s.ItemReference.Name == item.Name
+        );
+
+        if (existingSlot == null || existingSlot.Count <= 0)
+        {
+            UnityEngine.Debug.Log($"{item.Name} cannot be removed because it does not exist in the inventory.");
+            return false;
+        }
+
+        if (item.CanStack)
+        {
+            existingSlot.Count -= 1;
+
+            if (existingSlot.Count <= 0)
+            {
+                slots.Remove(existingSlot);
+                UnityEngine.Debug.Log($"Removed last stack of {item.Name}.");
+            }
+            else
+            {
+                UnityEngine.Debug.Log($"Removed one {item.Name}. Remaining: {existingSlot.Count}");
+            }
+        }
+        else 
+        {
+            slots.Remove(existingSlot);
+            UnityEngine.Debug.Log($"Removed unstackable item: {item.Name}.");
+        }
+        
+        OnInventoryChanged(); 
+        return true; 
+    }
 }

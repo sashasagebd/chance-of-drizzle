@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem; // << Input System
+using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
 public class PlayerController3D : MonoBehaviour
@@ -22,7 +24,14 @@ public class PlayerController3D : MonoBehaviour
     CharacterController _controller;
     PlayerInput _playerInput;
     InputAction _moveAction, _lookAction, _jumpAction, _fireAction, _reloadAction, _nextAction, _prevAction;
+
+    [Header("Items")]
     public Health HealthComponent; // needed right now for items to access health class easily
+    private Coroutine speedTimer; // time for temp speed buffs
+    public int baseDefense = 0;
+    public int currentDefense { get; private set; } = 0;
+    public readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
+    
 
     Vector3 _velocity; // for gravity
     float _pitch;      // camera pitch
@@ -50,6 +59,12 @@ public class PlayerController3D : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (HealthComponent == null)
+        {
+            HealthComponent = GetComponent<Health>();
+        }
+
     }
 
     void Update()
@@ -115,14 +130,74 @@ public class PlayerController3D : MonoBehaviour
 
     public void ApplySpeed(float amount, int duration)
     {
-        if (moveSpeed + amount <= maxSpeed)
+        if (speedTimer != null)
         {
-            moveSpeed += amount; //no duration yet
+            StopCoroutine(speedTimer);
+            speedTimer = null;
         }
-        else
+        
+        moveSpeed += amount;
+        Debug.Log($"Speed was increased by {amount} for a total speed of {moveSpeed}");
+
+        if (duration > 0) // If duration is 0 then permanent speed buff
         {
-            Debug.Log("Speed can't be increased past the max speed");
+            speedTimer = StartCoroutine(SpeedBuffCoroutine(amount, duration));
         }
     }
 
+    private IEnumerator SpeedBuffCoroutine(float amount, int duration)
+    {
+        // Wait for the duration time
+        yield return new WaitForSeconds(duration);
+
+        moveSpeed -= amount;
+
+        Debug.Log($"Temporary speed boost expired. Total speed reset to {moveSpeed}.");
+
+        speedTimer = null;
+    }
+
+    public bool EquipArmor(Armor newArmor, out Armor replacedArmor)
+    {
+        replacedArmor = null;
+        string type = newArmor.ArmorType;
+
+        if (equippedArmor.TryGetValue(type, out Armor oldArmor))
+        {
+            if (newArmor.Defense <= oldArmor.Defense)
+            {
+                // Worse or equal — do not equip
+                return false;
+            }
+
+            // Better — replace
+            replacedArmor = oldArmor;
+            equippedArmor[type] = newArmor;
+            CalculateDefense();
+            Debug.Log($"Replaced {oldArmor.Name} with {newArmor.Name}. Total defense: {currentDefense}");
+            return true;
+        }
+        else
+        {
+            // No armor yet — equip new
+            equippedArmor[type] = newArmor;
+            CalculateDefense();
+            Debug.Log($"Equipped new {newArmor.Name}. Total defense: {currentDefense}");
+            return true;
+        }
+    }
+    
+    private void CalculateDefense()
+    {
+        int total = baseDefense;
+        foreach (var armor in equippedArmor.Values)
+        {
+            total += armor.Defense;
+        }
+        currentDefense = total;
+        Debug.Log($"Total defense: {currentDefense}");
+    }
+
 }
+
+

@@ -6,13 +6,26 @@ public class Health : MonoBehaviour {
     [SerializeField]  private bool destroyOnDeath = false;
     public int Current { get; private set; }
     public event Action OnDied;
+    private PlayerController3D playerController; // need for accessing armor modifier
 
-    void Awake() { Current = maxHp; }
+    void Awake()
+    {
+        Current = maxHp;
+        playerController = GetComponent<PlayerController3D>();
+    }
 
     public void ApplyDamage(int amount)
     {
-        Current = Mathf.Max(0, Current - Mathf.Max(0, amount));
-        Debug.Log($"{name} took {amount} damage. TOTAL HP: {Current}");
+        int defense = 0;
+        if (playerController != null)
+        {
+            defense = playerController.currentDefense;
+        }
+
+        int damageTaken = Mathf.Max(1, amount - defense);
+
+        Current = Mathf.Max(0, Current - damageTaken);
+        Debug.Log($"{name} took {amount} damage but armor defended {defense}. TOTAL HP: {Current}");
         if (Current <= 0)
         {
             if (destroyOnDeath) Destroy(gameObject);
@@ -30,6 +43,12 @@ public class Health : MonoBehaviour {
         {
             Current = maxHp;
         }
+    }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        maxHp += amount;
+        Debug.Log($"Max health is now {maxHp}");
     }
     
     public void SetHealth(int value)
