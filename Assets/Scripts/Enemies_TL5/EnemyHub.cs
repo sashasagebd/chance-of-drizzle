@@ -12,25 +12,28 @@ public class EnemyHub : MonoBehaviour{
   private float terrainMaxX =  12.0f;
   private float terrainMinZ = -12.0f;
   private float terrainMaxZ =  12.0f;
-  private float terrainPartitionStepSize = 3.0f;
+  private float terrainPartitionStepSize = 1.5f;
 
   private const float SQRT3   = 1.7320508075688772f; // sqrt(3)
   private const float SQRT3_2 = 0.8660254037844386f; // sqrt(3) / 2
 
   // Variables for debugging / testing
   private bool debugVariablePrintHexagonalMap = false;
+  private bool debugVariablePrintGroups = false;
 
   private int enemyCount = 0;
+  private int maxGroupCount = 100;
 
   void Awake(){
     rayMask = LayerMask.GetMask("Terrain");
     // spawnEnemy(new Vector3(0, 0, 0));
     
-    //getTerrain();
+    debugVariablePrintHexagonalMap = true;
+    debugVariablePrintGroups = true;
+    getTerrain();
 
     // spawnEnemyAtTerrainHeight(new Vector2(-16, 4));
 
-    runTests("PRINT_HEXAGONAL_MAP");
     runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
   }
   void Update(){
@@ -89,11 +92,125 @@ public class EnemyHub : MonoBehaviour{
 
     // Organize hexagons into convex chunks
     int[,] terrainGroups = new int[terrainWidth, terrainDepth];
-    for(int j = 0; j < terrainDepth; j++){
-      for(int i = 0; i < terrainWidth; i++){
-        
+    for(int i = 0; i < terrainWidth; i++){
+      for(int j = 0; j < terrainDepth; j++){
+        terrainGroups[i, j] = -1;
       }
     }
+    int firstUnallocatedRow = 0;
+    float maxHeightDifference = 1f;
+
+    for(int currentGroupId = 0; currentGroupId < maxGroupCount; currentGroupId++){
+      bool continueLoop1 = false;
+      bool groupStarted = false;
+      bool breakLoop1 = false;
+
+      bool groupGrowthLeft = true;
+      bool groupGrowthRight = true;
+      int longestUninterruptedSectionStart = 0;
+      int longestUninterruptedSectionLength = 0;
+
+      for(int j = firstUnallocatedRow; j < terrainWidth; j++){
+        if(!groupStarted){
+          int currentUninterruptedSectionLength = 0;
+          for(int i = 0; i <= terrainDepth; i++){
+            if(i < terrainDepth && terrainGroups[j, i] == -1 && (currentUninterruptedSectionLength == 0 || Mathf.Abs(terrainHeights[j, i] - terrainHeights[j, i - 1]) < maxHeightDifference)){
+              currentUninterruptedSectionLength++;
+            }else{
+              if(currentUninterruptedSectionLength > longestUninterruptedSectionLength){
+                longestUninterruptedSectionLength = currentUninterruptedSectionLength;
+                longestUninterruptedSectionStart = i - currentUninterruptedSectionLength;
+              }
+              currentUninterruptedSectionLength = 0;
+            }
+          }
+          if(longestUninterruptedSectionLength > 0){
+            // print(longestUninterruptedSectionStart + " " + longestUninterruptedSectionLength);
+            for(int i = longestUninterruptedSectionStart; i < longestUninterruptedSectionStart + longestUninterruptedSectionLength; i++){
+              terrainGroups[j, i] = currentGroupId;
+            }
+            groupStarted = true;
+            continue;
+          }else{
+            firstUnallocatedRow = j + 1;
+            if(firstUnallocatedRow == terrainDepth - 1){
+              breakLoop1 = true;
+              break;
+            }
+          }
+        }else{
+          int offset = 0;
+          if(j % 2 == 0){
+            longestUninterruptedSectionStart ++;
+            offset = -1;
+          }
+          longestUninterruptedSectionLength --;
+          for(int i = longestUninterruptedSectionStart; i < longestUninterruptedSectionStart + longestUninterruptedSectionLength; i++){
+            if(terrainGroups[j, i] != -1
+            || Mathf.Abs(terrainHeights[j, i] - terrainHeights[j - 1, i + offset]) >= maxHeightDifference
+            || Mathf.Abs(terrainHeights[j, i] - terrainHeights[j - 1, i + 1 + offset]) >= maxHeightDifference
+            || (i > longestUninterruptedSectionStart && Mathf.Abs(terrainHeights[j, i] - terrainHeights[j, i - 1]) >= maxHeightDifference)
+            ){
+              continueLoop1 = true;
+              break;
+            }
+          }
+          if(!continueLoop1){
+            for(int i = longestUninterruptedSectionStart; i < longestUninterruptedSectionStart + longestUninterruptedSectionLength; i++){
+              terrainGroups[j, i] = currentGroupId;
+            }
+            // print(longestUninterruptedSectionStart + " " + longestUninterruptedSectionLength + " " + offset);
+            if(groupGrowthLeft
+            && longestUninterruptedSectionStart > 0
+            && terrainGroups[j, longestUninterruptedSectionStart - 1] == -1
+            && Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart - 1] - terrainHeights[j - 1, longestUninterruptedSectionStart + offset]) < maxHeightDifference 
+            && (longestUninterruptedSectionStart >= terrainDepth - 1 || Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart - 1] - terrainHeights[j, longestUninterruptedSectionStart]) < maxHeightDifference)
+            ){
+              terrainGroups[j, longestUninterruptedSectionStart - 1] = currentGroupId;
+              longestUninterruptedSectionStart --;
+              longestUninterruptedSectionLength ++;
+            }else if(longestUninterruptedSectionStart > 0){
+              groupGrowthLeft = false;
+            }
+            if(groupGrowthRight
+            && longestUninterruptedSectionStart + longestUninterruptedSectionLength < terrainDepth
+            && terrainGroups[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] == -1
+            && Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] - terrainHeights[j - 1, longestUninterruptedSectionStart + longestUninterruptedSectionLength + offset]) < maxHeightDifference
+            && (longestUninterruptedSectionStart + longestUninterruptedSectionLength <= 0 || Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] - terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength - 1]) < maxHeightDifference)
+            ){
+              terrainGroups[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] = currentGroupId;
+              longestUninterruptedSectionLength ++;
+            }else if(longestUninterruptedSectionStart + longestUninterruptedSectionLength < terrainDepth){
+              groupGrowthRight = false;
+            }
+
+            if(longestUninterruptedSectionLength == 0){
+              continueLoop1 = true;
+            }
+          }
+        }
+        if(continueLoop1){
+          break;
+        }
+      }
+
+      if(breakLoop1){
+        break;
+      }
+    }
+
+
+    if(debugVariablePrintGroups){
+      string str = "";
+      for(int i = 0; i < terrainWidth; i++){
+        str += (i % 2 > 0 ? "\n " : "\n");
+        for(int j = 0; j < terrainDepth; j++){
+          str += (char)(65 + terrainGroups[i, j]);
+        }
+      }
+      print(str);
+    }
+
   }
   private float getHeight(Vector2 position){
     // https://www.karvan1230.com/entry/2022/02/08/200731
@@ -118,6 +235,14 @@ public class EnemyHub : MonoBehaviour{
             return 1;
           }
         }
+      break;
+      case "DISPLAY_HEXAGONAL_MAP":
+        debugVariablePrintHexagonalMap = true;
+        getTerrain();
+      break;
+      case "DISPLAY_GROUPS":
+        debugVariablePrintGroups = true;
+        getTerrain();
       break;
     }
     return 0;
