@@ -160,6 +160,7 @@ public class EnemyHub : MonoBehaviour{
               terrainGroups[j, i] = currentGroupId;
             }
             // print(longestUninterruptedSectionStart + " " + longestUninterruptedSectionLength + " " + offset);
+            bool wasGroupGrowthLeft = groupGrowthLeft;
             if(groupGrowthLeft
             && longestUninterruptedSectionStart > 0
             && terrainGroups[j, longestUninterruptedSectionStart - 1] == -1
@@ -176,12 +177,23 @@ public class EnemyHub : MonoBehaviour{
             && longestUninterruptedSectionStart + longestUninterruptedSectionLength < terrainDepth
             && terrainGroups[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] == -1
             && Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] - terrainHeights[j - 1, longestUninterruptedSectionStart + longestUninterruptedSectionLength + offset]) < maxHeightDifference
-            && (longestUninterruptedSectionStart + longestUninterruptedSectionLength <= 0 || Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] - terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength - 1]) < maxHeightDifference)
+            && (longestUninterruptedSectionStart + longestUninterruptedSectionLength <= 0 || longestUninterruptedSectionLength == 0 || Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] - terrainHeights[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength - 1]) < maxHeightDifference)
             ){
               terrainGroups[j, longestUninterruptedSectionStart + longestUninterruptedSectionLength] = currentGroupId;
               longestUninterruptedSectionLength ++;
             }else if(longestUninterruptedSectionStart + longestUninterruptedSectionLength < terrainDepth){
               groupGrowthRight = false;
+            }
+
+            if(wasGroupGrowthLeft && longestUninterruptedSectionLength == 0 && !groupGrowthLeft
+            && longestUninterruptedSectionStart > 0
+            && terrainGroups[j, longestUninterruptedSectionStart - 1] == -1
+            && Mathf.Abs(terrainHeights[j, longestUninterruptedSectionStart - 1] - terrainHeights[j - 1, longestUninterruptedSectionStart + offset]) < maxHeightDifference 
+            ){
+              terrainGroups[j, longestUninterruptedSectionStart - 1] = currentGroupId;
+              longestUninterruptedSectionStart --;
+              longestUninterruptedSectionLength ++;
+              groupGrowthLeft = true;
             }
 
             if(longestUninterruptedSectionLength == 0){
