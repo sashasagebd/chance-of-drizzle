@@ -16,9 +16,6 @@ public class Armor : Item
 
     public override void Use(object target)
     {
-        if (target is PlayerController3D player)
-        {
-            player.EquipArmor(this);
-        }
+        
     }
 }

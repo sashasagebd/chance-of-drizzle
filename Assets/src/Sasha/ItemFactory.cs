@@ -16,9 +16,9 @@ public static class ItemFactory
                     amount: 10f,
                     duration: 0
                 );
-            case "speedberry":
+            case "speedboost":
                 return new Consumable(
-                    name: "Speed Berry",
+                    name: "Speed Boost",
                     description: "Temporarily increases movement speed.",
                     effect: "Speed",
                     amount: 2f,
@@ -32,28 +32,83 @@ public static class ItemFactory
                     amount: 1f,
                     duration: 30
                 );*/
-            case "helmet":
+            case "healthupgrade":
+                return new Equipment(
+                    name: "Health Upgrade",
+                    description: "Increases max health by 5",
+                    effect: "HealthIncrease",
+                    amount: 5
+                );
+            case "speedupgrade":
+                return new Equipment(
+                    name: "Speed Upgrade",
+                    description: "Increases speed by 1",
+                    effect: "SpeedIncrease",
+                    amount: 1f
+                );
+            case "ironhelmet":
+                return new Armor(
+                    name: "Helmet",
+                    description: "Protects the user's head",
+                    armorType: "helmet",
+                    defense: 2
+                );
+            case "ironchestplate":
+                return new Armor(
+                    name: "Chestplate",
+                    description: "Protects the user's upper body",
+                    armorType: "chestplate",
+                    defense: 3
+                );
+            case "ironpants":
+                return new Armor(
+                    name: "Pants",
+                    description: "Protects the user's legs",
+                    armorType: "pants",
+                    defense: 2
+                );
+            case "leatherhelmet":
                 return new Armor(
                     name: "Helmet",
                     description: "Protects the user's head",
                     armorType: "helmet",
                     defense: 1
                 );
-            case "chestplate":
+            case "leatherchestplate":
+                return new Armor(
+                    name: "Chestplate",
+                    description: "Protects the user's upper body",
+                    armorType: "chestplate",
+                    defense: 2
+                );
+            case "leatherpants":
+                return new Armor(
+                    name: "Pants",
+                    description: "Protects the user's legs",
+                    armorType: "pants",
+                    defense: 1
+                );
+            case "ancienthelmet":
+                return new Armor(
+                    name: "Helmet",
+                    description: "Protects the user's head",
+                    armorType: "helmet",
+                    defense: 3
+                );
+            case "ancientchestplate":
                 return new Armor(
                     name: "Chestplate",
                     description: "Protects the user's upper body",
                     armorType: "chestplate",
                     defense: 4
                 );
-            case "pants":
+            case "ancientpants":
                 return new Armor(
                     name: "Pants",
                     description: "Protects the user's legs",
                     armorType: "pants",
                     defense: 3
                 );
-            
             default:
                 Debug.LogError($"{id} is not recognized as a valid item");
                 return null;

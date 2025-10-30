@@ -1,4 +1,5 @@
-
+using UnityEngine;
+using System;
 
 public class Equipment : Item
 {
@@ -6,11 +7,11 @@ public class Equipment : Item
     public string EffectType { get; set; }
     public float Amount { get; set; }
 
-    public Equipment(string name, string description, string effectType, float amount)
+    public Equipment(string name, string description, string effect, float amount)
     {
         Name = name;
         Description = description;
-        EffectType = effectType;
+        EffectType = effect;
         Amount = amount;
         CanStack = true;
     }
@@ -19,7 +20,18 @@ public class Equipment : Item
     {
         if (target is PlayerController3D player)
         {
-            //need to make an equip method in player controller
+            
+            if (EffectType == "Speed")
+            {
+                player.ApplySpeed(Amount, 0);
+            }
+            else if(EffectType == "HealthIncrease")
+            {
+                if(player.HealthComponent != null)
+                {
+                    player.HealthComponent.IncreaseMaxHealth((int)Amount);
+                }
+            }
         }
     }
 }

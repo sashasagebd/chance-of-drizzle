@@ -44,6 +44,12 @@ public class Health : MonoBehaviour {
             Current = maxHp;
         }
     }
+
+    public void IncreaseMaxHealth(int amount)
+    {
+        maxHp += amount;
+        Debug.Log($"Max health is now {maxHp}");
+    }
     
     public void SetHealth(int value)
     {

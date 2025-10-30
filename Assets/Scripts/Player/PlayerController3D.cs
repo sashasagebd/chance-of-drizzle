@@ -30,7 +30,7 @@ public class PlayerController3D : MonoBehaviour
     private Coroutine speedTimer; // time for temp speed buffs
     public int baseDefense = 0;
     public int currentDefense { get; private set; } = 0;
-    private readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
+    public readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
     
 
     Vector3 _velocity; // for gravity
@@ -59,6 +59,12 @@ public class PlayerController3D : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (HealthComponent == null)
+        {
+            HealthComponent = GetComponent<Health>();
+        }
+
     }
 
     void Update()
@@ -127,12 +133,16 @@ public class PlayerController3D : MonoBehaviour
         if (speedTimer != null)
         {
             StopCoroutine(speedTimer);
+            speedTimer = null;
         }
-        else
+        
+        moveSpeed += amount;
+        Debug.Log($"Speed was increased by {amount} for a total speed of {moveSpeed}");
+
+        if (duration > 0) // If duration is 0 then permanent speed buff
         {
-            moveSpeed += amount;
+            speedTimer = StartCoroutine(SpeedBuffCoroutine(amount, duration));
         }
-        speedTimer = StartCoroutine(SpeedBuffCoroutine(amount, duration)); //
     }
 
     private IEnumerator SpeedBuffCoroutine(float amount, int duration)
@@ -147,28 +157,34 @@ public class PlayerController3D : MonoBehaviour
         speedTimer = null;
     }
 
-    public bool EquipArmor(Armor newArmor)
+    public bool EquipArmor(Armor newArmor, out Armor replacedArmor)
     {
+        replacedArmor = null;
         string type = newArmor.ArmorType;
 
-        if (equippedArmor.ContainsKey(type))
+        if (equippedArmor.TryGetValue(type, out Armor oldArmor))
         {
-            Armor oldArmor = equippedArmor[type];
-
             if (newArmor.Defense <= oldArmor.Defense)
             {
-                Debug.Log($"{oldArmor.Name} is better or equal quality than {newArmor.Name}, so {newArmor.Name}was not equipped");
+                // Worse or equal — do not equip
                 return false;
             }
 
-            Debug.Log($"Discarded {oldArmor.Name} and equipped {newArmor.Name}");
-            equippedArmor.Remove(type);
+            // Better — replace
+            replacedArmor = oldArmor;
+            equippedArmor[type] = newArmor;
+            CalculateDefense();
+            Debug.Log($"Replaced {oldArmor.Name} with {newArmor.Name}. Total defense: {currentDefense}");
+            return true;
         }
-
-        equippedArmor.Add(type, newArmor);
-        CalculateDefense();
-        return true;
-
+        else
+        {
+            // No armor yet — equip new
+            equippedArmor[type] = newArmor;
+            CalculateDefense();
+            Debug.Log($"Equipped new {newArmor.Name}. Total defense: {currentDefense}");
+            return true;
+        }
     }
     
     private void CalculateDefense()
