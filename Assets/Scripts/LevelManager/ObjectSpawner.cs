@@ -3,16 +3,17 @@ using System.Collections.Generic;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    [SerializeField] int spawnerPriority = 1;
-    [SerializeField] int spawnerPriorityMax = 1;
+    [SerializeField] protected int spawnerPriority = 1;
+    [SerializeField] protected int spawnerPriorityMax = 1;
 
-    [SerializeField] int spawnCount = 1;
+    [SerializeField] protected int spawnCount = 1;
     
-    [SerializeField] private List<GameObject> toSpawn = new List<GameObject>();
+    [SerializeField] protected List<GameObject> toSpawn = new List<GameObject>();
     // [SerializeField] private GameObject visual;
 
-    private List<GameObject> validSpawn = new List<GameObject>();
-    private GameObject spawnChoice = null;
+    protected List<GameObject> validSpawn = new List<GameObject>();
+    protected GameObject spawnChoice = null;
+    protected bool beenInitialized = false; 
 
     void Awake() {
         // Determine what from the list can be spawned
@@ -21,17 +22,25 @@ public class ObjectSpawner : MonoBehaviour
         Transform visual = transform.Find("Visual");
         Destroy(visual.gameObject);
 
-        foreach (var toSpawnObject in toSpawn) {
-            if (toSpawnObject != null && SpecificTest()) {
+        foreach (GameObject toSpawnObject in toSpawn) {
+            if (toSpawnObject != null && SpecificTest(toSpawnObject)) {
+                Debug.Log("Adding " + toSpawnObject.name + " to validSpawn list of "+name);
                 validSpawn.Add(toSpawnObject);
             }
         }
 
-        int randIndex = Random.Range(0, validSpawn.Count);
-        spawnChoice = validSpawn[randIndex];
+        if (validSpawn.Count > 0) {
+            int randIndex = Random.Range(0, validSpawn.Count);
+            spawnChoice = validSpawn[randIndex];
+            // Debug.Log("Chose choice "+spawnChoice.name+" at "+name);
+            beenInitialized = true;
+        } else {
+            Debug.LogWarning("Spawner could not properly spawn any objects!");
+            Destroy(gameObject);
+        }
     }
 
-    public virtual bool SpecificTest() {
+    public virtual bool SpecificTest(GameObject testObject) {
         // for subclasses. checks if class is valid for what the object spawner is trying to spawn
         return true;
     }
@@ -39,12 +48,15 @@ public class ObjectSpawner : MonoBehaviour
     public virtual void Initialize() {
         // Spawns random object within list
 
+        // Debug.Log(beenInitialized + " at " + name);
 
-        if (spawnChoice != null) {
+        if (beenInitialized && spawnChoice != null) {
+            Debug.Log("Spawning objects!");
             for (int i = 0; i < spawnCount; i++) {
                 Vector3 randomDisplace = new Vector3(Random.Range(-5,5),0,Random.Range(-5,5));
 
                 Instantiate(spawnChoice, transform.position + randomDisplace, Quaternion.identity);
+                Destroy(gameObject);
             }
         }
     }
