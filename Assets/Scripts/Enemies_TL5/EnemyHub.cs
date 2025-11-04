@@ -16,6 +16,8 @@ public class EnemyHub : MonoBehaviour{
 
   private const float SQRT3   = 1.7320508075688772f; // sqrt(3)
   private const float SQRT3_2 = 0.8660254037844386f; // sqrt(3) / 2
+  private const float SQRT3_3 = 0.5773502691896258f; // sqrt(3) / 3
+  private const float SQRT3_4 = 0.2886751345948129f; // sqrt(3) / 4
 
   // Variables for debugging / testing
   private bool debugVariablePrintHexagonalMap = false;
@@ -23,6 +25,9 @@ public class EnemyHub : MonoBehaviour{
 
   private int enemyCount = 0;
   private int maxGroupCount = 100;
+
+  private float[,] terrainHeights;
+  private int[,] terrainGroups;
 
   void Awake(){
     rayMask = LayerMask.GetMask("Terrain");
@@ -35,6 +40,8 @@ public class EnemyHub : MonoBehaviour{
     // spawnEnemyAtTerrainHeight(new Vector2(-16, 4));
 
     runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
+
+    getPathToPlayer();
   }
   void Update(){
   }
@@ -61,7 +68,7 @@ public class EnemyHub : MonoBehaviour{
     int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
     
     // Split the map into hexagons, and get the heights of each hexagon
-    float[,] terrainHeights = new float[terrainWidth, terrainDepth];
+    terrainHeights = new float[terrainWidth, terrainDepth];
     for(int i = 0; i < terrainWidth; i++){
       for(int j = 0; j < terrainDepth; j++){
         float x = terrainMinX + i * terrainPartitionStepSize * SQRT3_2;
@@ -91,7 +98,7 @@ public class EnemyHub : MonoBehaviour{
     }
 
     // Organize hexagons into convex chunks
-    int[,] terrainGroups = new int[terrainWidth, terrainDepth];
+    terrainGroups = new int[terrainWidth, terrainDepth];
     for(int i = 0; i < terrainWidth; i++){
       for(int j = 0; j < terrainDepth; j++){
         terrainGroups[i, j] = -1;
@@ -222,7 +229,6 @@ public class EnemyHub : MonoBehaviour{
       }
       print(str);
     }
-
   }
   private float getHeight(Vector2 position){
     // https://www.karvan1230.com/entry/2022/02/08/200731
@@ -232,6 +238,33 @@ public class EnemyHub : MonoBehaviour{
     }else{
       return -100f;
     }
+  }
+  private int[] getHexagonPosition(Vector2 position){
+    int nearestI = 0;
+    int nearestJ = 0;
+    float nearestDistance = Mathf.Infinity;
+
+    int approximateX = (int)Mathf.Floor((position.x - terrainMinX) / (terrainPartitionStepSize * SQRT3_2));
+    for(int i = approximateX; i < approximateX + 2; i++){
+      int approximateZ = (int)Mathf.Floor((position.y - terrainMinZ) / terrainPartitionStepSize - (i % 2 > 0 ? 0.5f : 0f));
+      for(int j = approximateZ; j < approximateZ + 2; j++){
+        float x = terrainMinX + i * terrainPartitionStepSize * SQRT3_2;
+        float z = terrainMinZ + (j + (i % 2 > 0 ? 0.5f : 0f)) * terrainPartitionStepSize;
+        float distance = Vector2.Distance(new Vector2(x, z), position);
+
+        if(distance < nearestDistance){
+          nearestDistance = distance;
+          nearestI = i;
+          nearestJ = j;
+        }
+      }
+    }
+    return new int[]{nearestI, nearestJ};
+  }
+  private void getPathToPlayer(){
+    GameObject player = GameObject.Find("Player");
+    Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
+    print(getHexagonPosition(playerPosition));
   }
 
 
@@ -255,6 +288,24 @@ public class EnemyHub : MonoBehaviour{
       case "DISPLAY_GROUPS":
         debugVariablePrintGroups = true;
         getTerrain();
+      break;
+      case "TEST_GET_HEXAGON_POSITION":
+        int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
+        int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
+        for(int i = 0; i < terrainWidth; i++){
+          for(int j = 0; j < terrainDepth; j++){
+            float x = terrainMinX + i * terrainPartitionStepSize * SQRT3_2;
+            float z = terrainMinZ + (j + (i % 2 > 0 ? 0.5f : 0f)) * terrainPartitionStepSize;
+            float angle = Random.Range(0f, 2f * Mathf.PI);
+            Vector2 pos = new Vector2(x + 0.4f * terrainPartitionStepSize * Mathf.Cos(angle), z + 0.4f * terrainPartitionStepSize * Mathf.Sin(angle));
+            int[] hex = getHexagonPosition(pos);
+            if(hex[0] != i || hex[1] != j){
+              print("Error: getHexagonPosition failed. Expected: (" + i + ", " + j + ") Got: (" + hex[0] + ", " + hex[1] + ") " + pos);
+              return 1;
+            }
+            print("getHexagonPosition passed. Got: (" + hex[0] + ", " + hex[1] + ") " + pos);
+          }
+        }
       break;
     }
     return 0;
