@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Enemy{
-  private GameObject enemy;
-  private EnemyController enemyController;
-  private EnemyHub enemyHub;
-  private Rigidbody rb;
-  private float maxJumpHeight = 1.6f;
-  private int stayedStillCount = 0;
+  protected GameObject enemy;
+  protected EnemyController enemyController;
+  protected EnemyHub enemyHub;
+  protected Rigidbody rb;
+  protected float maxJumpHeight = 1.6f;
+  protected int stayedStillCount = 0;
+  protected int frameCount = 0;
 
-  private float health = 100;
-  private float maxHealth = 100;
+  protected float health = 100;
+  protected float maxHealth = 100;
 
-  //private Vector3 velocity;
-  public Enemy(GameObject enemy, EnemyHub enemyHub){
+  //protected Vector3 velocity;
+  public Enemy(GameObject enemy, EnemyHub enemyHub, string type){
     this.enemy = enemy;
     this.enemyHub = enemyHub;
     this.enemyController = this.enemy.GetComponent<EnemyController>();
@@ -29,23 +30,32 @@ public class Enemy{
       this.stayedStillCount = 0;
     }
   }
-  private bool isOnGround(){
+  protected bool isOnGround(){
     float terrainHeight = this.enemyHub.getHeight(new Vector2(this.enemy.transform.position.x, this.enemy.transform.position.z));
     if(Mathf.Abs(terrainHeight - (this.enemy.transform.position.y - 1f)) < 0.05f || stayedStillCount > 7){
       return true;
     }
     return false;
   }
-  private bool obstacleInFront(Vector3 moveDir, float strictness = 0.2f){
-    Vector3 forward = moveDir.normalized * 0.55f + this.enemy.transform.position;
-    float terrainHeight = this.enemyHub.getHeight(new Vector2(forward.x, forward.z));
+  protected float getHeightInFront(Vector3 moveDir){
+    Vector3 forward = new Vector3(moveDir.x, 0f, moveDir.z).normalized * 0.55f + this.enemy.transform.position;
+    return this.enemyHub.getHeight(new Vector2(forward.x, forward.z));
+  }
+  protected bool obstacleInFront(Vector3 moveDir, float strictness = 0.2f){
+    float terrainHeight = this.getHeightInFront(moveDir);
     if(terrainHeight - (this.enemy.transform.position.y - 1f) > strictness){
     //&& terrainHeight - (this.enemy.transform.position.y - 1f) < this.maxJumpHeight){
       return true;
     }
     return false;
   }
+  /*
+  // Without virtual keyword (protected -> private)
   private void move(){
+  /*/
+  // Use virtual keyword to make this method overridable
+  protected virtual void move(){
+  //*/
     Vector3 toPlayerPosition = this.enemyHub.EnemyPathToPlayer(this.enemy.transform.position);
     Vector3 acceleration = (toPlayerPosition - this.enemy.transform.position).normalized * 1f;
     acceleration = new Vector3(acceleration.x, 0f, acceleration.z);
@@ -72,5 +82,19 @@ public class Enemy{
   public void Update(){
     this.move();
     this.updateStayedStillCount();
+    this.frameCount++;
+  }
+
+  static public Enemy createEnemy(GameObject enemy, EnemyHub enemyHub, string type = "basic"){
+    if(Enemy.isFlying(type)){
+      return new FlyingEnemy(enemy, enemyHub, type);
+    }
+    return new Enemy(enemy, enemyHub, type);
+  }
+  static public bool isFlying(string type){
+    if(type == "flying"){
+      return true;
+    }
+    return false;
   }
 }

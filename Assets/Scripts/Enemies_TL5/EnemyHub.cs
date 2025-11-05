@@ -45,6 +45,7 @@ public class EnemyHub : MonoBehaviour{
     getTerrain();
 
     runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
+    runTests("SPAWN_FLYING_ENEMIES_ABOVE_TERRAIN_HEIGHT");
 
     getPathToPlayer();
   }
@@ -55,17 +56,20 @@ public class EnemyHub : MonoBehaviour{
     }
   }
 
-  private Enemy spawnEnemy(Vector3 position){
+  private Enemy spawnEnemy(Vector3 position, string type = "basic"){
     // https://chamucode.com/unity-enemy-spawn/
     GameObject enemyInstance = Instantiate(enemyTemplate, position, Quaternion.identity);
-    Enemy enemy = new Enemy(enemyInstance, this);
+    Enemy enemy = Enemy.createEnemy(enemyInstance, this, type);
     enemies.Add(enemy);
     return enemy;
   }
-  public Enemy spawnEnemyAtTerrainHeight(Vector2 position){
+  public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "basic"){
     float height = getHeight(position);
     if(height > -99f){
-      return spawnEnemy(new Vector3(position.x, height + 1, position.y));
+      if(Enemy.isFlying(type)){
+        height += 4f;
+      }
+      return spawnEnemy(new Vector3(position.x, height + 1, position.y), type);
     }
     print("Error: No terrain found at location. Is the map piece in layer terrain?");
     return null;
@@ -447,6 +451,10 @@ public class EnemyHub : MonoBehaviour{
 
     return getRecursivePath(bestNode, iteration + 1);
   }
+  public Vector3 GetPlayerPosition(){
+    GameObject player = GameObject.Find("Player");
+    return player.transform.position;
+  }
   public Vector3 EnemyPathToPlayer(Vector3 position){
     int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
     int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
@@ -486,8 +494,14 @@ public class EnemyHub : MonoBehaviour{
       case "SPAWN_ENEMIES":
         return spawnEnemy(new Vector3(Random.Range(terrainMinX, terrainMaxX), 5f, Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
       break;
+      case "SPAWN_FLYING_ENEMIES":
+        return spawnEnemy(new Vector3(Random.Range(terrainMinX, terrainMaxX), 5f, Random.Range(terrainMinZ, terrainMaxZ)), "flying") == null ? 1 : 0;
+      break;
       case "SPAWN_ENEMIES_AT_TERRAIN_HEIGHT":
         return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
+      break;
+      case "SPAWN_FLYING_ENEMIES_ABOVE_TERRAIN_HEIGHT":
+        return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying") == null ? 1 : 0;
       break;
       case "CHECK_TERRAIN_EXISTS":
         for(int i = 0; i < 100; i++){
