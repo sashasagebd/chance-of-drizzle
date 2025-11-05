@@ -15,13 +15,16 @@ public class Enemy{
   protected float maxHealth = 100;
 
   //protected Vector3 velocity;
-  public Enemy(GameObject enemy, EnemyHub enemyHub, string type){
-    this.enemy = enemy;
+  public Enemy(EnemyHub enemyHub, Vector3 position, string type, float strengthScaling, int hiveMemberID){
+    this.enemy = enemyHub.createEnemyGameObject();
+    this.enemy.transform.position = position;
     this.enemyHub = enemyHub;
     this.enemyController = this.enemy.GetComponent<EnemyController>();
     this.enemyController.enemy = this;
     this.rb = this.enemy.GetComponent<Rigidbody>();
     //this.rb.isKinematic = true;
+
+    enemyHub.addEnemy(this);
   }
   public void updateStayedStillCount(){
     if(Mathf.Abs(this.rb.linearVelocity.y) < 0.05f){
@@ -85,11 +88,11 @@ public class Enemy{
     this.frameCount++;
   }
 
-  static public Enemy createEnemy(GameObject enemy, EnemyHub enemyHub, string type = "basic"){
+  static public Enemy createEnemy(EnemyHub enemyHub, Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
     if(Enemy.isFlying(type)){
-      return new FlyingEnemy(enemy, enemyHub, type);
+      return new FlyingEnemy(enemyHub, position, type, strengthScaling, hiveMemberID);
     }
-    return new Enemy(enemy, enemyHub, type);
+    return new Enemy(enemyHub, position, type, strengthScaling, hiveMemberID);
   }
   static public bool isFlying(string type){
     if(type == "flying"){

@@ -10,7 +10,7 @@ public class FlyingEnemy : Enemy {
   protected float hoverBobbingAmplitude = 0.35f;
   protected float hoverBobbingSpeed = 0.7f;
 
-  public FlyingEnemy(GameObject enemyInstance, EnemyHub enemyHub, string type) : base(enemyInstance, enemyHub, type) {
+  public FlyingEnemy(EnemyHub enemyHub, Vector3 position, string type, float strengthScaling, int hiveMemberID) : base(enemyHub, position, type, strengthScaling, hiveMemberID){
     this.rb.useGravity = false;
   }
   

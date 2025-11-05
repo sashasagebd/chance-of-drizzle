@@ -56,11 +56,16 @@ public class EnemyHub : MonoBehaviour{
     }
   }
 
+  public GameObject createEnemyGameObject(){
+    GameObject enemyInstance = Instantiate(enemyTemplate, Vector3.zero, Quaternion.identity);
+    return enemyInstance;
+  }
+  public void addEnemy(Enemy enemy){
+    enemies.Add(enemy);
+  }
   private Enemy spawnEnemy(Vector3 position, string type = "basic"){
     // https://chamucode.com/unity-enemy-spawn/
-    GameObject enemyInstance = Instantiate(enemyTemplate, position, Quaternion.identity);
-    Enemy enemy = Enemy.createEnemy(enemyInstance, this, type);
-    enemies.Add(enemy);
+    Enemy enemy = Enemy.createEnemy(this, position, type);
     return enemy;
   }
   public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "basic"){
