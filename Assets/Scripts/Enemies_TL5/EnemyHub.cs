@@ -63,18 +63,18 @@ public class EnemyHub : MonoBehaviour{
   public void addEnemy(Enemy enemy){
     enemies.Add(enemy);
   }
-  private Enemy spawnEnemy(Vector3 position, string type = "basic"){
+  private Enemy spawnEnemy(Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
     // https://chamucode.com/unity-enemy-spawn/
-    Enemy enemy = Enemy.createEnemy(this, position, type);
+    Enemy enemy = Enemy.createEnemy(this, position, type, strengthScaling, hiveMemberID);
     return enemy;
   }
-  public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "basic"){
+  public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
     float height = getHeight(position);
     if(height > -99f){
       if(Enemy.isFlying(type)){
         height += 4f;
       }
-      return spawnEnemy(new Vector3(position.x, height + 1, position.y), type);
+      return spawnEnemy(new Vector3(position.x, height + 1, position.y), type, strengthScaling, hiveMemberID);
     }
     print("Error: No terrain found at location. Is the map piece in layer terrain?");
     return null;
