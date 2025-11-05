@@ -7,7 +7,7 @@ public class EnemyHub : MonoBehaviour{
 
   private float maxTerrainHeight = 20.0f;
   private float minTerrainHeight = -1.0f;
-  private float maxHeightDifference = 1f;
+  private float maxHeightDifference = 1.4f;
   private LayerMask rayMask;
   private float terrainMinX = -17.0f;
   private float terrainMaxX =  12.0f;
@@ -236,7 +236,7 @@ public class EnemyHub : MonoBehaviour{
       print(str);
     }
   }
-  private float getHeight(Vector2 position){
+  public float getHeight(Vector2 position){
     // https://www.karvan1230.com/entry/2022/02/08/200731
     RaycastHit hit;
     if(Physics.Linecast(new Vector3(position.x, maxTerrainHeight, position.y), new Vector3(position.x, minTerrainHeight, position.y), out hit, rayMask)){
@@ -468,6 +468,13 @@ public class EnemyHub : MonoBehaviour{
     // print("hexagonalPosition: " + hexagonalPosition[0] + ", " + hexagonalPosition[1] + " playerHexagonalPosition: " + playerHexagonalPosition[0] + ", " + playerHexagonalPosition[1]);
 
     return getRecursivePath(hexagonalPosition, 0);
+  }
+
+
+  public void enemyDied(Enemy enemy, GameObject enemyInstance){
+    Destroy(enemyInstance);
+    enemies.Remove(enemy);
+    print("ENEMY DIED");
   }
 
 
