@@ -382,12 +382,14 @@ public class EnemyHub : MonoBehaviour{
 
     if(i > 0){
       if(j + offset >= 0
+      && distanceToPlayer[i - 1, j + offset] != -1
       && distanceToPlayer[i - 1, j + offset] < bestDistance
       ){
         bestDistance = distanceToPlayer[i - 1, j + offset];
         bestNode = new int[]{i - 1, j + offset};
       }
       if(j + 1 + offset < terrainDepth
+      && distanceToPlayer[i - 1, j + 1 + offset] != -1
       && distanceToPlayer[i - 1, j + 1 + offset] < bestDistance
       ){
         bestDistance = distanceToPlayer[i - 1, j + 1 + offset];
@@ -396,12 +398,14 @@ public class EnemyHub : MonoBehaviour{
     }
     if(i < terrainWidth - 1){
       if(j + offset >= 0
+      && distanceToPlayer[i + 1, j + offset] != -1
       && distanceToPlayer[i + 1, j + offset] < bestDistance
       ){
         bestDistance = distanceToPlayer[i + 1, j + offset];
         bestNode = new int[]{i + 1, j + offset};
       }
       if(j + 1 + offset < terrainDepth
+      && distanceToPlayer[i + 1, j + 1 + offset] != -1
       && distanceToPlayer[i + 1, j + 1 + offset] < bestDistance
       ){
         bestDistance = distanceToPlayer[i + 1, j + 1 + offset];
@@ -409,12 +413,14 @@ public class EnemyHub : MonoBehaviour{
       }
     }
     if(j > 0
+    && distanceToPlayer[i, j - 1] != -1
     && distanceToPlayer[i, j - 1] < bestDistance
     ){
       bestDistance = distanceToPlayer[i, j - 1];
       bestNode = new int[]{i, j - 1};
     }
     if(j < terrainDepth - 1
+    && distanceToPlayer[i, j + 1] != -1
     && distanceToPlayer[i, j + 1] < bestDistance
     ){
       bestDistance = distanceToPlayer[i, j + 1];
@@ -431,10 +437,10 @@ public class EnemyHub : MonoBehaviour{
         return new Vector3(positionBest.x, 0, positionBest.y);
       }
       Vector2 position = getPositionFromHexagonalPosition(hexagonalPosition);
-      return new Vector3((position.x + positionBest.x) / 2, 0, (position.y + positionBest.y) / 2);
+      return new Vector3((position.x * 3 + positionBest.x) / 4, 0, (position.y * 3 + positionBest.y) / 4);
     }
 
-    if(bestDistance == 0){
+    if(bestDistance == 0 || iteration > 50){
       Vector2 positionBest = getPositionFromHexagonalPosition(bestNode);
       return new Vector3(positionBest.x, 0, positionBest.y);
     }
@@ -442,13 +448,25 @@ public class EnemyHub : MonoBehaviour{
     return getRecursivePath(bestNode, iteration + 1);
   }
   public Vector3 EnemyPathToPlayer(Vector3 position){
+    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
+    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
     int [] hexagonalPosition = getHexagonPosition(new Vector2(position.x, position.z));
+
+    if(hexagonalPosition[0] < 0 || hexagonalPosition[0] >= terrainWidth || hexagonalPosition[1] < 0 || hexagonalPosition[1] >= terrainDepth
+    || playerHexagonalPosition[0] < 0 || playerHexagonalPosition[0] >= terrainWidth || playerHexagonalPosition[1] < 0 || playerHexagonalPosition[1] >= terrainDepth){
+      GameObject player = GameObject.Find("Player");
+      Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+      return playerPosition;
+    }
 
     if(terrainGroups[playerHexagonalPosition[0], playerHexagonalPosition[1]] == terrainGroups[hexagonalPosition[0], hexagonalPosition[1]]){
       GameObject player = GameObject.Find("Player");
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
+
+    // print("hexagonalPosition: " + hexagonalPosition[0] + ", " + hexagonalPosition[1] + " playerHexagonalPosition: " + playerHexagonalPosition[0] + ", " + playerHexagonalPosition[1]);
+
     return getRecursivePath(hexagonalPosition, 0);
   }
 
