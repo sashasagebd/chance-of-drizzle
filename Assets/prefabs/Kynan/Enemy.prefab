@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 5145364029106005687}
   - component: {fileID: 6839327146952143505}
   - component: {fileID: 5701935680364254471}
-  - component: {fileID: 4069414050272272759}
-  - component: {fileID: 506500540763085253}
+  - component: {fileID: -4370382643012729988}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -115,7 +114,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4069414050272272759
+--- !u!114 &-4370382643012729988
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,18 +125,4 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11cde26e91016c088b3b2102513623e4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyController
---- !u!114 &506500540763085253
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1765494066999471437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b80859beef774eaf9efe68b9a8cb372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHp: 100
-  destroyOnDeath: 1
+  m_EditorClassIdentifier: Enemies::EnemyController

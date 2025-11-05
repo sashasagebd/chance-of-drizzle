@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EnemyHub : MonoBehaviour{
-  public GameObject enemy;
+  public GameObject enemyTemplate;
 
   private float maxTerrainHeight = 20.0f;
   private float minTerrainHeight = -1.0f;
@@ -22,22 +22,23 @@ public class EnemyHub : MonoBehaviour{
   // Variables for debugging / testing
   private bool debugVariablePrintHexagonalMap = false;
   private bool debugVariablePrintGroups = false;
+  private bool debugVariablePrintDistanceToPlayer = !false;
 
   private int enemyCount = 0;
   private int maxGroupCount = 100;
 
   private float[,] terrainHeights;
   private int[,] terrainGroups;
+  private int[,] distanceToPlayer;
+
+  private List<Enemy> enemies = new List<Enemy>();
 
   void Awake(){
     rayMask = LayerMask.GetMask("Terrain");
-    // spawnEnemy(new Vector3(0, 0, 0));
     
-    debugVariablePrintHexagonalMap = true;
-    debugVariablePrintGroups = true;
+    //debugVariablePrintHexagonalMap = true;
+    //debugVariablePrintGroups = true;
     getTerrain();
-
-    // spawnEnemyAtTerrainHeight(new Vector2(-16, 4));
 
     runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
 
@@ -46,22 +47,20 @@ public class EnemyHub : MonoBehaviour{
   void Update(){
   }
 
-  private GameObject spawnEnemy(Vector3 position){
+  private Enemy spawnEnemy(Vector3 position){
     // https://chamucode.com/unity-enemy-spawn/
-    return Instantiate(enemy, position, Quaternion.identity);
+    GameObject enemyInstance = Instantiate(enemyTemplate, position, Quaternion.identity);
+    Enemy enemy = new Enemy(enemyInstance, position);
+    enemies.Add(enemy);
+    return enemy;
   }
-  public int spawnEnemyAtTerrainHeight(Vector2 position){
+  public Enemy spawnEnemyAtTerrainHeight(Vector2 position){
     float height = getHeight(position);
     if(height > -99f){
-      GameObject enemyInstance = spawnEnemy(new Vector3(position.x, height + 1, position.y));
-      if(enemyInstance == null){
-        return 1;
-      }
-    }else{
-      print("Error: No terrain found at location. Is the map piece in layer terrain?");
-      return 1;
+      return spawnEnemy(new Vector3(position.x, height + 1, position.y));
     }
-    return 0;
+    print("Error: No terrain found at location. Is the map piece in layer terrain?");
+    return null;
   }
   private void getTerrain(){
     int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
@@ -261,18 +260,109 @@ public class EnemyHub : MonoBehaviour{
     }
     return new int[]{nearestI, nearestJ};
   }
+  private int[,] reverseSearch(int[] hexagonalPosition){
+    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
+    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
+
+    int[,] distances = new int[terrainWidth, terrainDepth];
+
+    for(int i = 0; i < terrainWidth; i++){
+      for(int j = 0; j < terrainDepth; j++){
+        distances[i, j] = -1;
+      }
+    }
+    Queue<int[]> queue = new Queue<int[]>();
+    
+    queue.Enqueue(new int[]{hexagonalPosition[0], hexagonalPosition[1], 1});
+    distances[hexagonalPosition[0], hexagonalPosition[1]] = 0;
+    
+    while(queue.Count > 0){
+      int[] node = queue.Dequeue();
+      int i = node[0];
+      int j = node[1];
+      int offset = (i % 2 == 0 ? -1 : 0);
+      if(i > 0){
+        if(j + offset >= 0
+        && distances[i - 1, j + offset] == -1
+        //&& Mathf.Abs(terrainHeights[i, j] - terrainHeights[i - 1, j + offset]) < maxHeightDifference
+        ){
+          queue.Enqueue(new int[]{i - 1, j + offset, node[2] + 1});
+          distances[i - 1, j + offset] = node[2];
+        }
+        if(j + 1 + offset < terrainDepth
+        && distances[i - 1, j + 1 + offset] == -1
+        //&& Mathf.Abs(terrainHeights[i, j] - terrainHeights[i - 1, j + 1 + offset]) < maxHeightDifference
+        ){
+          queue.Enqueue(new int[]{i - 1, j + 1 + offset, node[2] + 1});
+          distances[i - 1, j + 1 + offset] = node[2];
+        }
+      }
+      if(i < terrainWidth - 1){
+        if(j + offset >= 0
+        && distances[i + 1, j + offset] == -1
+        //&& Mathf.Abs(terrainHeights[i, j] - terrainHeights[i + 1, j + offset]) < maxHeightDifference
+        ){
+          queue.Enqueue(new int[]{i + 1, j + offset, node[2] + 1});
+          distances[i + 1, j + offset] = node[2];
+        }
+        if(j + 1 + offset < terrainDepth
+        && distances[i + 1, j + 1 + offset] == -1
+        //&& Mathf.Abs(terrainHeights[i, j] - terrainHeights[i + 1, j + 1 + offset]) < maxHeightDifference
+        ){
+          queue.Enqueue(new int[]{i + 1, j + 1 + offset, node[2] + 1});
+          distances[i + 1, j + 1 + offset] = node[2];
+        }
+      }
+      if(j > 0
+      && distances[i, j - 1] == -1
+      //&& Mathf.Abs(terrainHeights[i, j] - terrainHeights[i, j - 1]) < maxHeightDifference
+      ){
+        queue.Enqueue(new int[]{i, j - 1, node[2] + 1});
+        distances[i, j - 1] = node[2];
+      }
+      if(j < terrainDepth - 1
+      && distances[i, j + 1] == -1
+      //&& Mathf.Abs(terrainHeights[i, j] - terrainHeights[i, j + 1]) < maxHeightDifference
+      ){
+        queue.Enqueue(new int[]{i, j + 1, node[2] + 1});
+        distances[i, j + 1] = node[2];
+      }
+    }
+
+    return distances;
+  }
   private void getPathToPlayer(){
+    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
+    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
+
     GameObject player = GameObject.Find("Player");
     Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
-    print(getHexagonPosition(playerPosition));
+    int[] playerHexagonalPosition = getHexagonPosition(playerPosition);
+
+    distanceToPlayer = reverseSearch(playerHexagonalPosition);
+    if(debugVariablePrintDistanceToPlayer){
+      string str = "";
+      for(int i = 0; i < terrainWidth; i++){
+        str += (i % 2 > 0 ? "\n " : "\n");
+        for(int j = 0; j < terrainDepth; j++){
+          str += (char)(distanceToPlayer[i, j] + (int)('A'));
+        }
+      }
+      print(str);
+    }
   }
 
 
 
   public int runTests(string testName){
+    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
+    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
     switch(testName){
+      case "SPAWN_ENEMIES":
+        return spawnEnemy(new Vector3(Random.Range(terrainMinX, terrainMaxX), 5f, Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
+      break;
       case "SPAWN_ENEMIES_AT_TERRAIN_HEIGHT":
-        return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+        return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
       break;
       case "CHECK_TERRAIN_EXISTS":
         for(int i = 0; i < 100; i++){
@@ -290,8 +380,6 @@ public class EnemyHub : MonoBehaviour{
         getTerrain();
       break;
       case "TEST_GET_HEXAGON_POSITION":
-        int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-        int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
         for(int i = 0; i < terrainWidth; i++){
           for(int j = 0; j < terrainDepth; j++){
             float x = terrainMinX + i * terrainPartitionStepSize * SQRT3_2;
@@ -305,6 +393,17 @@ public class EnemyHub : MonoBehaviour{
             }
             print("getHexagonPosition passed. Got: (" + hex[0] + ", " + hex[1] + ") " + pos);
           }
+        }
+      break;
+      case "PLAYER_HEXAGONAL_POSITION":
+        GameObject player = GameObject.Find("Player");
+        if(player == null){
+          return 1;
+        }
+        Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
+        int[] playerHexagonalPosition = getHexagonPosition(playerPosition);
+        if(playerHexagonalPosition[0] < 0 || playerHexagonalPosition[1] < 0 || playerHexagonalPosition[0] >= terrainWidth || playerHexagonalPosition[1] >= terrainDepth){
+          return 1;
         }
       break;
     }
