@@ -95,7 +95,7 @@ public class Enemy{
     return new Enemy(enemyHub, position, type, strengthScaling, hiveMemberID);
   }
   static public bool isFlying(string type){
-    if(type == "flying"){
+    if(type == "flying" || type == "flying-double"){
       return true;
     }
     return false;

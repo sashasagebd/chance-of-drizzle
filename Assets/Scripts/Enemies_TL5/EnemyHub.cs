@@ -44,8 +44,11 @@ public class EnemyHub : MonoBehaviour{
     //debugVariablePrintGroups = true;
     getTerrain();
 
-    runTests("SPAWN_ENEMIES_AT_TERRAIN_HEIGHT");
-    runTests("SPAWN_FLYING_ENEMIES_ABOVE_TERRAIN_HEIGHT");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
 
     getPathToPlayer();
   }
@@ -72,7 +75,7 @@ public class EnemyHub : MonoBehaviour{
     float height = getHeight(position);
     if(height > -99f){
       if(Enemy.isFlying(type)){
-        height += 4f;
+        height += 3f;
       }
       return spawnEnemy(new Vector3(position.x, height + 1, position.y), type, strengthScaling, hiveMemberID);
     }
