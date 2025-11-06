@@ -20,17 +20,22 @@ public class Equipment : Item
     {
         if (target is PlayerController3D player)
         {
-            
+
             if (EffectType == "Speed")
             {
                 player.ApplySpeed(Amount, 0);
             }
-            else if(EffectType == "HealthIncrease")
+            else if (EffectType == "HealthIncrease")
             {
-                if(player.HealthComponent != null)
+                if (player.HealthComponent != null)
                 {
                     player.HealthComponent.IncreaseMaxHealth((int)Amount);
                 }
+            }
+            else if (EffectType == "Damage")
+            {
+                PlayerController3D.damageBonus += 1; // Need actual class copy since static var
+                Debug.Log($"Damage boost increased to {PlayerController3D.damageBonus}");
             }
         }
     }

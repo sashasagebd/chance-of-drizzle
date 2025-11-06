@@ -63,7 +63,7 @@ public sealed class Inventory
             }
             else
             {
-                Debug.Log($"Unable to add Item: {item.Name} as it already exists and cannot stack");
+                //Debug.Log($"Unable to add Item: {item.Name} as it already exists and cannot stack");
                 return false;
             }
         }
@@ -83,7 +83,7 @@ public sealed class Inventory
 
         if (existingSlot == null || existingSlot.Count <= 0)
         {
-            UnityEngine.Debug.Log($"{item.Name} cannot be removed because it does not exist in the inventory.");
+           // UnityEngine.Debug.Log($"{item.Name} cannot be removed because it does not exist in the inventory.");
             return false;
         }
 
@@ -104,7 +104,7 @@ public sealed class Inventory
         else 
         {
             slots.Remove(existingSlot);
-            UnityEngine.Debug.Log($"Removed unstackable item: {item.Name}.");
+            //UnityEngine.Debug.Log($"Removed unstackable item: {item.Name}.");
         }
         
         OnInventoryChanged(); 

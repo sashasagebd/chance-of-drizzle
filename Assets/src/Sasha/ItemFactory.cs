@@ -24,6 +24,14 @@ public static class ItemFactory
                     amount: 2f,
                     duration: 30
                 );
+            case "jumpboost":
+                return new Consumable(
+                    name: "Jump Boost",
+                    description: "Temporarily increases jump height",
+                    effect: "Jump",
+                    amount: 2f,
+                    duration: 20
+                );
             /*case "damagepotion":
                 return new Consumable(
                     name: "Damage Potion",
@@ -43,8 +51,15 @@ public static class ItemFactory
                 return new Equipment(
                     name: "Speed Upgrade",
                     description: "Increases speed by 1",
-                    effect: "SpeedIncrease",
+                    effect: "Speed",
                     amount: 1f
+                );
+            case "damageupgrade":
+                return new Equipment(
+                    name: "Damage Upgrade",
+                    description: "Increases damage by 1",
+                    effect: "Damage",
+                    amount: 1
                 );
             case "ironhelmet":
                 return new Armor(

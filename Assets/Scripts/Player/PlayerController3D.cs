@@ -27,11 +27,13 @@ public class PlayerController3D : MonoBehaviour
 
     [Header("Items")]
     public Health HealthComponent; // needed right now for items to access health class easily
+    public WeaponBase WeaponComponent; // needed for items to access weapon base class easily
     private Coroutine speedTimer; // time for temp speed buffs
+    private Coroutine jumpTimer; // time for temp jump buffs
     public int baseDefense = 0;
     public int currentDefense { get; private set; } = 0;
     public readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
-    
+    public static int damageBonus = 0; // additional damage from items
 
     Vector3 _velocity; // for gravity
     float _pitch;      // camera pitch
@@ -156,6 +158,36 @@ public class PlayerController3D : MonoBehaviour
 
         speedTimer = null;
     }
+
+    public void ApplyJumpBoost(float amount, int duration)
+    {
+        if (jumpTimer != null)
+        {
+            StopCoroutine(jumpTimer);
+            jumpTimer = null;
+        }
+        
+        jumpSpeed += amount;
+        Debug.Log($"Jumping speed was increased by {amount} for a total speed of {jumpSpeed}");
+
+        if (duration > 0) // If duration is 0 then permanent jump buff
+        {
+            jumpTimer = StartCoroutine(JumpBuffCoroutine(amount, duration));
+        }
+    }
+
+    private IEnumerator JumpBuffCoroutine(float amount, int duration)
+    {
+        // Wait for the duration time
+        yield return new WaitForSeconds(duration);
+
+        jumpSpeed -= amount;
+
+        Debug.Log($"Temporary jump speed boost expired. Total jump speed reset to {moveSpeed}.");
+
+        jumpTimer = null;
+    }
+
 
     public bool EquipArmor(Armor newArmor, out Armor replacedArmor)
     {
