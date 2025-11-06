@@ -74,5 +74,6 @@ public class FlyingEnemy : Enemy {
     this.rb.linearVelocity += acceleration * this.movementSpeed;
 
     this.enemy.transform.rotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, 2.5f);
+    this.rb.angularVelocity *= 0.75f;
   }
 }

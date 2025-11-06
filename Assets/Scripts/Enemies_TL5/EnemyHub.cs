@@ -37,6 +37,8 @@ public class EnemyHub : MonoBehaviour{
 
   private int frameCount = 0;
 
+  private AIPlayer aiPlayer;
+
   void Awake(){
     rayMask = LayerMask.GetMask("Terrain");
     
@@ -51,11 +53,20 @@ public class EnemyHub : MonoBehaviour{
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
 
     getPathToPlayer();
+
+    aiPlayer = new AIPlayer(GameObject.Find("Player"), this);
+    aiPlayer = null;
   }
   void Update(){
     frameCount++;
     if(frameCount % 10 == 0){
       getPathToPlayer();
+    }
+
+    if(aiPlayer != null){
+      if (aiPlayer.run()){
+        aiPlayer = null;
+      }
     }
   }
 
@@ -484,6 +495,25 @@ public class EnemyHub : MonoBehaviour{
     // print("hexagonalPosition: " + hexagonalPosition[0] + ", " + hexagonalPosition[1] + " playerHexagonalPosition: " + playerHexagonalPosition[0] + ", " + playerHexagonalPosition[1]);
 
     return getRecursivePath(hexagonalPosition, 0);
+  }
+  public Vector3 getClosestEnemy(Vector3 position, int onlyFlying){
+    float closestDistance = 1e38f;
+    Vector3 closestEnemy = new Vector3(0, 0, 0);
+    for(int i = 0; i < enemies.Count; i++){
+      Enemy enemy = enemies[i];
+      if(onlyFlying != 0){
+        if((onlyFlying > 0) ^ (enemy is FlyingEnemy)){
+          continue;
+        }
+      }
+      Vector3 enemyPosition = enemy.getPosition();
+      float distance = Mathf.Pow(enemyPosition.x - position.x, 2) + Mathf.Pow(enemyPosition.z - position.z, 2);
+      if(distance < closestDistance){
+        closestDistance = distance;
+        closestEnemy = enemyPosition;
+      }
+    }
+    return closestEnemy;
   }
 
 

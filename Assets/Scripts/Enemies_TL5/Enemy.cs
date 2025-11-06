@@ -82,6 +82,9 @@ public class Enemy{
       this.enemyHub.enemyDied(this, this.enemy);
     }
   }
+  public Vector3 getPosition(){
+    return this.enemy.transform.position;
+  }
   public void Update(){
     this.move();
     this.updateStayedStillCount();
