@@ -33,6 +33,10 @@ public class Consumable : Item
                     player.HealthComponent.Heal((int)Amount);
                 }
             }
+            else if (EffectType == "Jump")
+            {
+                player.ApplyJumpBoost(Amount, Duration);
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ public class ProjectileWeapon : WeaponBase
         if (rb) rb.useGravity = useGravity;
         if (bullet)
         {
-            bullet.damage  = damage;
+            bullet.damage  = damage + PlayerController3D.damageBonus;
             bullet.hitMask = bulletHitMask;
             bullet.Fire(direction.normalized * muzzleSpeed);
         }

@@ -18,7 +18,7 @@ public class LazerWeapon : WeaponBase
         {
             end = hit.point;
             var hp = hit.collider.GetComponent<Health>();
-            if (hp) hp.ApplyDamage(damage);
+            if (hp) hp.ApplyDamage(damage + PlayerController3D.damageBonus);
         }
 
         if (line) StartCoroutine(FlashLine(origin, end));
