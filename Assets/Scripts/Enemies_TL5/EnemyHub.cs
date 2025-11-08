@@ -45,6 +45,9 @@ public class EnemyHub : MonoBehaviour{
   private AIPlayer aiPlayer;
 
   void Awake(){
+    Laser.setStaticValues(GameObject.Find("Player"), this);
+    Enemy.setStaticValues(this);
+
     rayMask = LayerMask.GetMask("Terrain");
     
     //debugVariablePrintHexagonalMap = true;
@@ -61,8 +64,6 @@ public class EnemyHub : MonoBehaviour{
 
     aiPlayer = new AIPlayer(GameObject.Find("Player"), this);
     aiPlayer = null;
-
-    Laser.setStaticValues(GameObject.Find("Player"), this);
   }
   void Update(){
     frameCount++;
@@ -88,7 +89,7 @@ public class EnemyHub : MonoBehaviour{
     enemies.Add(enemy);
   }
   private Enemy spawnEnemy(Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
-    Enemy enemy = Enemy.createEnemy(this, position, type, strengthScaling, hiveMemberID);
+    Enemy enemy = Enemy.createEnemy(position, type, strengthScaling, hiveMemberID);
     return enemy;
   }
   public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
