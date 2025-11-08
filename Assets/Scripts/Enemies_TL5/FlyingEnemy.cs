@@ -10,6 +10,7 @@ public class FlyingEnemy : Enemy {
   protected float hoverBobbingSpeed = 0.3f;
   protected float timeDelay = 0f;
   protected float movementSpeed = 0.8f;
+  protected bool lookAtPlayer = true;
 
   public FlyingEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID) : base(position, type, strengthScaling, hiveMemberID){
     this.timeDelay = Random.Range(0f, 10f);
@@ -38,14 +39,11 @@ public class FlyingEnemy : Enemy {
     }
     this.range = this.circleRadius * 1.3f + 1.5f;
   }
-  
-  /*
-  // Without virtual keyword (protected -> private)
-  private void move(){
-  /*/
-  // Use overrideable method that was set with virtual in the parent
+  protected virtual Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
+    toPlayerPosition += new Vector3(this.circleRadius * Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay), 0f, this.circleRadius * Mathf.Cos(this.circlingSpeed * Time.time + this.timeDelay));
+    return toPlayerPosition - this.enemy.transform.position;
+  }
   protected override void move(){
-  //*/
     float hoverHeightCurrent = this.hoverHeight * (1f + this.hoverBobbingAmplitude * Mathf.Sin(this.hoverBobbingSpeed * Time.time + this.timeDelay));
     Vector3 toPlayerPosition = Enemy.enemyHub.getPlayerPosition();
     Quaternion lookRotation = Quaternion.LookRotation(toPlayerPosition + new Vector3(0f, 0.8f, 0f) - this.enemy.transform.position);
@@ -55,8 +53,10 @@ public class FlyingEnemy : Enemy {
 
     float dist = Mathf.Pow(acceleration.x, 2) + Mathf.Pow(acceleration.z, 2);
     if(dist < Mathf.Pow(this.circleRadius + 0.5f, 2)){
-      toPlayerPosition += new Vector3(this.circleRadius * Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay), 0f, this.circleRadius * Mathf.Cos(this.circlingSpeed * Time.time + this.timeDelay));
-      acceleration = toPlayerPosition - this.enemy.transform.position;
+      acceleration = moveClose(ref toPlayerPosition, hoverHeightCurrent);
+      if(!this.lookAtPlayer){
+        lookRotation = Quaternion.LookRotation(this.rb.linearVelocity);
+      }
     }else{
       acceleration = acceleration.normalized;
       acceleration = new Vector3(acceleration.x, 1.0f + hoverHeightCurrent + this.getHeightInFront(acceleration) - this.enemy.transform.position.y, acceleration.z);

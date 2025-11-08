@@ -54,16 +54,18 @@ public class EnemyHub : MonoBehaviour{
     //debugVariablePrintGroups = true;
     getTerrain();
 
+    getPathToPlayer();
+
+    aiPlayer = new AIPlayer(GameObject.Find("Player"), this);
+    aiPlayer = null;
+  }
+  void Start(){
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
-
-    getPathToPlayer();
-
-    aiPlayer = new AIPlayer(GameObject.Find("Player"), this);
-    aiPlayer = null;
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee");
   }
   void Update(){
     frameCount++;
@@ -537,23 +539,26 @@ public class EnemyHub : MonoBehaviour{
     lineRenderer.enabled = true;
     return bulletInstance;
   }
-  protected bool runLaser(Laser laser){
+  protected bool runLaser(Laser laser, int i){
     if(laser.run()){
       Destroy(laser.getGameObject());
-      lasers.Remove(laser);
+      lasers.RemoveAt(i);
       return true;
     }
     return false;
   }
   protected void runLasers(){
     for(int i = 0; i < lasers.Count; i++){
-      if(runLaser(lasers[i])){
+      if(runLaser(lasers[i], i)){
         i--;
       }
     }
   }
   public void shoot(Vector3 position, Vector3 direction){
     lasers.Add(new Laser(addLineRenderer(), position, direction));
+  }
+  public Sword sword(Transform parentTransform, float range){
+    return new Sword(addLineRenderer(), parentTransform, range);
   }
 
 

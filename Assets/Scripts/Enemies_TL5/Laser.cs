@@ -25,7 +25,6 @@ public class Laser{
 
     this.move();
     if(!this.dead) this.move();
-    this.draw();
   }
   protected void draw(){
     this.lineRenderer.positionCount = this.nonStraightPath ? 1 + this.trail.Count : 2;
@@ -38,7 +37,7 @@ public class Laser{
       this.lineRenderer.SetPosition(1, this.trail[0]);
     }
   }
-  protected void move(){
+  protected bool hit(){
     RaycastHit hit;
     if(Physics.Linecast(this.position, this.position + this.direction, out hit)){
       if (hit.transform.gameObject == Laser.player){
@@ -47,8 +46,12 @@ public class Laser{
       }
       this.position = hit.point;
       this.dead = true;
-      return;
+      return true;
     }
+    return false;
+  }
+  protected virtual void move(){
+    if(this.hit()) return;
 
     this.trail.Add(this.position);
     this.position += this.direction;
@@ -56,7 +59,7 @@ public class Laser{
       this.trail.RemoveAt(0);
     }
   }
-  public bool run(){
+  public virtual bool run(){
     if(dead){
       return true;
     }
