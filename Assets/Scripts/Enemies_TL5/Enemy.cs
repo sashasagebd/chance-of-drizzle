@@ -14,6 +14,14 @@ public class Enemy{
   protected float health = 100;
   protected float maxHealth = 100;
 
+  protected float reloadTimer = 0f;
+  protected float reloadTime  = 1f;
+  protected float range = 20f;
+  protected bool alternateGuns = true;
+  protected int lastFired = 0;
+
+  protected List<Transform> gunPositions = new List<Transform>();
+
   //protected Vector3 velocity;
   public Enemy(EnemyHub enemyHub, Vector3 position, string type, float strengthScaling, int hiveMemberID){
     this.enemy = enemyHub.createEnemyGameObject();
@@ -52,13 +60,7 @@ public class Enemy{
     }
     return false;
   }
-  /*
-  // Without virtual keyword (protected -> private)
-  private void move(){
-  /*/
-  // Use virtual keyword to make this method overridable
   protected virtual void move(){
-  //*/
     Vector3 toPlayerPosition = this.enemyHub.EnemyPathToPlayer(this.enemy.transform.position);
     Vector3 acceleration = (toPlayerPosition - this.enemy.transform.position).normalized * 1f;
     acceleration = new Vector3(acceleration.x, 0f, acceleration.z);
@@ -75,6 +77,29 @@ public class Enemy{
     //this.rb.linearVelocity = new Vector3(5f, rb.velocity.y, 0f);
     //this.enemy.transform.position += this.velocity;
   }
+  protected virtual void attack(){
+    if(this.reloadTimer < this.reloadTime || Mathf.Pow(this.enemy.transform.position.x - this.enemyHub.getPlayerPosition().x, 2) + Mathf.Pow(this.enemy.transform.position.z - this.enemyHub.getPlayerPosition().z, 2) > this.range * this.range){
+      this.reloadTimer += Time.deltaTime;
+      return;
+    }
+    this.reloadTimer = 0f;
+
+    if(alternateGuns){
+      this.fire(this.lastFired);
+      this.lastFired = (this.lastFired + 1) % this.gunPositions.Count;
+    }else{
+      for(int i = 0; i < this.gunPositions.Count; i++){
+        this.fire(i);
+      }
+    }
+  }
+  protected void fire(int i){
+    Vector3 fireLocation = this.gunPositions[i].position + this.rb.linearVelocity * Time.deltaTime;
+    Quaternion lookRotation = Quaternion.LookRotation(this.enemyHub.getPlayerPosition() - fireLocation);
+    lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, 5f);
+    lookRotation = Quaternion.RotateTowards(lookRotation, Random.rotation, 3f);
+    this.enemyHub.shoot(fireLocation, lookRotation * new Vector3(0f, 0f, 0.45f));
+  }
   public void takeDamage(float damage){
     this.health -= damage;
     Debug.Log("Health: " + this.health);
@@ -87,6 +112,7 @@ public class Enemy{
   }
   public void Update(){
     this.move();
+    this.attack();
     this.updateStayedStillCount();
     this.frameCount++;
   }

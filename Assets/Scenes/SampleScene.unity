@@ -1619,6 +1619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHub
   enemyTemplate: {fileID: 1765494066999471437, guid: 0714af87dd0ba31f18fe915f59c92a32, type: 3}
+  enemyBulletTemplate: {fileID: 4168602225618128106, guid: d1c8a23d69d555a63a3bb5cff7a38e95, type: 3}
 --- !u!1 &1415099920
 GameObject:
   m_ObjectHideFlags: 0

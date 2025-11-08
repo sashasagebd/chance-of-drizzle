@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class EnemyHub : MonoBehaviour{
+  // Prefabs (set through editor)
   public GameObject enemyTemplate;
+  public GameObject enemyBulletTemplate;
 
   private float maxTerrainHeight = 20.0f;
   private float minTerrainHeight = -1.0f;
@@ -34,6 +36,9 @@ public class EnemyHub : MonoBehaviour{
   int[] playerHexagonalPosition;
 
   private List<Enemy> enemies = new List<Enemy>();
+  private List<Laser> lasers = new List<Laser>();
+
+  private Color bulletColor = new Color(1.0f, 0.0f, 0.0f);
 
   private int frameCount = 0;
 
@@ -46,9 +51,9 @@ public class EnemyHub : MonoBehaviour{
     //debugVariablePrintGroups = true;
     getTerrain();
 
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
 
@@ -56,6 +61,8 @@ public class EnemyHub : MonoBehaviour{
 
     aiPlayer = new AIPlayer(GameObject.Find("Player"), this);
     aiPlayer = null;
+
+    Laser.setStaticValues(GameObject.Find("Player"), this);
   }
   void Update(){
     frameCount++;
@@ -68,9 +75,12 @@ public class EnemyHub : MonoBehaviour{
         aiPlayer = null;
       }
     }
+
+    runLasers();
   }
 
   public GameObject createEnemyGameObject(){
+    // https://chamucode.com/unity-enemy-spawn/
     GameObject enemyInstance = Instantiate(enemyTemplate, Vector3.zero, Quaternion.identity);
     return enemyInstance;
   }
@@ -78,7 +88,6 @@ public class EnemyHub : MonoBehaviour{
     enemies.Add(enemy);
   }
   private Enemy spawnEnemy(Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
-    // https://chamucode.com/unity-enemy-spawn/
     Enemy enemy = Enemy.createEnemy(this, position, type, strengthScaling, hiveMemberID);
     return enemy;
   }
@@ -470,7 +479,7 @@ public class EnemyHub : MonoBehaviour{
 
     return getRecursivePath(bestNode, iteration + 1);
   }
-  public Vector3 GetPlayerPosition(){
+  public Vector3 getPlayerPosition(){
     GameObject player = GameObject.Find("Player");
     return player.transform.position;
   }
@@ -514,6 +523,36 @@ public class EnemyHub : MonoBehaviour{
       }
     }
     return closestEnemy;
+  }
+  protected GameObject addLineRenderer(){
+    GameObject bulletInstance = Instantiate(enemyBulletTemplate, Vector3.zero, Quaternion.identity);
+    LineRenderer lineRenderer = bulletInstance.GetComponent<LineRenderer>();
+    lineRenderer.startWidth = 0.03f;
+    lineRenderer.endWidth = 0.03f;
+    lineRenderer.positionCount = 2;
+    lineRenderer.useWorldSpace = true;
+    //lineRenderer.startColor = bulletColor;
+    //lineRenderer.endColor = bulletColor;
+    lineRenderer.enabled = true;
+    return bulletInstance;
+  }
+  protected bool runLaser(Laser laser){
+    if(laser.run()){
+      Destroy(laser.getGameObject());
+      lasers.Remove(laser);
+      return true;
+    }
+    return false;
+  }
+  protected void runLasers(){
+    for(int i = 0; i < lasers.Count; i++){
+      if(runLaser(lasers[i])){
+        i--;
+      }
+    }
+  }
+  public void shoot(Vector3 position, Vector3 direction){
+    lasers.Add(new Laser(addLineRenderer(), position, direction));
   }
 
 
