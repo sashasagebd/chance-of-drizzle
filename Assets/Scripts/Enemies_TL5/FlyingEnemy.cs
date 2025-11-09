@@ -22,9 +22,6 @@ public class FlyingEnemy : Enemy {
     capsuleCollider.radius = 0.45f;
     capsuleCollider.height = 0f;
 
-    MeshRenderer meshRenderer = this.enemy.GetComponent<MeshRenderer>();
-    meshRenderer.enabled = false;
-
     switch(type){
       case "flying":
         this.circleRadius *= 1.3f;
@@ -82,7 +79,9 @@ public class FlyingEnemy : Enemy {
       break;
     }
     this.range = this.circleRadius * 1.3f + 1.5f;
+
     this.applyStrengthScaling(strengthScaling);
+    this.setGunPositionDistance();
   }
   protected virtual Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
     toPlayerPosition += new Vector3(this.circleRadius * Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay), 0f, this.circleRadius * Mathf.Cos(this.circlingSpeed * Time.time + this.timeDelay));

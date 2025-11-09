@@ -15,9 +15,9 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     switch(type){
       case "flying-melee":
         this.circleRadius = 5f;
-        this.movementSpeed *= 1.6f;
+        this.movementSpeed = 1.4f;
         this.circlingSpeed *= 1.4f;
-        this.damage = 3.2f;
+        this.damage = 1.8f;
         this.maxHealth = 65f;
         this.spinMode = Enemy.spinX | Enemy.spinY;
       break;
@@ -25,14 +25,14 @@ public class FlyingMeleeEnemy : FlyingEnemy{
         this.swordRange = 2.6f;
         this.circleRadius = 0.5f;
         this.hoverHeight = 0.8f;
-        this.movementSpeed *= 0.35f;
+        this.movementSpeed = 0.3f;
         this.weaponSpinSpeed *= 0.4f;
-        this.damage = 6.75f;
+        this.damage = 3.6f;
         this.maxHealth = 115f;
         this.spinMode = Enemy.spinX | Enemy.spinY;
       break;
       case "flying-pyramid":
-        this.damage = 7.5f;
+        this.damage = 5.5f;
         this.maxHealth = 125f;
         this.movementSpeed = 0f;
         this.spinMode = Enemy.spinX | Enemy.spinY;
@@ -49,6 +49,7 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     }
 
     this.applyStrengthScaling(strengthScaling);
+    this.setGunPositionDistance();
   }
   protected override Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
     float s = Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay);

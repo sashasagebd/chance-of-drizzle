@@ -11,27 +11,30 @@ public class Enemy{
   protected int stayedStillCount = 0;
   protected int frameCount = 0;
 
-  protected float health = 100;
-  protected float maxHealth = 100;
-  protected float damage = 1f;
+  protected float health = 0f;
+  protected float maxHealth = 0f;
+  protected float damage = 0f;
+  protected float reloadTime  = 1e3f;
+  protected float movementSpeed = 0f;
 
   protected float reloadTimer = 0f;
-  protected float reloadTime  = 1f;
   protected float range = 20f;
   protected bool alternateGuns = true;
   protected float accuracy = 3f;
   protected float firingFreedom = 5f;
   protected int lastFired = 0;
-  protected float movementSpeed = 0.8f;
   protected bool homing = false;
 
   protected float weaponSpinSpeed = 7f;
   protected float gunPositionDistance;
+  protected float gunWobbleDistance;
   protected float shotSpeed = 1f;
 
   protected const int spinX = 1;
   protected const int spinY = 2;
   protected const int spinZ = 4;
+  protected const int spinWobble = 8;
+  protected const int spinAlternate = 16;
   protected int spinMode = 0;
 
 
@@ -54,7 +57,6 @@ public class Enemy{
     foreach (Transform gunPosition in objT) {
       this.gunPositions.Add(gunPosition);
     }
-    this.gunPositionDistance = Vector3.Distance(this.gunPositions[0].localPosition, new Vector3(0f, 0f, 0f));
     this.weaponSpinSpeed = (Random.Range(0f, 1f) < 0.5f ? this.weaponSpinSpeed : -this.weaponSpinSpeed) * (Random.Range(0.7f, 1.2f));
 
     this.timeDelay = Random.Range(0f, 10f);
@@ -63,7 +65,15 @@ public class Enemy{
     }
 
     this.applyStrengthScaling(strengthScaling);
+    this.setGunPositionDistance();
     Enemy.enemyHub.addEnemy(this);
+  }
+  protected void setGunPositionDistance(){
+    float x = this.gunPositions[0].localPosition.x * ((this.spinMode & Enemy.spinX) > 0 ? 1f : 0f);
+    float y = this.gunPositions[0].localPosition.y * ((this.spinMode & Enemy.spinY) > 0 ? 1f : 0f);
+    float z = this.gunPositions[0].localPosition.z * ((this.spinMode & Enemy.spinZ) > 0 ? 1f : 0f);
+    this.gunPositionDistance = Mathf.Sqrt(x * x + y * y + z * z);
+    this.gunWobbleDistance = (new Vector3(x, y, z) - this.gunPositions[0].localPosition).magnitude;
   }
   protected void applyStrengthScaling(float strengthScaling){
     this.damage *= strengthScaling;
@@ -115,6 +125,10 @@ public class Enemy{
       this.rb.linearVelocity = new Vector3(this.rb.linearVelocity.x, 7f, this.rb.linearVelocity.z);
     }
 
+    Quaternion lookRotation = this.lookRotation(acceleration);
+
+    this.enemy.transform.rotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, 2f);
+    this.rb.angularVelocity *= 0.75f;
     //this.rb.MovePosition(this.rb.position + this.velocity);
     //this.rb.linearVelocity = new Vector3(5f, rb.velocity.y, 0f);
     //this.enemy.transform.position += this.velocity;
@@ -151,12 +165,32 @@ public class Enemy{
   protected void spinWeapons(){
     for(int i = 0; i < this.gunPositions.Count; i++){
       float offsetAngle = i * 2f * Mathf.PI / this.gunPositions.Count;
-      float s = this.gunPositionDistance * Mathf.Sin(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
-      float c = this.gunPositionDistance * Mathf.Cos(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
+      float weaponSpinSpeed = this.weaponSpinSpeed;
+      float gunWobbleDistance = this.gunWobbleDistance;
+      if((this.spinMode & Enemy.spinAlternate) > 0){
+        weaponSpinSpeed = Mathf.Abs(weaponSpinSpeed);
+        if(i % 2 == 0){
+          weaponSpinSpeed *= -1f;
+          gunWobbleDistance *= -1f;
+        }else{
+        }
+        if(this.gunPositions.Count == 2){
+          offsetAngle = Mathf.PI / 2f;
+        }else if(this.gunPositions.Count == 4){
+          offsetAngle += Mathf.PI / 2f;
+        }
+      }
+      float s = this.gunPositionDistance * Mathf.Sin(weaponSpinSpeed * (Time.time + this.timeDelay) + offsetAngle);
+      float c = this.gunPositionDistance * Mathf.Cos(weaponSpinSpeed * (Time.time + this.timeDelay) + offsetAngle);
+      float x = this.gunPositions[i].transform.localPosition.x;
       float y = this.gunPositions[i].transform.localPosition.y;
-      float x = (this.spinMode & Enemy.spinX) > 0 ? s : gunPositions[i].transform.localPosition.x;
-            y = (this.spinMode & Enemy.spinY) > 0 ? ((this.spinMode & Enemy.spinX) > 0 ? c : s) : y;
-      float z = (this.spinMode & Enemy.spinZ) > 0 ? c : gunPositions[i].transform.localPosition.z;
+      float z = this.gunPositions[i].transform.localPosition.z;
+      if((this.spinMode & Enemy.spinWobble) > 0){
+        x = y = z = Mathf.Sin(weaponSpinSpeed * (Time.time + this.timeDelay) + offsetAngle) * gunWobbleDistance;
+      }
+      x = (this.spinMode & Enemy.spinX) > 0 ? s : x;
+      y = (this.spinMode & Enemy.spinY) > 0 ? ((this.spinMode & Enemy.spinX) > 0 ? c : s) : y;
+      z = (this.spinMode & Enemy.spinZ) > 0 ? c : z;
       this.gunPositions[i].transform.localPosition = new Vector3(x, y, z);
     }
   }
@@ -188,9 +222,11 @@ public class Enemy{
     if(Enemy.isFlying(type)){
       if(Enemy.isMelee(type)){
         return new FlyingMeleeEnemy(position, type, strengthScaling, hiveMemberID);
-      }else{
-        return new FlyingEnemy(position, type, strengthScaling, hiveMemberID);
       }
+      return new FlyingEnemy(position, type, strengthScaling, hiveMemberID);
+    }
+    if(Enemy.isMelee(type)){
+      return new MeleeEnemy(position, type, strengthScaling, hiveMemberID);
     }
     return new Enemy(position, type, strengthScaling, hiveMemberID);
   }
@@ -201,7 +237,7 @@ public class Enemy{
     return false;
   }
   static public bool isMelee(string type){
-    if(type == "flying-melee" || type == "flying-melee-quad" || type == "flying-pyramid"){
+    if(type == "flying-melee" || type == "flying-melee-quad" || type == "flying-pyramid" || type == "melee-figure-eight" || type == "melee-figure-eight-double"){
       return true;
     }
     return false;
