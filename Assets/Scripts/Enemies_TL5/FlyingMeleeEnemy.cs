@@ -4,15 +4,12 @@ using System.Collections.Generic;
 
 public class FlyingMeleeEnemy : FlyingEnemy{
   protected List<Sword> swords = new List<Sword>();
-  protected float weaponSpinSpeed = 7f;
   protected float swordRange = 1.95f;
-  protected float gunPositionDistance;
   protected float circlingSpeedSlow = 0.5f;
 
   public FlyingMeleeEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID) : base(position, type, strengthScaling, hiveMemberID){
     // Always spin the same way to avoid hitting gun
     this.circlingSpeed = -Mathf.Abs(this.circlingSpeed);
-    this.weaponSpinSpeed = (Random.Range(0f, 1f) < 0.5f ? this.weaponSpinSpeed : -this.weaponSpinSpeed) * (Random.Range(0.7f, 1.2f));
     this.circlingSpeedSlow = (Random.Range(0f, 1f) < 0.5f ? this.circlingSpeed : -this.circlingSpeed) * (Random.Range(0.2f, 1f));
 
     switch(type){
@@ -22,21 +19,31 @@ public class FlyingMeleeEnemy : FlyingEnemy{
         this.circlingSpeed *= 1.4f;
         this.damage = 3.2f;
         this.maxHealth = 65f;
+        this.spinMode = Enemy.spinX | Enemy.spinY;
       break;
       case "flying-melee-quad":
         this.swordRange = 2.6f;
         this.circleRadius = 0.5f;
         this.hoverHeight = 0.8f;
-        this.movementSpeed *= 0.8f;
-        this.movementSpeed *= 0.4f;
+        this.movementSpeed *= 0.35f;
         this.weaponSpinSpeed *= 0.4f;
         this.damage = 6.75f;
         this.maxHealth = 115f;
+        this.spinMode = Enemy.spinX | Enemy.spinY;
+      break;
+      case "flying-pyramid":
+        this.damage = 7.5f;
+        this.maxHealth = 125f;
+        this.movementSpeed = 0f;
+        this.spinMode = Enemy.spinX | Enemy.spinY;
+        this.swordRange = 300f;
+        this.lookIntoSpace = true;
+        this.weaponSpinSpeed = 1.5f;
+        this.enemy.transform.position += new Vector3(0f, 6f + this.getTerrainHeight() - this.enemy.transform.position.y, 0f);
       break;
     }
     this.range = this.circleRadius * 1.3f + 1.5f;
 
-    this.gunPositionDistance = Mathf.Pow(Mathf.Pow(this.gunPositions[0].localPosition.x, 2) + Mathf.Pow(this.gunPositions[0].localPosition.y, 2), 0.5f);
     for(int i = 0; i < this.gunPositions.Count; i++){
       this.swords.Add(Enemy.enemyHub.sword(this.gunPositions[i], this.swordRange));
     }
@@ -57,11 +64,8 @@ public class FlyingMeleeEnemy : FlyingEnemy{
       return;
     }
     */
+    this.spinWeapons();
     for(int i = 0; i < this.gunPositions.Count; i++){
-      float offsetAngle = i * 2f * Mathf.PI / this.gunPositions.Count;
-      float s = this.gunPositionDistance * Mathf.Sin(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
-      float c = this.gunPositionDistance * Mathf.Cos(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
-      this.gunPositions[i].transform.localPosition = new Vector3(s, c, 0f);
       this.swords[i].run();
     }
   }

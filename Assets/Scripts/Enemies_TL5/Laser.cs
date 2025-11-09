@@ -13,7 +13,7 @@ public class Laser{
   protected float time = 0f;
   protected List<Vector3> trail = new List<Vector3>();
   protected float distance = 0f;
-  protected int maxTrailCount = 5;
+  protected int maxTrailCount = 25;
   protected bool dead = false;
   protected bool nonStraightPath = false;
   protected float damage = 1f;
@@ -33,7 +33,7 @@ public class Laser{
     this.lineRenderer.SetPosition(0, this.position);
     if(this.nonStraightPath){
       for(int i = 0; i < this.trail.Count; i++){
-        this.lineRenderer.SetPosition(1 + i, this.trail[i]);
+        this.lineRenderer.SetPosition(this.trail.Count - i, this.trail[i]);
       }
     }else{
       this.lineRenderer.SetPosition(1, this.trail[0]);

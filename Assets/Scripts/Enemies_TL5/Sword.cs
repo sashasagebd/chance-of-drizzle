@@ -21,8 +21,11 @@ public class Sword : Laser {
     }else{
       this.trail[0] = this.parentTransform.position;
     }
-    this.position = this.parentTransform.position + (this.parentTransform.rotation * Quaternion.Euler(0f, 0f, 90f)) * this.parentTransform.localPosition.normalized * this.range;
-    this.hit();
+    this.position = this.parentTransform.position;
+    this.direction = (this.parentTransform.position - this.parentTransform.parent.position).normalized * this.range;
+    if(this.hit()) return;
+
+    this.position += this.direction;
   }
   public override bool run(){
     this.move();

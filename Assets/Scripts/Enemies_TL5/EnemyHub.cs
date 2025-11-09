@@ -63,10 +63,15 @@ public class EnemyHub : MonoBehaviour{
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)));
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-missile");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee-quad");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-ufo");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-sniper");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-pyramid");
   }
   void Update(){
     frameCount++;
@@ -555,8 +560,11 @@ public class EnemyHub : MonoBehaviour{
       }
     }
   }
-  public void shoot(Vector3 position, Vector3 direction){
-    lasers.Add(new Laser(addLineRenderer(), position, direction));
+  public void shoot(Vector3 position, Vector3 direction, float damage = 1f){
+    lasers.Add(new Laser(addLineRenderer(), position, direction, damage));
+  }
+  public void shootMissile(Vector3 position, Vector3 direction, float damage = 1f){
+    lasers.Add(new Missile(addLineRenderer(), position, direction, damage));
   }
   public Sword sword(Transform parentTransform, float range){
     return new Sword(addLineRenderer(), parentTransform, range);

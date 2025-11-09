@@ -19,8 +19,23 @@ public class Enemy{
   protected float reloadTime  = 1f;
   protected float range = 20f;
   protected bool alternateGuns = true;
+  protected float accuracy = 3f;
+  protected float firingFreedom = 5f;
   protected int lastFired = 0;
   protected float movementSpeed = 0.8f;
+  protected bool homing = false;
+
+  protected float weaponSpinSpeed = 7f;
+  protected float gunPositionDistance;
+  protected float shotSpeed = 1f;
+
+  protected const int spinX = 1;
+  protected const int spinY = 2;
+  protected const int spinZ = 4;
+  protected int spinMode = 0;
+
+
+  protected float timeDelay = 0f;
 
   protected List<Transform> gunPositions = new List<Transform>();
 
@@ -39,6 +54,10 @@ public class Enemy{
     foreach (Transform gunPosition in objT) {
       this.gunPositions.Add(gunPosition);
     }
+    this.gunPositionDistance = Vector3.Distance(this.gunPositions[0].localPosition, new Vector3(0f, 0f, 0f));
+    this.weaponSpinSpeed = (Random.Range(0f, 1f) < 0.5f ? this.weaponSpinSpeed : -this.weaponSpinSpeed) * (Random.Range(0.7f, 1.2f));
+
+    this.timeDelay = Random.Range(0f, 10f);
 
     switch(type){
     }
@@ -47,11 +66,12 @@ public class Enemy{
     Enemy.enemyHub.addEnemy(this);
   }
   protected void applyStrengthScaling(float strengthScaling){
-    this.maxHealth *= strengthScaling;
+    this.damage *= strengthScaling;
+    this.maxHealth *= (strengthScaling + 2f) / 3f;
+    this.movementSpeed *= (Mathf.Log(strengthScaling) + 4f) / 4f;
+    this.reloadTime /= (Mathf.Log(strengthScaling) + 6f) / 6f;
+
     this.health = this.maxHealth;
-    this.damage *= (strengthScaling + 1f) / 2f;
-    this.movementSpeed *= Mathf.Log(strengthScaling) + 1f;
-    this.reloadTime /= (Mathf.Log(strengthScaling) + 3f) / 3f;
   }
   public void updateStayedStillCount(){
     if(Mathf.Abs(this.rb.linearVelocity.y) < 0.05f){
@@ -60,8 +80,11 @@ public class Enemy{
       this.stayedStillCount = 0;
     }
   }
+  protected float getTerrainHeight(){
+    return Enemy.enemyHub.getHeight(new Vector2(this.enemy.transform.position.x, this.enemy.transform.position.z));
+  }
   protected bool isOnGround(){
-    float terrainHeight = Enemy.enemyHub.getHeight(new Vector2(this.enemy.transform.position.x, this.enemy.transform.position.z));
+    float terrainHeight = this.getTerrainHeight();
     if(Mathf.Abs(terrainHeight - (this.enemy.transform.position.y - 1f)) < 0.05f || stayedStillCount > 7){
       return true;
     }
@@ -97,6 +120,8 @@ public class Enemy{
     //this.enemy.transform.position += this.velocity;
   }
   protected virtual void attack(){
+    this.spinWeapons();
+
     if(this.reloadTimer < this.reloadTime || Mathf.Pow(this.enemy.transform.position.x - Enemy.enemyHub.getPlayerPosition().x, 2) + Mathf.Pow(this.enemy.transform.position.z - Enemy.enemyHub.getPlayerPosition().z, 2) > this.range * this.range){
       this.reloadTimer += Time.deltaTime;
       return;
@@ -115,9 +140,25 @@ public class Enemy{
   protected void fire(int i){
     Vector3 fireLocation = this.gunPositions[i].position + this.rb.linearVelocity * Time.deltaTime;
     Quaternion lookRotation = Quaternion.LookRotation(Enemy.enemyHub.getPlayerPosition() - fireLocation);
-    lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, 5f);
-    lookRotation = Quaternion.RotateTowards(lookRotation, Random.rotation, 3f);
-    Enemy.enemyHub.shoot(fireLocation, lookRotation * new Vector3(0f, 0f, 0.45f));
+    lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, this.firingFreedom);
+    lookRotation = Quaternion.RotateTowards(lookRotation, Random.rotation, this.accuracy);
+    if(this.homing){
+      Enemy.enemyHub.shootMissile(fireLocation, this.shotSpeed * (lookRotation * new Vector3(0f, 0f, 0.45f)), this.damage); 
+    }else{
+      Enemy.enemyHub.shoot(fireLocation, this.shotSpeed * (lookRotation * new Vector3(0f, 0f, 0.45f)), this.damage);
+    }
+  }
+  protected void spinWeapons(){
+    for(int i = 0; i < this.gunPositions.Count; i++){
+      float offsetAngle = i * 2f * Mathf.PI / this.gunPositions.Count;
+      float s = this.gunPositionDistance * Mathf.Sin(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
+      float c = this.gunPositionDistance * Mathf.Cos(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
+      float y = this.gunPositions[i].transform.localPosition.y;
+      float x = (this.spinMode & Enemy.spinX) > 0 ? s : gunPositions[i].transform.localPosition.x;
+            y = (this.spinMode & Enemy.spinY) > 0 ? (x == y ? s : c) : y;
+      float z = (this.spinMode & Enemy.spinZ) > 0 ? c : gunPositions[i].transform.localPosition.z;
+      this.gunPositions[i].transform.localPosition = new Vector3(x, y, z);
+    }
   }
   public void takeDamage(float damage){
     this.health -= damage;
@@ -135,6 +176,13 @@ public class Enemy{
     this.updateStayedStillCount();
     this.frameCount++;
   }
+  protected Quaternion lookRotation(Vector3 lookAngle){
+    if(lookAngle == Vector3.zero){
+      return this.enemy.transform.rotation;
+    }else{
+      return Quaternion.LookRotation(lookAngle);
+    }
+  }
 
   static public Enemy createEnemy(Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
     if(Enemy.isFlying(type)){
@@ -147,13 +195,13 @@ public class Enemy{
     return new Enemy(position, type, strengthScaling, hiveMemberID);
   }
   static public bool isFlying(string type){
-    if(type == "flying" || type == "flying-double" || type == "flying-melee" || type == "flying-melee-quad"){
+    if(type == "flying" || type == "flying-double" || type == "flying-melee" || type == "flying-melee-quad" || type == "flying-ufo" || type == "flying-sniper" || type == "flying-missile" || type == "flying-pyramid"){
       return true;
     }
     return false;
   }
   static public bool isMelee(string type){
-    if(type == "flying-melee" || type == "flying-melee-quad"){
+    if(type == "flying-melee" || type == "flying-melee-quad" || type == "flying-pyramid"){
       return true;
     }
     return false;
