@@ -155,7 +155,7 @@ public class Enemy{
       float c = this.gunPositionDistance * Mathf.Cos(this.weaponSpinSpeed * Time.time + this.timeDelay + offsetAngle);
       float y = this.gunPositions[i].transform.localPosition.y;
       float x = (this.spinMode & Enemy.spinX) > 0 ? s : gunPositions[i].transform.localPosition.x;
-            y = (this.spinMode & Enemy.spinY) > 0 ? (x == y ? s : c) : y;
+            y = (this.spinMode & Enemy.spinY) > 0 ? ((this.spinMode & Enemy.spinX) > 0 ? c : s) : y;
       float z = (this.spinMode & Enemy.spinZ) > 0 ? c : gunPositions[i].transform.localPosition.z;
       this.gunPositions[i].transform.localPosition = new Vector3(x, y, z);
     }
