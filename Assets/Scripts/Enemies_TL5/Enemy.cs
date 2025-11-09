@@ -13,12 +13,14 @@ public class Enemy{
 
   protected float health = 100;
   protected float maxHealth = 100;
+  protected float damage = 1f;
 
   protected float reloadTimer = 0f;
   protected float reloadTime  = 1f;
   protected float range = 20f;
   protected bool alternateGuns = true;
   protected int lastFired = 0;
+  protected float movementSpeed = 0.8f;
 
   protected List<Transform> gunPositions = new List<Transform>();
 
@@ -38,7 +40,18 @@ public class Enemy{
       this.gunPositions.Add(gunPosition);
     }
 
+    switch(type){
+    }
+
+    this.applyStrengthScaling(strengthScaling);
     Enemy.enemyHub.addEnemy(this);
+  }
+  protected void applyStrengthScaling(float strengthScaling){
+    this.maxHealth *= strengthScaling;
+    this.health = this.maxHealth;
+    this.damage *= (strengthScaling + 1f) / 2f;
+    this.movementSpeed *= Mathf.Log(strengthScaling) + 1f;
+    this.reloadTime /= (Mathf.Log(strengthScaling) + 3f) / 3f;
   }
   public void updateStayedStillCount(){
     if(Mathf.Abs(this.rb.linearVelocity.y) < 0.05f){
@@ -134,13 +147,13 @@ public class Enemy{
     return new Enemy(position, type, strengthScaling, hiveMemberID);
   }
   static public bool isFlying(string type){
-    if(type == "flying" || type == "flying-double" || type == "flying-melee"){
+    if(type == "flying" || type == "flying-double" || type == "flying-melee" || type == "flying-melee-quad"){
       return true;
     }
     return false;
   }
   static public bool isMelee(string type){
-    if(type == "flying-melee"){
+    if(type == "flying-melee" || type == "flying-melee-quad"){
       return true;
     }
     return false;

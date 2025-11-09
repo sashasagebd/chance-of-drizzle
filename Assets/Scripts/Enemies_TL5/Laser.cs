@@ -16,12 +16,14 @@ public class Laser{
   protected int maxTrailCount = 5;
   protected bool dead = false;
   protected bool nonStraightPath = false;
+  protected float damage = 1f;
 
-  public Laser(GameObject lineRenderer, Vector3 position, Vector3 direction){
+  public Laser(GameObject lineRenderer, Vector3 position, Vector3 direction, float damage = 1f){
     this.gameObject = lineRenderer;
     this.lineRenderer = lineRenderer.GetComponent<LineRenderer>();
     this.position = position;
     this.direction = direction;
+    this.damage = damage;
 
     this.move();
     if(!this.dead) this.move();
@@ -41,6 +43,8 @@ public class Laser{
     RaycastHit hit;
     if(Physics.Linecast(this.position, this.position + this.direction, out hit)){
       if (hit.transform.gameObject == Laser.player){
+        Health health = hit.transform.gameObject.GetComponent<Health>();
+        health.ApplyDamage((int)(Mathf.Floor(this.damage)) + (Random.Range(0f, 1f) < this.damage % 1f ? 1 : 0));
         // Debug.Log("hit player at " + hit.point);
         // this.player.GetComponent<PlayerController3D>().takeDamage(this.damage);
       }

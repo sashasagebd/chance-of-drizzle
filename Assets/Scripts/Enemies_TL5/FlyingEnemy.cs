@@ -9,7 +9,6 @@ public class FlyingEnemy : Enemy {
   protected float hoverBobbingAmplitude = 0.25f;
   protected float hoverBobbingSpeed = 0.3f;
   protected float timeDelay = 0f;
-  protected float movementSpeed = 0.8f;
   protected bool lookAtPlayer = true;
 
   public FlyingEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID) : base(position, type, strengthScaling, hiveMemberID){
@@ -30,14 +29,19 @@ public class FlyingEnemy : Enemy {
       case "flying":
         this.circleRadius *= 1.3f;
         this.reloadTime = 1.5f;
+        this.damage = 2.5f;
+        this.maxHealth = 75f;
       break;
       case "flying-double":
         this.movementSpeed = 0.75f;
         this.circlingSpeed *= 0.75f;
         this.reloadTime = 0.5f;
+        this.damage = 1f;
+        this.maxHealth = 45f;
       break;
     }
     this.range = this.circleRadius * 1.3f + 1.5f;
+    this.applyStrengthScaling(strengthScaling);
   }
   protected virtual Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
     toPlayerPosition += new Vector3(this.circleRadius * Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay), 0f, this.circleRadius * Mathf.Cos(this.circlingSpeed * Time.time + this.timeDelay));

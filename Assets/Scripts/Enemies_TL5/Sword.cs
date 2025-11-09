@@ -6,7 +6,7 @@ public class Sword : Laser {
   protected Transform parentTransform;
   protected float range;
 
-  public Sword(GameObject lineRenderer, Transform parentTransform, float range) : base(lineRenderer, parentTransform.position, parentTransform.localPosition){
+  public Sword(GameObject lineRenderer, Transform parentTransform, float range, float damage = 1f) : base(lineRenderer, parentTransform.position, parentTransform.localPosition, damage){
     this.gameObject.transform.parent = parentTransform;
     this.parentTransform = parentTransform;
     this.range = range;

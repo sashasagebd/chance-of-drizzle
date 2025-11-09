@@ -14,12 +14,24 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     this.circlingSpeed = -Mathf.Abs(this.circlingSpeed);
     this.weaponSpinSpeed = (Random.Range(0f, 1f) < 0.5f ? this.weaponSpinSpeed : -this.weaponSpinSpeed) * (Random.Range(0.7f, 1.2f));
     this.circlingSpeedSlow = (Random.Range(0f, 1f) < 0.5f ? this.circlingSpeed : -this.circlingSpeed) * (Random.Range(0.2f, 1f));
-    this.movementSpeed *= 1.6f;
-    this.circlingSpeed *= 1.4f;
 
     switch(type){
-      case "flying":
-        this.circleRadius = 6f;
+      case "flying-melee":
+        this.circleRadius = 5f;
+        this.movementSpeed *= 1.6f;
+        this.circlingSpeed *= 1.4f;
+        this.damage = 3.2f;
+        this.maxHealth = 65f;
+      break;
+      case "flying-melee-quad":
+        this.swordRange = 2.6f;
+        this.circleRadius = 0.5f;
+        this.hoverHeight = 0.8f;
+        this.movementSpeed *= 0.8f;
+        this.movementSpeed *= 0.4f;
+        this.weaponSpinSpeed *= 0.4f;
+        this.damage = 6.75f;
+        this.maxHealth = 115f;
       break;
     }
     this.range = this.circleRadius * 1.3f + 1.5f;
@@ -28,6 +40,8 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     for(int i = 0; i < this.gunPositions.Count; i++){
       this.swords.Add(Enemy.enemyHub.sword(this.gunPositions[i], this.swordRange));
     }
+
+    this.applyStrengthScaling(strengthScaling);
   }
   protected override Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
     float s = Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay);
