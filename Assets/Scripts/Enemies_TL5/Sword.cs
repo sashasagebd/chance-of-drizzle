@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Sword : Laser {
   protected Transform parentTransform;
   protected float range;
+  protected Vector3 overrideDirection = Vector3.zero;
 
   public Sword(GameObject lineRenderer, Transform parentTransform, float range, float damage = 1f) : base(lineRenderer, parentTransform.position, parentTransform.localPosition, damage){
     this.gameObject.transform.parent = parentTransform;
@@ -22,7 +23,7 @@ public class Sword : Laser {
       this.trail[0] = this.parentTransform.position;
     }
     this.position = this.parentTransform.position;
-    this.direction = (this.parentTransform.position - this.parentTransform.parent.position).normalized * this.range;
+    this.direction = (this.overrideDirection == Vector3.zero ? (this.parentTransform.position - this.parentTransform.parent.position).normalized : this.overrideDirection) * this.range;
     if(this.hit()) return;
 
     this.position += this.direction;
@@ -32,5 +33,8 @@ public class Sword : Laser {
     this.draw();
 
     return false;
+  }
+  public void setOverrideDirection(Vector3 direction){
+    this.overrideDirection = direction;
   }
 }

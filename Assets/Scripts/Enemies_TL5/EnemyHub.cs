@@ -63,7 +63,12 @@ public class EnemyHub : MonoBehaviour{
   void Start(){
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight-double");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "quad");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "quad");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-egg-beater");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "homing-shot");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "basic");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "deadly-drizzle");
     
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-missile");
@@ -97,11 +102,11 @@ public class EnemyHub : MonoBehaviour{
   public void addEnemy(Enemy enemy){
     enemies.Add(enemy);
   }
-  private Enemy spawnEnemy(Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
+  private Enemy spawnEnemy(Vector3 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
     Enemy enemy = Enemy.createEnemy(position, type, strengthScaling, hiveMemberID);
     return enemy;
   }
-  public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
+  public Enemy spawnEnemyAtTerrainHeight(Vector2 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
     float height = getHeight(position);
     if(height > -99f){
       if(Enemy.isFlying(type)){
@@ -567,8 +572,8 @@ public class EnemyHub : MonoBehaviour{
   public void shootMissile(Vector3 position, Vector3 direction, float damage = 1f){
     lasers.Add(new Missile(addLineRenderer(), position, direction, damage));
   }
-  public Sword sword(Transform parentTransform, float range){
-    return new Sword(addLineRenderer(), parentTransform, range);
+  public Sword sword(Transform parentTransform, float range, float damage = 1f){
+    return new Sword(addLineRenderer(), parentTransform, range, damage);
   }
 
 

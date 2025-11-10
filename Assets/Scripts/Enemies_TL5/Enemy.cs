@@ -39,12 +39,14 @@ public class Enemy{
   protected float weaponSpinSpeed = 7f;
   protected float gunPositionDistance;
   protected float gunWobbleDistance;
+  protected float gunInPlaceRadius = 1f;
 
   protected const int spinX = 1;
   protected const int spinY = 2;
   protected const int spinZ = 4;
   protected const int spinWobble = 8;
   protected const int spinAlternate = 16;
+  protected const int spinInPlace = 32;
   protected int spinMode = 0;
 
 
@@ -79,6 +81,17 @@ public class Enemy{
         this.maxHealth = 100f;
         this.reloadTime = 1.5f;
         this.alternateGuns = false;
+        this.accuracy = 4.5f;
+      break;
+      case "homing-shot":
+        this.movementSpeed = 0.7f;
+        this.damage = 3.4f;
+        this.maxHealth = 80f;
+        this.reloadTime = 1.5f;
+        this.accuracy = 0f;
+        this.homing = true;
+        this.shotSpeed = 0.6f;
+        this.range *= 1.3f;
       break;
     }
 
@@ -195,6 +208,9 @@ public class Enemy{
     }
   }
   protected void spinWeapons(){
+    if(this.spinMode == 0 || (this.spinMode & Enemy.spinInPlace) > 0){
+      return;
+    }
     for(int i = 0; i < this.gunPositions.Count; i++){
       float offsetAngle = i * 2f * Mathf.PI / this.gunPositions.Count;
       float weaponSpinSpeed = this.weaponSpinSpeed;
@@ -279,7 +295,7 @@ public class Enemy{
     }
   }
 
-  static public Enemy createEnemy(Vector3 position, string type = "basic", float strengthScaling = 1f, int hiveMemberID = -1){
+  static public Enemy createEnemy(Vector3 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
     if(Enemy.isFlying(type)){
       if(Enemy.isMelee(type)){
         return new FlyingMeleeEnemy(position, type, strengthScaling, hiveMemberID);
@@ -298,7 +314,7 @@ public class Enemy{
     return false;
   }
   static public bool isMelee(string type){
-    if(type == "flying-melee" || type == "flying-melee-quad" || type == "flying-pyramid" || type == "melee-figure-eight" || type == "melee-figure-eight-double"){
+    if(type == "flying-melee" || type == "flying-melee-quad" || type == "flying-pyramid" || type == "melee-figure-eight" || type == "melee-figure-eight-double" || type == "melee" || type == "melee-egg-beater"){
       return true;
     }
     return false;

@@ -18,12 +18,12 @@ public class FlyingMeleeEnemy : FlyingEnemy{
         this.circleRadius = 5f;
         this.movementSpeed = 1.4f;
         this.circlingSpeed *= 1.4f;
-        this.damage = 1.8f;
+        this.damage = 1f;
         this.maxHealth = 65f;
         this.spinMode = Enemy.spinX | Enemy.spinY;
       break;
       case "flying-melee-quad":
-        this.swordRange = 2.6f;
+        this.swordRange = 1.2f;
         this.circleRadius = 0.5f;
         this.hoverHeight = 0.8f;
         this.movementSpeed = 0.3f;
@@ -45,11 +45,12 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     }
     this.range = this.circleRadius * 1.3f + 1.5f;
 
+    this.applyStrengthScaling(strengthScaling);
+
     for(int i = 0; i < this.gunPositions.Count; i++){
-      this.swords.Add(Enemy.enemyHub.sword(this.gunPositions[i], this.swordRange));
+      this.swords.Add(Enemy.enemyHub.sword(this.gunPositions[i], this.swordRange, this.damage));
     }
 
-    this.applyStrengthScaling(strengthScaling);
     this.setGunPositionDistance();
   }
   protected override Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
