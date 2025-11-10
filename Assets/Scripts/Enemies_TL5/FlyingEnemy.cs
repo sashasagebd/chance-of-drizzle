@@ -71,7 +71,7 @@ public class FlyingEnemy : Enemy {
         this.circleRadius *= 2.1f;
         this.circleRadius += 6f;
         this.reloadTime = 0.15f;
-        this.damage = 1.1f;
+        this.damage = 0.9f;
         this.maxHealth = 55f;
         this.firingFreedom = 180f;
         this.accuracy = 70f;

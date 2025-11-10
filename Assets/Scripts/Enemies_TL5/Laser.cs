@@ -59,7 +59,7 @@ public class Laser{
     if(this.hit()) return;
 
     this.trail.Add(this.position);
-    this.position += this.direction;
+    this.position += this.direction * Time.deltaTime * 60f;
     if(trail.Count > this.maxTrailCount){
       this.trail.RemoveAt(0);
     }

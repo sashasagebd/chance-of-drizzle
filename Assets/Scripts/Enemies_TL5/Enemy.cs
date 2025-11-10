@@ -6,28 +6,41 @@ public class Enemy{
   protected static EnemyHub enemyHub;
   protected static GameObject player;
 
+  // Game object / Unity integration
   protected GameObject enemy;
   protected EnemyController enemyController;
   protected Rigidbody rb;
+
+  // Used for jumping / calculating if on ground
   protected float maxJumpHeight = 1.6f;
   protected int stayedStillCount = 0;
   protected int frameCount = 0;
 
+  // Basic stats
   protected float health = 0f;
   protected float maxHealth = 0f;
   protected float damage = 0f;
   protected float reloadTime  = 1e3f;
   protected float movementSpeed = 0f;
 
+  // Weapon stats
   protected float reloadTimer = 0f;
   protected float range = 20f;
   protected bool alternateGuns = true;
   protected float accuracy = 3f;
   protected float firingFreedom = 5f;
   protected int lastFired = 0;
-  protected bool homing = false;
   protected float shotSpeed = 1.35f;
+  protected bool overrideDirection = false;
+  protected Quaternion firingDirectionOverride = Quaternion.identity;
 
+  // Homing missile behaviour
+  protected bool homing = false;
+  protected int homingStartFrame = 6;
+  protected int maxHomingFrames = 60;
+  protected float homingStrength = 0.14f;
+
+  // Enemy behaviour and whether to shoot
   protected bool stopWhenInRange = true;
   protected bool keepMoving = true;
   protected bool checkIfCanShoot = true;
@@ -36,11 +49,13 @@ public class Enemy{
   protected const int checkInterval = 10;
   protected int checkOffset;
 
+  // Weapon movement (orbit around enemy)
   protected float weaponSpinSpeed = 7f;
   protected float gunPositionDistance;
   protected float gunWobbleDistance;
   protected float gunInPlaceRadius = 1f;
 
+  // Weapon spin mode (bitwise flags)
   protected const int spinX = 1;
   protected const int spinY = 2;
   protected const int spinZ = 4;
@@ -49,9 +64,10 @@ public class Enemy{
   protected const int spinInPlace = 32;
   protected int spinMode = 0;
 
-
+  // Time delay randomness for all spinning
   protected float timeDelay = 0f;
 
+  // List of where the weapons fire from
   protected List<Transform> gunPositions = new List<Transform>();
 
   //protected Vector3 velocity;
@@ -85,13 +101,39 @@ public class Enemy{
       break;
       case "homing-shot":
         this.movementSpeed = 0.7f;
-        this.damage = 3.4f;
+        this.damage = 5f;
         this.maxHealth = 80f;
-        this.reloadTime = 1.5f;
+        this.reloadTime = 2.2f;
         this.accuracy = 0f;
         this.homing = true;
-        this.shotSpeed = 0.6f;
+        this.shotSpeed = 0.37f;
         this.range *= 1.3f;
+        this.maxHomingFrames = 190;
+        this.homingStrength = 0.05f;
+      break;
+      case "basic":
+        this.movementSpeed = 1f;
+        this.damage = 2.6f;
+        this.maxHealth = 90f;
+        this.reloadTime = 1f;
+        this.range *= 0.8f;
+      break;
+      case "drizzle-of-doom":
+        this.movementSpeed = 0.65f;
+        this.damage = 1f;
+        this.maxHealth = 70f;
+        this.reloadTime = 0.12f;
+        this.accuracy = 14f;
+        this.homing = true;
+        this.shotSpeed = 0.6f;
+        this.range *= 0.9f;
+        this.spinMode = Enemy.spinX | Enemy.spinY;
+        this.overrideDirection = true;
+        this.firingDirectionOverride = Quaternion.LookRotation(Vector3.up);
+        this.checkIfCanShoot = false;
+        this.homingStartFrame = 65;
+        this.maxHomingFrames = 145;
+        this.homingStrength = 0.12f;
       break;
     }
 
@@ -198,11 +240,16 @@ public class Enemy{
   }
   protected void fire(int i){
     Vector3 fireLocation = this.gunPositions[i].position + this.rb.linearVelocity * Time.deltaTime;
-    Quaternion lookRotation = Quaternion.LookRotation(Enemy.enemyHub.getPlayerPosition() - fireLocation);
-    lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, this.firingFreedom);
+    Quaternion lookRotation;
+    if(this.overrideDirection){
+      lookRotation = this.firingDirectionOverride;
+    }else{
+      lookRotation = Quaternion.LookRotation(Enemy.enemyHub.getPlayerPosition() - fireLocation);
+      lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, this.firingFreedom);
+    }
     lookRotation = Quaternion.RotateTowards(lookRotation, Random.rotation, this.accuracy);
     if(this.homing){
-      Enemy.enemyHub.shootMissile(fireLocation, this.shotSpeed * (lookRotation * new Vector3(0f, 0f, 0.45f)), this.damage); 
+      Enemy.enemyHub.shootMissile(fireLocation, this.shotSpeed * (lookRotation * new Vector3(0f, 0f, 0.45f)), this.damage, this.homingStartFrame, this.maxHomingFrames, this.homingStrength); 
     }else{
       Enemy.enemyHub.shoot(fireLocation, this.shotSpeed * (lookRotation * new Vector3(0f, 0f, 0.45f)), this.damage);
     }

@@ -65,10 +65,10 @@ public class EnemyHub : MonoBehaviour{
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight-double");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "quad");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-egg-beater");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-egg-beater");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "homing-shot");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "basic");
-    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "deadly-drizzle");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "drizzle-of-doom");
     
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-missile");
@@ -569,8 +569,8 @@ public class EnemyHub : MonoBehaviour{
   public void shoot(Vector3 position, Vector3 direction, float damage = 1f){
     lasers.Add(new Laser(addLineRenderer(), position, direction, damage));
   }
-  public void shootMissile(Vector3 position, Vector3 direction, float damage = 1f){
-    lasers.Add(new Missile(addLineRenderer(), position, direction, damage));
+  public void shootMissile(Vector3 position, Vector3 direction, float damage = 1f, int homingStartFrame = 6, int maxHomingFrames = 60, float homingStrength = 0.14f){
+    lasers.Add(new Missile(addLineRenderer(), position, direction, damage, homingStartFrame, maxHomingFrames, homingStrength));
   }
   public Sword sword(Transform parentTransform, float range, float damage = 1f){
     return new Sword(addLineRenderer(), parentTransform, range, damage);
