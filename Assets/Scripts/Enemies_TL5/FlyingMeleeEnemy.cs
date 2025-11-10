@@ -11,6 +11,7 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     // Always spin the same way to avoid hitting gun
     this.circlingSpeed = -Mathf.Abs(this.circlingSpeed);
     this.circlingSpeedSlow = (Random.Range(0f, 1f) < 0.5f ? this.circlingSpeed : -this.circlingSpeed) * (Random.Range(0.2f, 1f));
+    this.checkIfCanShoot = false;
 
     switch(type){
       case "flying-melee":

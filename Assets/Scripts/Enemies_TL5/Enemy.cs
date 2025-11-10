@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Enemy{
   protected static EnemyHub enemyHub;
+  protected static GameObject player;
+
   protected GameObject enemy;
   protected EnemyController enemyController;
   protected Rigidbody rb;
@@ -24,11 +26,19 @@ public class Enemy{
   protected float firingFreedom = 5f;
   protected int lastFired = 0;
   protected bool homing = false;
+  protected float shotSpeed = 1.35f;
+
+  protected bool stopWhenInRange = true;
+  protected bool keepMoving = true;
+  protected bool checkIfCanShoot = true;
+  protected bool canShoot = false;
+  protected bool playerInSight = false;
+  protected const int checkInterval = 10;
+  protected int checkOffset;
 
   protected float weaponSpinSpeed = 7f;
   protected float gunPositionDistance;
   protected float gunWobbleDistance;
-  protected float shotSpeed = 1f;
 
   protected const int spinX = 1;
   protected const int spinY = 2;
@@ -60,8 +70,16 @@ public class Enemy{
     this.weaponSpinSpeed = (Random.Range(0f, 1f) < 0.5f ? this.weaponSpinSpeed : -this.weaponSpinSpeed) * (Random.Range(0.7f, 1.2f));
 
     this.timeDelay = Random.Range(0f, 10f);
+    this.checkOffset = Random.Range(0, Enemy.checkInterval);
 
     switch(type){
+      case "quad":
+        this.movementSpeed = 0.8f;
+        this.damage = 2.3f;
+        this.maxHealth = 100f;
+        this.reloadTime = 1.5f;
+        this.alternateGuns = false;
+      break;
     }
 
     this.applyStrengthScaling(strengthScaling);
@@ -114,15 +132,29 @@ public class Enemy{
   }
   protected virtual void move(){
     Vector3 toPlayerPosition = Enemy.enemyHub.EnemyPathToPlayer(this.enemy.transform.position);
-    Vector3 acceleration = (toPlayerPosition - this.enemy.transform.position).normalized * 1f;
-    acceleration = new Vector3(acceleration.x, 0f, acceleration.z);
+    Vector3 acceleration = toPlayerPosition - this.enemy.transform.position;
 
-    if(isOnGround() || !obstacleInFront(acceleration, 0f)){  
-      this.rb.linearVelocity = new Vector3(0.75f * this.rb.linearVelocity.x, this.rb.linearVelocity.y, 0.75f * this.rb.linearVelocity.z) + acceleration;
-    }
+    Vector3 toPlayer = Enemy.enemyHub.getPlayerPosition() - this.enemy.transform.position;
 
-    if(isOnGround() && obstacleInFront(acceleration)){
-      this.rb.linearVelocity = new Vector3(this.rb.linearVelocity.x, 7f, this.rb.linearVelocity.z);
+    if(this.stopWhenInRange && toPlayer.magnitude < this.range && !this.keepMoving && this.canShoot){
+      acceleration = new Vector3(toPlayer.x, 0f, toPlayer.z);
+      
+      
+    }else if(this.stopWhenInRange && toPlayer.magnitude < this.range * 0.7f && this.canShoot){
+      this.keepMoving = false;
+    }else{
+      this.keepMoving = true;
+
+      acceleration = acceleration.normalized * this.movementSpeed;
+      acceleration = new Vector3(acceleration.x, 0f, acceleration.z);
+      
+      if(isOnGround() || !obstacleInFront(acceleration, 0f)){  
+        this.rb.linearVelocity = new Vector3(0.75f * this.rb.linearVelocity.x, this.rb.linearVelocity.y, 0.75f * this.rb.linearVelocity.z) + acceleration;
+      }
+
+      if(isOnGround() && obstacleInFront(acceleration)){
+        this.rb.linearVelocity = new Vector3(this.rb.linearVelocity.x, 7f, this.rb.linearVelocity.z);
+      }
     }
 
     Quaternion lookRotation = this.lookRotation(acceleration);
@@ -206,8 +238,13 @@ public class Enemy{
   }
   public void Update(){
     this.move();
-    this.attack();
+    if(this.canShoot){
+      this.attack();
+    }
     this.updateStayedStillCount();
+    if((this.frameCount + this.checkOffset) % Enemy.checkInterval == 0){
+      this.checkIfPlayerInSight();
+    }
     this.frameCount++;
   }
   protected Quaternion lookRotation(Vector3 lookAngle){
@@ -215,6 +252,30 @@ public class Enemy{
       return this.enemy.transform.rotation;
     }else{
       return Quaternion.LookRotation(lookAngle);
+    }
+  }
+  protected void checkIfPlayerInSight(){
+    RaycastHit hit;
+    if(Physics.Linecast(this.enemy.transform.position + new Vector3(0f, 0.5f, 0f), Enemy.player.transform.position, out hit)){
+      if(hit.transform.gameObject == Enemy.player){
+        this.playerInSight = true;
+      }else{
+        this.playerInSight = false;
+      }
+    }
+    this.canShoot = false;
+    if(this.playerInSight && Vector3.Distance(this.enemy.transform.position, Enemy.player.transform.position) < this.range && this.checkIfCanShoot){
+      this.canShoot = true;
+      for(int i = 0; i < 1; i++){ //this.gunPositions.Count; i++){
+        if(Physics.Linecast(this.gunPositions[i].position, Enemy.player.transform.position, out hit)){
+          if(hit.transform.gameObject != Enemy.player){
+            this.canShoot = false;
+            return;
+          }
+        }
+      }
+    }else if(!this.checkIfCanShoot){
+      this.canShoot = true;
     }
   }
 
@@ -242,7 +303,8 @@ public class Enemy{
     }
     return false;
   }
-  static public void setStaticValues(EnemyHub enemyHub){
+  static public void setStaticValues(GameObject player, EnemyHub enemyHub){
+    Enemy.player = player;
     Enemy.enemyHub = enemyHub;
   }
 }

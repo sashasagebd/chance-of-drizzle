@@ -24,16 +24,17 @@ public class FlyingEnemy : Enemy {
 
     switch(type){
       case "flying":
+        this.movementSpeed = 0.8f;
         this.circleRadius *= 1.3f;
         this.reloadTime = 1.5f;
-        this.damage = 3.5f;
+        this.damage = 4.5f;
         this.maxHealth = 75f;
       break;
       case "flying-double":
         this.movementSpeed = 0.75f;
         this.circlingSpeed *= 0.75f;
         this.reloadTime = 0.5f;
-        this.damage = 1.5f;
+        this.damage = 2.3f;
         this.maxHealth = 45f;
       break;
       case "flying-sniper":
@@ -42,10 +43,10 @@ public class FlyingEnemy : Enemy {
         this.circleRadius *= 3.3f;
         this.circleRadius += 10f;
         this.reloadTime = 8.5f;
-        this.damage = 4.5f;
+        this.damage = 7f;
         this.maxHealth = 65f;
         this.accuracy = 0f;
-        this.shotSpeed = 2.3f;
+        this.shotSpeed = 2.9f;
       break;
       case "flying-ufo":
         this.movementSpeed = 0.65f;
@@ -62,6 +63,7 @@ public class FlyingEnemy : Enemy {
         this.lookHorizontal = true;
         this.firingFreedom = 180f;
         this.spinMode = Enemy.spinX | Enemy.spinY;
+        this.shotSpeed = 1f;
       break;
       case "flying-missile":
         this.movementSpeed = 0.7f;
@@ -69,13 +71,14 @@ public class FlyingEnemy : Enemy {
         this.circleRadius *= 2.1f;
         this.circleRadius += 6f;
         this.reloadTime = 0.15f;
-        this.damage = 1.5f;
+        this.damage = 1.1f;
         this.maxHealth = 55f;
         this.firingFreedom = 180f;
         this.accuracy = 70f;
         this.homing = true;
         this.spinMode = Enemy.spinY | Enemy.spinZ;
         this.shotSpeed = 0.4f;
+        this.checkIfCanShoot = false;
       break;
     }
     this.range = this.circleRadius * 1.3f + 1.5f;

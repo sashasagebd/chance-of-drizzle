@@ -7,10 +7,13 @@ public class MeleeEnemy : Enemy {
   protected float swordRange = 1.95f;
 
   public MeleeEnemy(Vector3 position, string type, float strengthScaling = 1f, int hiveMemberID = -1) : base(position, type, strengthScaling, hiveMemberID){
+    this.stopWhenInRange = false;
+    this.checkIfCanShoot = false;
+
     switch(type){
       case "melee-figure-eight":
         this.damage = 2.5f;
-        this.movementSpeed = 1f;
+        this.movementSpeed = 1.6f;
         this.maxHealth = 170f;
         this.weaponSpinSpeed = 5f;
         this.spinMode = Enemy.spinX | Enemy.spinY | Enemy.spinWobble | Enemy.spinAlternate;
@@ -18,8 +21,8 @@ public class MeleeEnemy : Enemy {
       break;
       case "melee-figure-eight-double":
         this.damage = 1.9f;
-        this.movementSpeed = 1f;
-        this.maxHealth = 170f;
+        this.movementSpeed = 1.1f;
+        this.maxHealth = 160f;
         this.weaponSpinSpeed = 8f;
         this.spinMode = Enemy.spinX | Enemy.spinY | Enemy.spinWobble | Enemy.spinAlternate;
         this.swordRange = 1.4f;
