@@ -7,8 +7,10 @@ public class FlyingMeleeEnemy : FlyingEnemy{
   protected float swordRange = 1.95f;
   protected float circlingSpeedSlow = 0.5f;
 
-  public FlyingMeleeEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID) : base(position, type, strengthScaling, hiveMemberID){
-    // Always spin the same way to avoid hitting gun
+  public FlyingMeleeEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID)
+  : base(position, type, strengthScaling, hiveMemberID){
+
+    // Always spin the same way to avoid hitting gun (counter clockwise)
     this.circlingSpeed = -Mathf.Abs(this.circlingSpeed);
     this.circlingSpeedSlow = (Random.Range(0f, 1f) < 0.5f ? this.circlingSpeed : -this.circlingSpeed) * (Random.Range(0.2f, 1f));
     this.checkIfCanShoot = false;

@@ -3,8 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Enemy{
+  // References to other scripts / GameObjects
   protected static EnemyHub enemyHub;
   protected static GameObject player;
+
+  // Offset of player head from player position
+  protected static Vector3 playerHead = new Vector3(0, 0.8f, 0);
 
   // Game object / Unity integration
   protected GameObject enemy;
@@ -48,6 +52,8 @@ public class Enemy{
   protected bool playerInSight = false;
   protected const int checkInterval = 10;
   protected int checkOffset;
+  protected Vector3 head = new Vector3(0, 0.7f, 0);
+  protected bool checkAllGuns = false;
 
   // Weapon movement (orbit around enemy)
   protected float weaponSpinSpeed = 7f;
@@ -72,13 +78,14 @@ public class Enemy{
 
   //protected Vector3 velocity;
   public Enemy(Vector3 position, string type, float strengthScaling, int hiveMemberID){
+    // Set up Unity integration
     this.enemy = Enemy.enemyHub.createEnemyGameObject();
     this.enemy.transform.position = position;
     this.enemyController = this.enemy.GetComponent<EnemyController>();
     this.enemyController.enemy = this;
     this.rb = this.enemy.GetComponent<Rigidbody>();
-    //this.rb.isKinematic = true;
 
+    // Find and record weapon positions
     Transform objT = this.enemy.transform.Find(type);
     GameObject obj = objT.gameObject;
     obj.SetActive(true);
@@ -87,9 +94,11 @@ public class Enemy{
     }
     this.weaponSpinSpeed = (Random.Range(0f, 1f) < 0.5f ? this.weaponSpinSpeed : -this.weaponSpinSpeed) * (Random.Range(0.7f, 1.2f));
 
+    // Define offsets to prevent all enemies doing the same thing at the same time
     this.timeDelay = Random.Range(0f, 10f);
     this.checkOffset = Random.Range(0, Enemy.checkInterval);
 
+    // Individual stats for various enemy types
     switch(type){
       case "quad":
         this.movementSpeed = 0.8f;
@@ -137,11 +146,15 @@ public class Enemy{
       break;
     }
 
+    // Run setup functions
     this.applyStrengthScaling(strengthScaling);
     this.setGunPositionDistance();
+
+    // Record self in hub
     Enemy.enemyHub.addEnemy(this);
   }
   protected void setGunPositionDistance(){
+    // Find gun spin and wobble radii
     float x = this.gunPositions[0].localPosition.x * ((this.spinMode & Enemy.spinX) > 0 ? 1f : 0f);
     float y = this.gunPositions[0].localPosition.y * ((this.spinMode & Enemy.spinY) > 0 ? 1f : 0f);
     float z = this.gunPositions[0].localPosition.z * ((this.spinMode & Enemy.spinZ) > 0 ? 1f : 0f);
@@ -157,6 +170,7 @@ public class Enemy{
     this.health = this.maxHealth;
   }
   public void updateStayedStillCount(){
+    // Increase count when minimal y velocity (reads as on ground if still for long enough)
     if(Mathf.Abs(this.rb.linearVelocity.y) < 0.05f){
       this.stayedStillCount++;
     }else{
@@ -177,13 +191,14 @@ public class Enemy{
     Vector3 forward = new Vector3(moveDir.x, 0f, moveDir.z).normalized * 0.55f + this.enemy.transform.position;
     return Enemy.enemyHub.getHeight(new Vector2(forward.x, forward.z));
   }
-  protected bool obstacleInFront(Vector3 moveDir, float strictness = 0.2f){
+  protected float obstacleInFront(Vector3 moveDir){//, float strictness = 0.2f){
     float terrainHeight = this.getHeightInFront(moveDir);
-    if(terrainHeight - (this.enemy.transform.position.y - 1f) > strictness){
+    return terrainHeight - (this.enemy.transform.position.y - 1f);
+    /*if(terrainHeight - (this.enemy.transform.position.y - 1f) > strictness){
     //&& terrainHeight - (this.enemy.transform.position.y - 1f) < this.maxJumpHeight){
       return true;
     }
-    return false;
+    return false;*/
   }
   protected virtual void move(){
     Vector3 toPlayerPosition = Enemy.enemyHub.EnemyPathToPlayer(this.enemy.transform.position);
@@ -192,33 +207,38 @@ public class Enemy{
     Vector3 toPlayer = Enemy.enemyHub.getPlayerPosition() - this.enemy.transform.position;
 
     if(this.stopWhenInRange && toPlayer.magnitude < this.range && !this.keepMoving && this.canShoot){
+      // Used for facing towards player when in range (doesn't actually move)
       acceleration = new Vector3(toPlayer.x, 0f, toPlayer.z);
-      
-      
     }else if(this.stopWhenInRange && toPlayer.magnitude < this.range * 0.7f && this.canShoot){
+      // Only stop moving when player very close (then don't start again until entirely out of range)
       this.keepMoving = false;
     }else{
       this.keepMoving = true;
 
+      // Only move on xz plane
       acceleration = acceleration.normalized * this.movementSpeed;
       acceleration = new Vector3(acceleration.x, 0f, acceleration.z);
       
-      if(isOnGround() || !obstacleInFront(acceleration, 0f)){  
+      bool grounded = this.isOnGround();
+      float obstacleHeight = this.obstacleInFront(acceleration);
+
+      // Regular movement
+      if(grounded || obstacleHeight <= 0f){
         this.rb.linearVelocity = new Vector3(0.75f * this.rb.linearVelocity.x, this.rb.linearVelocity.y, 0.75f * this.rb.linearVelocity.z) + acceleration;
       }
 
-      if(isOnGround() && obstacleInFront(acceleration)){
+      // Jump
+      if(grounded && obstacleHeight > 0.2f){
         this.rb.linearVelocity = new Vector3(this.rb.linearVelocity.x, 7f, this.rb.linearVelocity.z);
       }
     }
 
+    // Direction for enemy to face
     Quaternion lookRotation = this.lookRotation(acceleration);
 
+    // Rotation
     this.enemy.transform.rotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, 2f);
     this.rb.angularVelocity *= 0.75f;
-    //this.rb.MovePosition(this.rb.position + this.velocity);
-    //this.rb.linearVelocity = new Vector3(5f, rb.velocity.y, 0f);
-    //this.enemy.transform.position += this.velocity;
   }
   protected virtual void attack(){
     this.spinWeapons();
@@ -229,6 +249,7 @@ public class Enemy{
     }
     this.reloadTimer = 0f;
 
+    // Alternate between guns or shoot from all at once
     if(alternateGuns){
       this.fire(this.lastFired);
       this.lastFired = (this.lastFired + 1) % this.gunPositions.Count;
@@ -239,15 +260,21 @@ public class Enemy{
     }
   }
   protected void fire(int i){
+    // Where bullet is fired from
     Vector3 fireLocation = this.gunPositions[i].position + this.rb.linearVelocity * Time.deltaTime;
     Quaternion lookRotation;
     if(this.overrideDirection){
       lookRotation = this.firingDirectionOverride;
     }else{
+      // fire forward
       lookRotation = Quaternion.LookRotation(Enemy.enemyHub.getPlayerPosition() - fireLocation);
+      // rotate firing angle towards player (max firingFreedom degrees)
       lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, this.firingFreedom);
     }
+    // rotate firing angle randomly (constrained by accuracy degrees)
     lookRotation = Quaternion.RotateTowards(lookRotation, Random.rotation, this.accuracy);
+
+    // Fire laser / missile (through EnemyHub)
     if(this.homing){
       Enemy.enemyHub.shootMissile(fireLocation, this.shotSpeed * (lookRotation * new Vector3(0f, 0f, 0.45f)), this.damage, this.homingStartFrame, this.maxHomingFrames, this.homingStrength); 
     }else{
@@ -262,6 +289,8 @@ public class Enemy{
       float offsetAngle = i * 2f * Mathf.PI / this.gunPositions.Count;
       float weaponSpinSpeed = this.weaponSpinSpeed;
       float gunWobbleDistance = this.gunWobbleDistance;
+
+      // If Spinning direction alternates
       if((this.spinMode & Enemy.spinAlternate) > 0){
         weaponSpinSpeed = Mathf.Abs(weaponSpinSpeed);
         if(i % 2 == 0){
@@ -275,14 +304,20 @@ public class Enemy{
           offsetAngle += Mathf.PI / 2f;
         }
       }
+      
+      // Trig calculations for spin
       float s = this.gunPositionDistance * Mathf.Sin(weaponSpinSpeed * (Time.time + this.timeDelay) + offsetAngle);
       float c = this.gunPositionDistance * Mathf.Cos(weaponSpinSpeed * (Time.time + this.timeDelay) + offsetAngle);
       float x = this.gunPositions[i].transform.localPosition.x;
       float y = this.gunPositions[i].transform.localPosition.y;
       float z = this.gunPositions[i].transform.localPosition.z;
+      
+      // Add wobble
       if((this.spinMode & Enemy.spinWobble) > 0){
         x = y = z = Mathf.Sin(weaponSpinSpeed * (Time.time + this.timeDelay) + offsetAngle) * gunWobbleDistance;
       }
+
+      // Apply spin
       x = (this.spinMode & Enemy.spinX) > 0 ? s : x;
       y = (this.spinMode & Enemy.spinY) > 0 ? ((this.spinMode & Enemy.spinX) > 0 ? c : s) : y;
       z = (this.spinMode & Enemy.spinZ) > 0 ? c : z;
@@ -291,7 +326,7 @@ public class Enemy{
   }
   public void takeDamage(float damage){
     this.health -= damage;
-    Debug.Log("Health: " + this.health);
+    // Debug.Log("Health: " + this.health);
     if(this.health <= 0f){
       Enemy.enemyHub.enemyDied(this, this.enemy);
     }
@@ -311,6 +346,7 @@ public class Enemy{
     this.frameCount++;
   }
   protected Quaternion lookRotation(Vector3 lookAngle){
+    // Regular Quaternion.LookRotation but returns enemy rotation if lookAngle is zero
     if(lookAngle == Vector3.zero){
       return this.enemy.transform.rotation;
     }else{
@@ -318,18 +354,22 @@ public class Enemy{
     }
   }
   protected void checkIfPlayerInSight(){
+    // raycast from enemy head to player head
     RaycastHit hit;
-    if(Physics.Linecast(this.enemy.transform.position + new Vector3(0f, 0.5f, 0f), Enemy.player.transform.position, out hit)){
+    if(Physics.Linecast(this.enemy.transform.position + this.head, Enemy.player.transform.position + Enemy.playerHead, out hit)){
       if(hit.transform.gameObject == Enemy.player){
         this.playerInSight = true;
       }else{
         this.playerInSight = false;
       }
     }
+
+    // raycast from enemy gun to player body (check if in scope)
     this.canShoot = false;
     if(this.playerInSight && Vector3.Distance(this.enemy.transform.position, Enemy.player.transform.position) < this.range && this.checkIfCanShoot){
       this.canShoot = true;
-      for(int i = 0; i < 1; i++){ //this.gunPositions.Count; i++){
+      // Check only one gun by default
+      for(int i = 0; i < (this.checkAllGuns ? this.gunPositions.Count : 1); i++){
         if(Physics.Linecast(this.gunPositions[i].position, Enemy.player.transform.position, out hit)){
           if(hit.transform.gameObject != Enemy.player){
             this.canShoot = false;
@@ -343,6 +383,7 @@ public class Enemy{
   }
 
   static public Enemy createEnemy(Vector3 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
+    // Sort enemy by type and create new instance of appropriate class
     if(Enemy.isFlying(type)){
       if(Enemy.isMelee(type)){
         return new FlyingMeleeEnemy(position, type, strengthScaling, hiveMemberID);
@@ -367,6 +408,7 @@ public class Enemy{
     return false;
   }
   static public void setStaticValues(GameObject player, EnemyHub enemyHub){
+    // Set references to other scripts / GameObjects
     Enemy.player = player;
     Enemy.enemyHub = enemyHub;
   }
