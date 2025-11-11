@@ -15,6 +15,9 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     this.circlingSpeedSlow = (Random.Range(0f, 1f) < 0.5f ? this.circlingSpeed : -this.circlingSpeed) * (Random.Range(0.2f, 1f));
     this.checkIfCanShoot = false;
 
+    // Update swords regardless of distance from player
+    this.alwaysAttack = true;
+
     // Individual stats for various flying enemy types
     switch(type){
       case "flying-melee":
@@ -52,6 +55,7 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     // Run setup functions
     this.applyStrengthScaling(strengthScaling);
     this.setGunPositionDistance();
+    this.setFindRanges();
 
     // Create line renderers for the swords
     for(int i = 0; i < this.gunPositions.Count; i++){
