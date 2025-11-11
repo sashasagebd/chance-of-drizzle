@@ -204,7 +204,7 @@ public class Enemy{
     Vector3 toPlayerPosition = Enemy.enemyHub.EnemyPathToPlayer(this.enemy.transform.position);
     Vector3 acceleration = toPlayerPosition - this.enemy.transform.position;
 
-    Vector3 toPlayer = Enemy.enemyHub.getPlayerPosition() - this.enemy.transform.position;
+    Vector3 toPlayer = Enemy.player.transform.position - this.enemy.transform.position;
 
     if(this.stopWhenInRange && toPlayer.magnitude < this.range && !this.keepMoving && this.canShoot){
       // Used for facing towards player when in range (doesn't actually move)
@@ -243,7 +243,7 @@ public class Enemy{
   protected virtual void attack(){
     this.spinWeapons();
 
-    if(this.reloadTimer < this.reloadTime || Mathf.Pow(this.enemy.transform.position.x - Enemy.enemyHub.getPlayerPosition().x, 2) + Mathf.Pow(this.enemy.transform.position.z - Enemy.enemyHub.getPlayerPosition().z, 2) > this.range * this.range){
+    if(this.reloadTimer < this.reloadTime || Mathf.Pow(this.enemy.transform.position.x - Enemy.player.transform.position.x, 2) + Mathf.Pow(this.enemy.transform.position.z - Enemy.player.transform.position.z, 2) > this.range * this.range){
       this.reloadTimer += Time.deltaTime;
       return;
     }
@@ -267,7 +267,7 @@ public class Enemy{
       lookRotation = this.firingDirectionOverride;
     }else{
       // fire forward
-      lookRotation = Quaternion.LookRotation(Enemy.enemyHub.getPlayerPosition() - fireLocation);
+      lookRotation = Quaternion.LookRotation(Enemy.player.transform.position - fireLocation);
       // rotate firing angle towards player (max firingFreedom degrees)
       lookRotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, this.firingFreedom);
     }

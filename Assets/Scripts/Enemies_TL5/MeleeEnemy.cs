@@ -6,10 +6,14 @@ public class MeleeEnemy : Enemy {
   protected List<Sword> swords = new List<Sword>();
   protected float swordRange = 1.95f;
 
-  public MeleeEnemy(Vector3 position, string type, float strengthScaling = 1f, int hiveMemberID = -1) : base(position, type, strengthScaling, hiveMemberID){
+  public MeleeEnemy(Vector3 position, string type, float strengthScaling = 1f, int hiveMemberID = -1)
+  : base(position, type, strengthScaling, hiveMemberID){
+
+    // Disable shooting related booleans
     this.stopWhenInRange = false;
     this.checkIfCanShoot = false;
 
+    // Individual stats for various flying enemy types
     switch(type){
       case "melee-figure-eight":
         this.damage = 0.9f;
@@ -46,17 +50,21 @@ public class MeleeEnemy : Enemy {
       break;
     }
 
+    // Run setup functions
     this.applyStrengthScaling(strengthScaling);
+    this.setGunPositionDistance();
 
+    // Create line renderers for the swords
     for(int i = 0; i < this.gunPositions.Count; i++){
       this.swords.Add(Enemy.enemyHub.sword(this.gunPositions[i], this.swordRange, this.damage));
     }
-
-    this.setGunPositionDistance();
   }
   protected override void attack(){
     this.spinWeapons();
+
+    // Update every sword
     for(int i = 0; i < this.gunPositions.Count; i++){
+      // Spin the swords themselves instead of the hands when spinMode has spinInPlace
       if((this.spinMode & Enemy.spinInPlace) > 0){
         float weaponSpinSpeed = Mathf.Abs(this.weaponSpinSpeed) * (i % 2 == 1 ? 1f : -1f);
         float offsetAngle = i * 2f * Mathf.PI / this.gunPositions.Count;
