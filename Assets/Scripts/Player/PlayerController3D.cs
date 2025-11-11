@@ -30,8 +30,8 @@ public class PlayerController3D : MonoBehaviour
     public WeaponBase WeaponComponent; // needed for items to access weapon base class easily
     private Coroutine speedTimer; // time for temp speed buffs
     private Coroutine jumpTimer; // time for temp jump buffs
-    public int baseDefense = 0;
-    public int currentDefense { get; private set; } = 0;
+    public float baseDefense = 0;
+    public float currentDefense { get; private set; } = 0;
     public readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
     public static int damageBonus = 0; // additional damage from items
 
@@ -221,13 +221,13 @@ public class PlayerController3D : MonoBehaviour
     
     private void CalculateDefense()
     {
-        int total = baseDefense;
+        float total = baseDefense;
         foreach (var armor in equippedArmor.Values)
         {
             total += armor.Defense;
         }
         currentDefense = total;
-        Debug.Log($"Total defense: {currentDefense}");
+        Debug.Log($"Total defense: {currentDefense * 100}%");
     }
 
 }

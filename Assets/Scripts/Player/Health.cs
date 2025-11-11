@@ -2,9 +2,9 @@ using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour {
-    public int maxHp = 100;
+    public float maxHp = 100f;
     [SerializeField]  private bool destroyOnDeath = false;
-    public int Current { get; private set; }
+    public float Current { get; private set; }
     public event Action OnDied;
     private PlayerController3D playerController; // need for accessing armor modifier
 
@@ -16,16 +16,18 @@ public class Health : MonoBehaviour {
 
     public void ApplyDamage(int amount)
     {
-        int defense = 0;
+        float defense = 0;
         if (playerController != null)
         {
             defense = playerController.currentDefense;
         }
 
-        int damageTaken = Mathf.Max(1, amount - defense);
+        float percentDefense = MathF.Clamp(percentDefense, 0f, 1f);
+        float damageTaken = amount * (1f - defense);
+        damageTaken = MathF.Max(0f, damageTaken);
 
         Current = Mathf.Max(0, Current - damageTaken);
-        Debug.Log($"{name} took {amount} damage but armor defended {defense}. TOTAL HP: {Current}");
+        Debug.Log($"{name} took {amount} damage but armor defended {defense * 100}% so only {damageTaken} damage taken. CURRENT HP: {Current}");
         if (Current <= 0)
         {
             if (destroyOnDeath) Destroy(gameObject);
