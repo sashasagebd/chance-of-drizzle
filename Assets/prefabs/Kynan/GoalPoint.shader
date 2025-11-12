@@ -104,7 +104,7 @@ Shader "Custom/GoalPoint"{
       }
 
       half4 frag(Varyings IN) : SV_Target{
-        half3 color1 = half3(0, 0, 0);
+        half3 color1 = half3(0.5, 0, 1);
         float strengthOfFirstColor = 0.3;
         float initialNoise = FBM3d(3 * IN.position + float3(0, -_Time.y * 0.2, 0), 5);
         float pulse = FBM3d(6 * initialNoise + 3 * IN.position + float3(0, -_Time.y * 0.5, 0), 3);
