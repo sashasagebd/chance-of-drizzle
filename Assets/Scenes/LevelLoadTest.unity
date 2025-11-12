@@ -1575,7 +1575,7 @@ GameObject:
   - component: {fileID: 1617537694}
   - component: {fileID: 1617537693}
   - component: {fileID: 1617537692}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1812,6 +1812,63 @@ RectTransform:
   m_AnchoredPosition: {x: 102, y: -60}
   m_SizeDelta: {x: 194, y: 51}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &2053226585
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.74298
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.79626
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4966459211512148882, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6045327542880266548, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
+      propertyPath: m_Name
+      value: Enemy Hub
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2aef236b4c1097dfbb6a769764687f3c, type: 3}
 --- !u!1 &2056952877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,7 +1920,7 @@ GameObject:
   - component: {fileID: 2110639586}
   - component: {fileID: 2110639585}
   m_Layer: 0
-  m_Name: Player
+  m_Name: 'Player '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1924,13 +1981,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController3D
   maxSpeed: 15
-  moveSpeed: 6
+  runSpeed: 4
+  sprintSpeed: 9
+  crouchSpeed: 2
   jumpSpeed: 5.5
   gravity: -9.81
   cam: {fileID: 152268932}
   lookSensitivity: 1.5
   minPitch: -80
   maxPitch: 80
+  standingHeight: 2
+  crouchingHeight: 1
+  crouchTransitionSpeed: 10
   cameraDistance: 5
   cameraHeight: 2
   cameraCollisionMask:
@@ -1939,6 +2001,7 @@ MonoBehaviour:
   cameraCollisionBuffer: 0.2
   inventory: {fileID: 1364855768}
   muzzle: {fileID: 40337307}
+  animationController: {fileID: 0}
   HealthComponent: {fileID: 0}
   WeaponComponent: {fileID: 0}
   baseDefense: 0
@@ -2167,3 +2230,4 @@ SceneRoots:
   - {fileID: 2110639584}
   - {fileID: 843449165}
   - {fileID: 1329141219}
+  - {fileID: 2053226585}
