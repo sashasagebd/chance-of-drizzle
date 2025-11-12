@@ -643,7 +643,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 601622792}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 715358912}
+        m_TargetAssemblyTypeName: PauseMenu, HudMenus
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &601622792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,6 +1109,68 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665099776}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &705884541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 705884542}
+  - component: {fileID: 705884543}
+  m_Layer: 5
+  m_Name: HUDPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &705884542
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705884541}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 898163863}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 116.58075, y: 494.314}
+  m_SizeDelta: {x: 1642.2965, y: 184.3707}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &705884543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705884541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
+  m_Padding:
+    m_Left: 5
+    m_Right: 5
+    m_Top: 5
+    m_Bottom: 5
+  m_ChildAlignment: 2
+  m_Spacing: 20
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &715358910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,6 +1180,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 715358911}
+  - component: {fileID: 715358912}
+  - component: {fileID: 715358913}
   m_Layer: 5
   m_Name: HudManager
   m_TagString: Untagged
@@ -1127,11 +1203,39 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 898163863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &715358912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715358910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda74174842dd0e4996d100f56ed0e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: HudMenus::PauseMenu
+  pauseMenuPanel: {fileID: 1767782926}
+  playerScript: {fileID: 1273956416}
+--- !u!114 &715358913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715358910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a7a7556138db404d8e20b6cc5814fb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::HUDManager
+  iconParent: {fileID: 705884542}
+  itemIconPrefab: {fileID: 5374940674283816565, guid: 48252768c94a8c34bbf9c30e8ddb1665, type: 3}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1520,7 @@ RectTransform:
   - {fileID: 366073381}
   - {fileID: 715358911}
   - {fileID: 1767782927}
+  - {fileID: 705884542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3138,7 +3243,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1936067347}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 715358912}
+        m_TargetAssemblyTypeName: PauseMenu, HudMenus
+        m_MethodName: GoToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1936067347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3969,7 +4086,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2113298878}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 715358912}
+        m_TargetAssemblyTypeName: PauseMenu, HudMenus
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2113298878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4205,6 +4334,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Damage Boost
       objectReference: {fileID: 0}
+    - target: {fileID: 8598518796571726501, guid: b5be42be5babaa8418ea4c06ce9c9106, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 1f8ba681e44aba54381d5b946e07c246, type: 3}
+    - target: {fileID: 8598518796571726501, guid: b5be42be5babaa8418ea4c06ce9c9106, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 715358913}
+    - target: {fileID: 8598518796571726501, guid: b5be42be5babaa8418ea4c06ce9c9106, type: 3}
+      propertyPath: iconDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4376,6 +4517,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health Upgrade
       objectReference: {fileID: 0}
+    - target: {fileID: 8907762372304451624, guid: d2912a20abfefb74687796f0e749d3d4, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: ff23332e77acd7647985ffa6e1597c76, type: 3}
+    - target: {fileID: 8907762372304451624, guid: d2912a20abfefb74687796f0e749d3d4, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 715358913}
+    - target: {fileID: 8907762372304451624, guid: d2912a20abfefb74687796f0e749d3d4, type: 3}
+      propertyPath: iconDuration
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4432,6 +4585,18 @@ PrefabInstance:
     - target: {fileID: 5217381352363765439, guid: 9ec33f8e1350dda4c88c8639ffef144e, type: 3}
       propertyPath: m_Name
       value: Jump Boost
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893225434118091889, guid: 9ec33f8e1350dda4c88c8639ffef144e, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a3a50d5bec788041b90be1cd12d5b09, type: 3}
+    - target: {fileID: 6893225434118091889, guid: 9ec33f8e1350dda4c88c8639ffef144e, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 715358913}
+    - target: {fileID: 6893225434118091889, guid: 9ec33f8e1350dda4c88c8639ffef144e, type: 3}
+      propertyPath: iconDuration
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4604,6 +4769,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4858169862069845203, guid: ec378068eb37e964894259537853f0a5, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4cce1f2e18d4dae4d9ac6cff1d491e21, type: 3}
+    - target: {fileID: 4858169862069845203, guid: ec378068eb37e964894259537853f0a5, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 715358913}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4674,6 +4847,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4911562751429169150, guid: 22ed44068d0006d458a9a147f8c28f6c, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 02e4de20d8c06554fb7c111b423ad826, type: 3}
+    - target: {fileID: 4911562751429169150, guid: 22ed44068d0006d458a9a147f8c28f6c, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 715358913}
+    - target: {fileID: 4911562751429169150, guid: 22ed44068d0006d458a9a147f8c28f6c, type: 3}
+      propertyPath: iconDuration
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8527588928401014174, guid: 22ed44068d0006d458a9a147f8c28f6c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.88
@@ -4958,6 +5143,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Heal Potion
       objectReference: {fileID: 0}
+    - target: {fileID: 3636871914474162345, guid: e066c2b7a95bf1c4c8ccf11ef7478369, type: 3}
+      propertyPath: itemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 570685b18de447542b63524f4ea28d13, type: 3}
+    - target: {fileID: 3636871914474162345, guid: e066c2b7a95bf1c4c8ccf11ef7478369, type: 3}
+      propertyPath: hudManager
+      value: 
+      objectReference: {fileID: 715358913}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

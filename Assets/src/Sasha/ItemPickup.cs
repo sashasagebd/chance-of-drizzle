@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
+    
+    [Header("HUD")]
+    public HUDManager hudManager; 
+    public Sprite itemIcon;
+    public float iconDuration = 3f;
     public string itemID;
     private void OnTriggerEnter(Collider other)
     {
@@ -11,7 +16,7 @@ public class ItemPickup : MonoBehaviour
         {
             return;
         }
-        
+
         Item itemToUse = ItemFactory.CreateItem(itemID);
 
         if (itemToUse == null)
@@ -33,7 +38,7 @@ public class ItemPickup : MonoBehaviour
                 Debug.Log($"Unable to add {itemToUse.Name} to inventory");
             }
         }
-        else if(itemToUse is Armor armor)
+        else if (itemToUse is Armor armor)
         {
             Armor replacedArmor;
             bool equipped = player.EquipArmor(armor, out replacedArmor);
@@ -59,7 +64,12 @@ public class ItemPickup : MonoBehaviour
         {
             Debug.Log($"{itemToUse.Name} was consumed on pickup");
         }
-        
+
+        if (hudManager != null && itemIcon != null)
+        {
+            hudManager.ShowIcon(itemIcon, iconDuration);
+        }
+
         Destroy(gameObject);
     }
 }
