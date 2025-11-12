@@ -44,6 +44,10 @@ public class EnemyHub : MonoBehaviour{
   private List<Laser> lasers = new List<Laser>();
   private Color bulletColor = new Color(1.0f, 0.0f, 0.0f);
 
+  // For spotting player
+  private float enemyLastShotAtByPlayer = -1f;
+  private float secondsToRememberLastShot = 2f;
+
   private int frameCount = 0;
 
   void Awake(){
@@ -68,23 +72,32 @@ public class EnemyHub : MonoBehaviour{
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight-double");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "quad");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-egg-beater");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "homing-shot");
     spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "basic");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "drizzle-of-doom");
     
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-missile");
-    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee-quad");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee");
+    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee-quad");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-ufo");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-sniper");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-pyramid");
+
+    for(int i = 0; i < 1; i++){
+      Vector2 randomPosition = new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ));
+      for(int j = 0; j < 3; j++){
+        Vector2 randomPosition2 = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        //spawnEnemyAtTerrainHeight(randomPosition + randomPosition2, "flying", 1f, i);
+      }
+    }
   }
   void Update(){
     frameCount++;
+    enemyLastShotAtByPlayer -= Time.deltaTime;
 
     // Run pathfinding every 10 frames to minimize footprint
     if(frameCount % 10 == 0){
@@ -662,6 +675,29 @@ public class EnemyHub : MonoBehaviour{
   public Sword sword(Transform parentTransform, float range, float damage = 1f){
     // Create sword
     return new Sword(addLineRenderer(), parentTransform, range, damage);
+  }
+  public bool isPlayerMakingNoise(){
+    return enemyLastShotAtByPlayer > 0;
+  }
+  public void relayHiveMessage(int hiveMemberID, string message){
+    if(message == "shot-at"){
+      enemyLastShotAtByPlayer = secondsToRememberLastShot;
+      if(hiveMemberID >= 0){
+        for(int i = 0; i < enemies.Count; i++){
+          if(enemies[i].getHiveMemberID() == hiveMemberID){
+            enemies[i].hiveMemberShotAt();
+          }
+        }
+      }
+    }else if(message == "spotted"){
+      if(hiveMemberID >= 0){
+        for(int i = 0; i < enemies.Count; i++){
+          if(enemies[i].getHiveMemberID() == hiveMemberID){
+            enemies[i].hiveMemberSpotted();
+          }
+        }
+      }
+    }
   }
 
 

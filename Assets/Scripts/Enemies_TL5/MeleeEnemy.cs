@@ -13,6 +13,9 @@ public class MeleeEnemy : Enemy {
     this.stopWhenInRange = false;
     this.checkIfCanShoot = false;
 
+    // Update swords regardless of distance from player
+    this.alwaysAttack = true;
+
     // Individual stats for various flying enemy types
     switch(type){
       case "melee-figure-eight":
@@ -53,6 +56,7 @@ public class MeleeEnemy : Enemy {
     // Run setup functions
     this.applyStrengthScaling(strengthScaling);
     this.setGunPositionDistance();
+    this.setFindRanges();
 
     // Create line renderers for the swords
     for(int i = 0; i < this.gunPositions.Count; i++){
