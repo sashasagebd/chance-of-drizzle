@@ -20,6 +20,7 @@ public class ItemPickup : MonoBehaviour
         }
 
         itemToUse.Use(player);
+        itemToUse.TriggerVisualEffects(player);
 
         if (itemToUse is Equipment)
         {

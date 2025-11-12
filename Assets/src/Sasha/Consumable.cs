@@ -17,9 +17,9 @@ public class Consumable : Item
         CanStack = true;
     }
 
+
     public override void Use(object target)
     {
-
         if (target is PlayerController3D player)
         {
             if (EffectType == "Speed")
