@@ -2,7 +2,7 @@
 
 public class Armor : Item
 {
-    public int Defense { get; set; }
+    public float Defense { get; set; }
     public string ArmorType { get; set; }
 
     public Armor(string name, string description, string armorType, float defense)

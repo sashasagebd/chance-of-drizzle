@@ -66,63 +66,63 @@ public static class ItemFactory
                     name: "Helmet",
                     description: "Protects the user's head",
                     armorType: "helmet",
-                    defense: .05 //5%
+                    defense: .05f //5%
                 );
             case "ironchestplate":
                 return new Armor(
                     name: "Chestplate",
                     description: "Protects the user's upper body",
                     armorType: "chestplate",
-                    defense: .1 //10%
+                    defense: .1f //10%
                 );
             case "ironpants":
                 return new Armor(
                     name: "Pants",
                     description: "Protects the user's legs",
                     armorType: "pants",
-                    defense: .05 //5%
+                    defense: .05f //5%
                 );
             case "leatherhelmet":
                 return new Armor(
                     name: "Helmet",
                     description: "Protects the user's head",
                     armorType: "helmet",
-                    defense: .025 //2.5%
+                    defense: .025f //2.5%
                 );
             case "leatherchestplate":
                 return new Armor(
                     name: "Chestplate",
                     description: "Protects the user's upper body",
                     armorType: "chestplate",
-                    defense: .05 //5%
+                    defense: .05f //5%
                 );
             case "leatherpants":
                 return new Armor(
                     name: "Pants",
                     description: "Protects the user's legs",
                     armorType: "pants",
-                    defense: .025 //2.5%
+                    defense: .025f //2.5%
                 );
             case "ancienthelmet":
                 return new Armor(
                     name: "Helmet",
                     description: "Protects the user's head",
                     armorType: "helmet",
-                    defense: .075 //7.5%
+                    defense: .075f //7.5%
                 );
             case "ancientchestplate":
                 return new Armor(
                     name: "Chestplate",
                     description: "Protects the user's upper body",
                     armorType: "chestplate",
-                    defense: .15 //15%
+                    defense: .15f //15%
                 );
             case "ancientpants":
                 return new Armor(
                     name: "Pants",
                     description: "Protects the user's legs",
                     armorType: "pants",
-                    defense: .075 //7.5%
+                    defense: .075f //7.5%
                 );
             default:
                 Debug.LogError($"{id} is not recognized as a valid item");

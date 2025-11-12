@@ -22,12 +22,12 @@ public class Health : MonoBehaviour {
             defense = playerController.currentDefense;
         }
 
-        float percentDefense = MathF.Clamp(percentDefense, 0f, 1f);
+        float percentDefense = Mathf.Clamp(defense, 0f, 1f); // make sure between 0-1 for percent
         float damageTaken = amount * (1f - defense);
-        damageTaken = MathF.Max(0f, damageTaken);
+        damageTaken = Mathf.Max(0f, damageTaken);
 
         Current = Mathf.Max(0, Current - damageTaken);
-        Debug.Log($"{name} took {amount} damage but armor defended {defense * 100}% so only {damageTaken} damage taken. CURRENT HP: {Current}");
+        Debug.Log($"{name} took {amount} damage but armor defended {percentDefense * 100}% so only {damageTaken} damage taken. CURRENT HP: {Current}");
         if (Current <= 0)
         {
             if (destroyOnDeath) Destroy(gameObject);
