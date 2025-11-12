@@ -69,7 +69,7 @@ public class EnemyHub : MonoBehaviour{
     getPathToPlayer();
 
 
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight-double");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "quad");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
@@ -87,7 +87,7 @@ public class EnemyHub : MonoBehaviour{
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-sniper");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-pyramid");
 
-    for(int i = -1; i < 1; i++){
+    for(int i = 0; i < 1; i++){
       Vector2 randomPosition = new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ));
       for(int j = 0; j < 3; j++){
         Vector2 randomPosition2 = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
