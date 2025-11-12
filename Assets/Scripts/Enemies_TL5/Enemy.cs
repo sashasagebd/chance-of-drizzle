@@ -61,16 +61,17 @@ public class Enemy{
   // spotting player and what enemy knows
   protected bool alwaysAttack = false;
   protected bool knowsPlayerLocation = false;
-  protected float timeSinceLastSeen = 99999f;
-  protected float timeSinceLastShot = 99999f;
+  protected float timeToForget = 0f;
   protected float maxMemoryVision = 10f;
   protected float maxMemoryAttacked = 25f;
-  protected float focalRange = 0f;   // Finds player if within focal triangle and in this range (view can't be obstructed)
-  protected float hearingRange = 0f; // Finds player if within this range and player shoots at any enemy
-  protected float absoluteRange = 0f; // Finds player if within this range
-  protected float focalAngle = 25f;   // Uses focal triangle (only xz values, ignoring y)
+  protected float focusedFocalRange = 0f; // Keeps track of player if enemy already knows about player and player is in this range
+  protected float focalRange = 0f;        // Finds player if within focal triangle and in this range (view can't be obstructed)
+  protected float hearingRange = 0f;      // Finds player if within this range and player shoots at any enemy
+  protected float absoluteRange = 0f;     // Finds player if within this range
+  protected float focalAngle = 25f;       // Uses focal triangle (only xz values, ignoring y)
   protected Vector3 lastWanderCenter = new Vector2(0f, 0f);
   protected bool setNewWanderCenter = true;
+  protected int hiveMemberID = -1;
 
   // Weapon movement (orbit around enemy)
   protected float weaponSpinSpeed = 7f;
@@ -115,6 +116,9 @@ public class Enemy{
     this.timeDelay = Random.Range(0f, 10f);
     this.checkOffset = Random.Range(0, Enemy.checkInterval);
     this.noiseSeed = Random.Range(0f, 1000f);
+
+    // Set hive membership
+    this.hiveMemberID = hiveMemberID;
 
     // Individual stats for various enemy types
     switch(type){
@@ -190,9 +194,10 @@ public class Enemy{
     this.wanderSpeed = this.movementSpeed * 0.4f;
   }
   protected void setFindRanges(){
-    this.focalRange    = this.range * 1.4f;
-    this.hearingRange  = this.range * 0.7f;
-    this.absoluteRange = this.range * 0.35f;
+    this.focusedFocalRange = this.range * 2.6f;
+    this.focalRange        = this.range * 1.9f;
+    this.hearingRange      = this.range * 1.3f;
+    this.absoluteRange     = this.range * 0.7f;
   }
   public void updateStayedStillCount(){
     // Increase count when minimal y velocity (reads as on ground if still for long enough)
@@ -269,6 +274,7 @@ public class Enemy{
     this.rb.angularVelocity *= 0.75f;
   }
   protected void wander(){
+    // Move for when enemy doesn't know player location
     this.setWanderCenter();
     Vector3 noiseRotation = Quaternion.Euler(0f, Mathf.PerlinNoise(Time.time * 0.5f, this.noiseSeed) * 360f + this.timeDelay * 360f, 0f) * new Vector3(1f, 0f, 0f);
 
@@ -385,6 +391,9 @@ public class Enemy{
     }
   }
   public void takeDamage(float damage){
+    this.timeToForget = Mathf.Max(this.maxMemoryAttacked, this.timeToForget);
+    Enemy.enemyHub.relayHiveMessage(this.hiveMemberID, "shot-at");
+
     this.health -= damage;
     // Debug.Log("Health: " + this.health);
     if(this.health <= 0f){
@@ -405,9 +414,7 @@ public class Enemy{
       this.attack();
     }
     this.updateStayedStillCount();
-    if((this.frameCount + this.checkOffset) % Enemy.checkInterval == 0){
-      this.checkIfPlayerInSight();
-    }
+    this.searchForPlayer();
     this.frameCount++;
   }
   protected Quaternion lookRotation(Vector3 lookAngle){
@@ -416,6 +423,36 @@ public class Enemy{
       return this.enemy.transform.rotation;
     }else{
       return Quaternion.LookRotation(lookAngle);
+    }
+  }
+  protected void searchForPlayer(){
+    Vector2 enemyPosition = new Vector2(this.enemy.transform.position.x, this.enemy.transform.position.z);
+    Vector2 playerPosition = new Vector2(Enemy.player.transform.position.x, Enemy.player.transform.position.z);
+
+    float distance = Vector2.Distance(enemyPosition, playerPosition);
+    float angleToPlayer = Vector2.Angle(new Vector2(this.enemy.transform.forward.x, this.enemy.transform.forward.z), playerPosition - enemyPosition);
+
+    this.timeToForget -= Time.deltaTime;
+    this.knowsPlayerLocation = this.timeToForget > 0f;
+
+    if(distance > this.focusedFocalRange
+    || (distance > this.focalRange && !this.knowsPlayerLocation)
+    || (distance > this.absoluteRange && angleToPlayer > this.focalAngle
+       && (!Enemy.enemyHub.isPlayerMakingNoise() || distance > this.hearingRange) 
+       && !this.knowsPlayerLocation)
+    ){
+      this.playerInSight = false;
+      this.canShoot = !this.checkIfCanShoot;
+      return;
+    }
+
+    if((this.frameCount + this.checkOffset) % Enemy.checkInterval == 0){
+      this.checkIfPlayerInSight();
+    }
+
+    if(this.playerInSight || distance < this.absoluteRange || (Enemy.enemyHub.isPlayerMakingNoise() && distance < this.hearingRange)){
+      this.timeToForget = Mathf.Max(this.maxMemoryVision, this.timeToForget);
+      Enemy.enemyHub.relayHiveMessage(this.hiveMemberID, "spotted");
     }
   }
   protected void checkIfPlayerInSight(){
@@ -445,6 +482,15 @@ public class Enemy{
     }else if(!this.checkIfCanShoot){
       this.canShoot = true;
     }
+  }
+  public int getHiveMemberID(){
+    return this.hiveMemberID;
+  }
+  public void hiveMemberShotAt(){
+    this.timeToForget = Mathf.Max(this.maxMemoryAttacked, this.timeToForget);
+  }
+  public void hiveMemberSpotted(){
+    this.timeToForget = Mathf.Max(this.maxMemoryVision, this.timeToForget);
   }
 
   static public Enemy createEnemy(Vector3 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
