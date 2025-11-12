@@ -7,12 +7,18 @@ public class FlyingMeleeEnemy : FlyingEnemy{
   protected float swordRange = 1.95f;
   protected float circlingSpeedSlow = 0.5f;
 
-  public FlyingMeleeEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID) : base(position, type, strengthScaling, hiveMemberID){
-    // Always spin the same way to avoid hitting gun
+  public FlyingMeleeEnemy(Vector3 position, string type, float strengthScaling, int hiveMemberID)
+  : base(position, type, strengthScaling, hiveMemberID){
+
+    // Always spin the same way to avoid hitting gun (counter clockwise)
     this.circlingSpeed = -Mathf.Abs(this.circlingSpeed);
     this.circlingSpeedSlow = (Random.Range(0f, 1f) < 0.5f ? this.circlingSpeed : -this.circlingSpeed) * (Random.Range(0.2f, 1f));
     this.checkIfCanShoot = false;
 
+    // Update swords regardless of distance from player
+    this.alwaysAttack = true;
+
+    // Individual stats for various flying enemy types
     switch(type){
       case "flying-melee":
         this.circleRadius = 5f;
@@ -43,17 +49,21 @@ public class FlyingMeleeEnemy : FlyingEnemy{
         this.enemy.transform.position += new Vector3(0f, 6f + this.getTerrainHeight() - this.enemy.transform.position.y, 0f);
       break;
     }
+    // Set attack range to larger than circling radius (attack range is when enemy gets into attack pattern, not actual attack range)
     this.range = this.circleRadius * 1.3f + 1.5f;
 
+    // Run setup functions
     this.applyStrengthScaling(strengthScaling);
+    this.setGunPositionDistance();
+    this.setFindRanges();
 
+    // Create line renderers for the swords
     for(int i = 0; i < this.gunPositions.Count; i++){
       this.swords.Add(Enemy.enemyHub.sword(this.gunPositions[i], this.swordRange, this.damage));
     }
-
-    this.setGunPositionDistance();
   }
   protected override Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
+    // When close, spin in narrow ellipses around player (almost touching player at 2 points)
     float s = Mathf.Sin(this.circlingSpeed * Time.time + this.timeDelay);
     float c = Mathf.Cos(this.circlingSpeed * Time.time + this.timeDelay);
     Vector3 goTo = Quaternion.Euler(0f, this.circlingSpeedSlow * Time.time + this.timeDelay, 0f) * new Vector3(0.38f * this.swordRange * s, 0f, this.circleRadius * c);
@@ -62,11 +72,7 @@ public class FlyingMeleeEnemy : FlyingEnemy{
     return toPlayerPosition - this.enemy.transform.position;
   }
   protected override void attack(){
-    /*
-    if(Mathf.Pow(this.enemy.transform.position.x - Enemy.enemyHub.getPlayerPosition().x, 2) + Mathf.Pow(this.enemy.transform.position.z - Enemy.enemyHub.getPlayerPosition().z, 2) > this.range * this.range){
-      return;
-    }
-    */
+    // Spin and update swords
     this.spinWeapons();
     for(int i = 0; i < this.gunPositions.Count; i++){
       this.swords[i].run();

@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &12148871
 Transform:
   m_ObjectHideFlags: 0
@@ -150,8 +150,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1364855769}
+  m_Children: []
   m_Father: {fileID: 152268932}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &12148872
@@ -561,13 +560,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152268931}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.13, z: -3.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 12148871}
-  m_Father: {fileID: 2110639584}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &152268933
 MonoBehaviour:
@@ -1282,7 +1281,7 @@ GameObject:
   - component: {fileID: 1364855769}
   - component: {fileID: 1364855768}
   m_Layer: 0
-  m_Name: FP_WeaponRig
+  m_Name: WeaponRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1311,14 +1310,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364855767}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 145300411}
   - {fileID: 406999266}
-  m_Father: {fileID: 12148871}
+  m_Father: {fileID: 2110639584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1412590829
 GameObject:
@@ -1883,7 +1882,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 152268932}
+  - {fileID: 1364855769}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2110639585
@@ -1932,6 +1931,12 @@ MonoBehaviour:
   lookSensitivity: 1.5
   minPitch: -80
   maxPitch: 80
+  cameraDistance: 5
+  cameraHeight: 2
+  cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  cameraCollisionBuffer: 0.2
   inventory: {fileID: 1364855768}
   muzzle: {fileID: 40337307}
   HealthComponent: {fileID: 0}
@@ -2158,6 +2163,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1426054125}
   - {fileID: 1617537695}
+  - {fileID: 152268932}
   - {fileID: 2110639584}
   - {fileID: 843449165}
   - {fileID: 1329141219}

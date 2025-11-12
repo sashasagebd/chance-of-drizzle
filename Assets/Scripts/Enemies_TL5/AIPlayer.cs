@@ -2,13 +2,16 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+// Class for demo mode
 public class AIPlayer{
+  // GameObjects / Unity Integration
   private GameObject player;
   private PlayerController3D playerController;
   private EnemyHub enemyHub;
   private CharacterController characterController;
   private Camera camera;
 
+  // Basic movement variables
   private Vector3 velocity = Vector3.zero;
   private Quaternion rotation = Quaternion.identity;
 
@@ -20,6 +23,7 @@ public class AIPlayer{
     this.camera = player.GetComponentInChildren<Camera>();
   }
   public bool run(){
+    // Go to closest enemy
     Vector3 closestEnemy = this.enemyHub.getClosestEnemy(this.player.transform.position, 1);
     Vector3 acceleration = closestEnemy - this.player.transform.position;
 
@@ -27,6 +31,7 @@ public class AIPlayer{
     this.velocity += new Vector3(acceleration.x, 0f, acceleration.z).normalized * Mathf.Min(0.005f, acceleration.magnitude) * (-1f);
     this.characterController.Move(this.velocity);
 
+    // Look at closest enemy
     Quaternion lookRotation = Quaternion.LookRotation(closestEnemy - this.player.transform.position - new Vector3(0f, 0.8f, 0f));
     /*
     Vector3 eulerNumbers = lookRotation.eulerAngles;
@@ -38,6 +43,7 @@ public class AIPlayer{
     this.camera.transform.rotation = this.rotation;
     //*/
 
+    // Fire weapon (stolen from Sebastjan's scripts)
     var weapon = this.playerController.inventory ? this.playerController.inventory.Current : null;
     if(weapon != null){
       Vector3 origin = this.playerController.muzzle ? this.playerController.muzzle.position : this.camera.transform.position;
@@ -47,6 +53,9 @@ public class AIPlayer{
     }
 
     //Debug.Log(lookRotation + " " + eulerNumbers);
+
+    // Return true if any key / mouse is pressed
+    // Uses Unity's old input system
     return Input.anyKeyDown;
   }
 }

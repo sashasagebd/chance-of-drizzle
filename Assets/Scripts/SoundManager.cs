@@ -171,4 +171,10 @@ public class SoundManager : MonoBehaviour
 	public void PlayHitAt(Vector3 position, float volume = 1f) => PlaySfxAt(sfxHit, position, volume);
 	public void PlayUIClick(float volume = 1f) => PlaySfx2D(sfxUIClick, volume);
 	public void StartStageMusic(float volume = 1f) => PlayMusic(musicStageLoop, true, volume);
+
+void Start()
+{
+    StartStageMusic();   // this will play your background music
+}
+
 }
