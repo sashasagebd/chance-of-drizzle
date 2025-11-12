@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class EnemySpawner : ObjectSpawner
+public class ItemSpawner : ObjectSpawner
 {
 
     public override bool SpecificTest(GameObject testObject) {
 
-        Debug.Log(testObject.GetComponent<EnemyController>());
-        if (testObject.GetComponent<EnemyController>() != null) {
+        Debug.Log(testObject.GetComponent<ItemPickup>());
+        if (testObject.GetComponent<ItemPickup>() != null) {
             // Enemy.createEnemy
             // Debug.Log("True!");
             return true;
