@@ -97,6 +97,7 @@ public class Enemy{
   //protected Vector3 velocity;
   public Enemy(Vector3 position, string type, float strengthScaling, int hiveMemberID){
     // Set up Unity integration
+    // vvvv -- this is the line that is bugging out -ERIK PEAVEY -- vvvv
     this.enemy = Enemy.enemyHub.createEnemyGameObject();
     this.enemy.transform.position = position;
     this.enemyController = this.enemy.GetComponent<EnemyController>();

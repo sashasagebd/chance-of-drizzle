@@ -9,8 +9,7 @@ public class ObjectSpawner : MonoBehaviour
     [SerializeField] protected int spawnerPriorityMax = 1;
 
     [Header("Spawn Settings")]
-    [SerializeField] protected int spawnCount = 1;
-    
+    // [SerializeField] protected int spawnCount = 1;
     [SerializeField] protected List<GameObject> toSpawn = new List<GameObject>();
     // [SerializeField] private GameObject visual;
 
@@ -27,7 +26,7 @@ public class ObjectSpawner : MonoBehaviour
 
         foreach (GameObject toSpawnObject in toSpawn) {
             if (toSpawnObject != null && SpecificTest(toSpawnObject)) {
-                Debug.Log("Adding " + toSpawnObject.name + " to validSpawn list of "+name);
+                // Debug.Log("Adding " + toSpawnObject.name + " to validSpawn list of "+name);
                 validSpawn.Add(toSpawnObject);
             }
         }
@@ -41,7 +40,7 @@ public class ObjectSpawner : MonoBehaviour
             Debug.LogWarning("Spawner could not properly spawn any objects!");
             Destroy(gameObject);
         }
-    }
+    } 
 
     public bool SpawnerRandomize() {
         if (!spawnerRandomChance) return true;
@@ -76,6 +75,7 @@ public class ObjectSpawner : MonoBehaviour
             }
             */
             Instantiate(spawnChoice, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 
