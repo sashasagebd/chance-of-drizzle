@@ -16,6 +16,7 @@ public class ItemSpawner : ObjectSpawner
             return false;
         }
     }
+    // Eventually will have a Chest object which will drop these items, but for the time being they will just spawn in place via normal means
 
     /*
     public virtual void Initialize() {
