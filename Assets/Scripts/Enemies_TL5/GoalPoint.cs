@@ -3,7 +3,7 @@ using UnityEngine;
 public class GoalPoint : MonoBehaviour{
   GameObject player;
   void Start(){
-    player = GameObject.Find("Player");
+    player = GameObject.Find("Player ");
   }
   void Update(){
     if(isInRange()){

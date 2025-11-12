@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+/*
     [Header("References")]
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -123,5 +124,5 @@ public void QuitGame()
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
->>>>>>> Stashed changes
+>>>>>>> Stashed changes*/
 }

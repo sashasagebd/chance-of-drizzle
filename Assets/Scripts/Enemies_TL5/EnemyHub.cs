@@ -52,7 +52,7 @@ public class EnemyHub : MonoBehaviour{
 
   void Awake(){
     // Set up references to other scripts / GameObjects in this, Enemy, and Laser
-    GameObject player = GameObject.Find("Player");
+    GameObject player = GameObject.Find("Player ");
     Laser.setStaticValues(player, this);
     Enemy.setStaticValues(player, this);
 
@@ -471,7 +471,7 @@ public class EnemyHub : MonoBehaviour{
     int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
     int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
 
-    GameObject player = GameObject.Find("Player");
+    GameObject player = GameObject.Find("Player ");
     Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
     playerHexagonalPosition = getHexagonPosition(playerPosition);
 
@@ -594,14 +594,14 @@ public class EnemyHub : MonoBehaviour{
     // If either enemy or player is out of bounds, return player position
     if(hexagonalPosition[0] < 0 || hexagonalPosition[0] >= terrainWidth || hexagonalPosition[1] < 0 || hexagonalPosition[1] >= terrainDepth
     || playerHexagonalPosition[0] < 0 || playerHexagonalPosition[0] >= terrainWidth || playerHexagonalPosition[1] < 0 || playerHexagonalPosition[1] >= terrainDepth){
-      GameObject player = GameObject.Find("Player");
+      GameObject player = GameObject.Find("Player ");
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
 
     // If the two hexagons are in the same group, return player position (the group is convex, so enemy can move in a straight line without going out of group)
     if(terrainGroups[playerHexagonalPosition[0], playerHexagonalPosition[1]] == terrainGroups[hexagonalPosition[0], hexagonalPosition[1]]){
-      GameObject player = GameObject.Find("Player");
+      GameObject player = GameObject.Find("Player ");
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
@@ -761,7 +761,7 @@ public class EnemyHub : MonoBehaviour{
         }
       break;
       case "PLAYER_HEXAGONAL_POSITION":
-        GameObject player = GameObject.Find("Player");
+        GameObject player = GameObject.Find("Player ");
         if(player == null){
           return 1;
         }
