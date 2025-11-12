@@ -681,6 +681,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2056952878}
     m_Modifications:
+    - target: {fileID: 102507300025249874, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
+      propertyPath: toSpawn.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 102507300025249874, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
+      propertyPath: enemyType.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 102507300025249874, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
+      propertyPath: 'toSpawn.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1765494066999471437, guid: 0714af87dd0ba31f18fe915f59c92a32, type: 3}
+    - target: {fileID: 102507300025249874, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
+      propertyPath: 'enemyType.Array.data[0]'
+      value: basic
+      objectReference: {fileID: 0}
+    - target: {fileID: 102507300025249874, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
+      propertyPath: 'enemyType.Array.data[1]'
+      value: melee
+      objectReference: {fileID: 0}
     - target: {fileID: 4614481917929585159, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -729,37 +749,13 @@ PrefabInstance:
     - {fileID: 3821285442372453210, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6936177971569817953, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 207792448}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
 --- !u!4 &207792446 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4614481917929585159, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
   m_PrefabInstance: {fileID: 207792445}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &207792447 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6936177971569817953, guid: 89f20df922df5a244a2c34178ec01e0c, type: 3}
-  m_PrefabInstance: {fileID: 207792445}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &207792448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 207792447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f268e7a5f060169488505d361272ec0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  spawnerPriority: 1
-  spawnerPriorityMax: 1
-  spawnCount: 1
-  toSpawn: []
 --- !u!1 &406999260
 GameObject:
   m_ObjectHideFlags: 0
@@ -1939,6 +1935,7 @@ MonoBehaviour:
   inventory: {fileID: 1364855768}
   muzzle: {fileID: 40337307}
   HealthComponent: {fileID: 0}
+  WeaponComponent: {fileID: 0}
   baseDefense: 0
 --- !u!114 &2110639588
 MonoBehaviour:
@@ -2093,11 +2090,11 @@ PrefabInstance:
     - target: {fileID: 3821285442372453210, guid: 5830a2d3758dfdc4e82e2d14cfc1fd79, type: 3}
       propertyPath: 'toSpawn.Array.data[0]'
       value: 
-      objectReference: {fileID: 1765494066999471437, guid: 0714af87dd0ba31f18fe915f59c92a32, type: 3}
+      objectReference: {fileID: 1765494066999471437, guid: ab4173d17db814c34b148b47fdcaf787, type: 3}
     - target: {fileID: 3821285442372453210, guid: 5830a2d3758dfdc4e82e2d14cfc1fd79, type: 3}
       propertyPath: 'toSpawn.Array.data[1]'
       value: 
-      objectReference: {fileID: 1765494066999471437, guid: ab4173d17db814c34b148b47fdcaf787, type: 3}
+      objectReference: {fileID: 5225455176718880169, guid: 59fd80584945fc7448940995b97dab30, type: 3}
     - target: {fileID: 3821285442372453210, guid: 5830a2d3758dfdc4e82e2d14cfc1fd79, type: 3}
       propertyPath: 'toSpawn.Array.data[2]'
       value: 
