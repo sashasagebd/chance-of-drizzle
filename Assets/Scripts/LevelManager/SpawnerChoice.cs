@@ -23,8 +23,11 @@ public class SpawnerChoice : MonoBehaviour
     public void Initialize() {
         
         int randIndex = Random.Range(0, eligibleSpawners.Count);
+        GameObject designatedSpawner = eligibleSpawners[randIndex];
+        if (designatedSpawner.GetComponent<ObjectSpawner>()!=null)
+            eligibleSpawners[randIndex].GetComponent<ObjectSpawner>().Initialize();
 
         Destroy(gameObject);
-        
+
     }
 }
