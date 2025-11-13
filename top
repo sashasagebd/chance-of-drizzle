@@ -1,0 +1,438 @@
+[33mcommit 3ef8f721c7b9d27679e9696a9320561943290a9f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msasha-code[m[33m, [m[1;31morigin/sasha-code[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Thu Oct 23 09:49:48 2025 -0700
+
+    Update video links in doc README.md
+
+[33mcommit ff242fd2f5d7dc5a4b32558561def80677a980e5[m
+Merge: 93fa9ff 5cc6d63
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Thu Oct 23 09:12:50 2025 -0700
+
+    Merge pull request #1 from sashasagebd/sasha-tests
+    
+    Sasha tests + initial item code
+
+[33mcommit 93fa9ff5929c639c3ef2dc8d7e0936aea8a7ea0c[m
+Merge: 6ba15fd 8024cda
+Author: Sebastjan Bas <60714956+generalseba@users.noreply.github.com>
+Date:   Thu Oct 23 08:27:43 2025 -0700
+
+    Merge branch 'main' of github.com:sashasagebd/chance-of-drizzle
+    "merge player boundary tests"
+
+[33mcommit 6ba15fd2e91b78716190d9ee75479c8bbcb6f006[m
+Author: Sebastjan Bas <60714956+generalseba@users.noreply.github.com>
+Date:   Thu Oct 23 08:27:25 2025 -0700
+
+    add boundry tests for player movement and weapon system
+
+[33mcommit 8024cda5b2ab09b1b51a24afe1d235a531407613[m
+Merge: 20385ad bdfda69
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Wed Oct 22 23:53:33 2025 -0700
+
+    Merge branch 'main' of https://github.com/sashasagebd/chance-of-drizzle
+    AAA
+
+[33mcommit 20385ad1f960ccdad390476fe647f444eba29366[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Wed Oct 22 23:53:29 2025 -0700
+
+    Add tests for enemies (Proper way)
+
+[33mcommit 5cc6d63c75e632522f77616b250fae5089593a11[m[33m ([m[1;31morigin/sasha-tests[m[33m)[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Wed Oct 22 23:11:34 2025 -0700
+
+    unity scene stuff
+
+[33mcommit 35a76543a4f570ffe4c7157f781a3ab94da9fefe[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Wed Oct 22 22:59:33 2025 -0700
+
+    added item testing + pushed a lotta item code - sasha
+
+[33mcommit bdfda69d6c34a8150f0e71f9e0c78ff5ef055d88[m[33m ([m[1;31morigin/sebastjan-tests[m[33m)[m
+Author: Sebastjan Bas <60714956+generalseba@users.noreply.github.com>
+Date:   Wed Oct 22 22:44:46 2025 -0700
+
+    Player movement stress tests
+
+[33mcommit 4fe072008554b4e456b45d2d6a62ca2d81e201dd[m
+Author: Sebastjan Bas <60714956+generalseba@users.noreply.github.com>
+Date:   Wed Oct 22 19:48:38 2025 -0700
+
+    update TextMesh Pro
+
+[33mcommit b3c5cf2d767eb35df81bcf85feeedb908b6ddb65[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Wed Oct 22 19:36:36 2025 -0700
+
+    Add tests for enemies
+
+[33mcommit cebcfe045d18cdb40ea757b2abdde35992487499[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Oct 18 18:16:24 2025 -0700
+
+    Partition map into small hexagons for pathfinding
+
+[33mcommit 2fe06f2c502eadac6bb8da5c3ff2cfce3e51b2b6[m
+Merge: d05a217 7888f0f
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Oct 11 19:12:09 2025 -0700
+
+    Merge branch 'main' of https://github.com/sashasagebd/chance-of-drizzle
+    a
+
+[33mcommit d05a21730d5e1b0e201eac16e83a0363c7294e4b[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Oct 11 19:11:27 2025 -0700
+
+    Save changes to scene
+
+[33mcommit 7888f0f1219c860e6c307211cb3ea8e884d4faa3[m
+Author: Ky <ky246.code@gmail.com>
+Date:   Sat Oct 11 15:59:00 2025 -0700
+
+    Rename ProgressSnapshot to ProgressSnapshot.png
+
+[33mcommit e272fa12d67c7eda183ec963aff31a2f0895e88b[m
+Author: Ky <ky246.code@gmail.com>
+Date:   Sat Oct 11 15:57:42 2025 -0700
+
+    Rename image
+
+[33mcommit e9008f895a9d01ec7b993d32425537f43ddd315b[m
+Author: Ky <ky246.code@gmail.com>
+Date:   Sat Oct 11 15:57:00 2025 -0700
+
+    Add progress snapshot
+
+[33mcommit b094932bcda4e83e7645fb5990a3c059471e04b0[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Oct 11 15:16:16 2025 -0700
+
+    Add script to spawn new enemies - public EnemyHub.spawnEnemyAtTerrainHeight(Vector2)
+
+[33mcommit fc0f741d988c6f5f879dbe31675b45ec3769e19d[m
+Author: Sebastjan Bas <60714956+generalseba@users.noreply.github.com>
+Date:   Thu Oct 9 00:00:45 2025 -0700
+
+    MVP complete: player controller, shooting, reloading, weapon switching, and HUD implemented
+
+[33mcommit d4e84ebff0a18836a5775c1dc80e933e69cf3dcb[m
+Author: alija <alijaacharya05@gmail.com>
+Date:   Mon Oct 6 13:54:47 2025 -0700
+
+    mytextfile
+
+[33mcommit 2f8b7901842ec7fb58695a5cb671cb8f2fb4e125[m
+Author: eviled <77637435+eviled123123123@users.noreply.github.com>
+Date:   Tue Sep 30 20:33:07 2025 -0700
+
+    Add files via upload
+    
+    my class diagram
+
+[33mcommit b845c855fd6c51166672a6e9f0083bfa637df810[m
+Author: owenkmc <75801735+owenkmc@users.noreply.github.com>
+Date:   Tue Sep 30 19:11:42 2025 -0700
+
+    Add files via upload
+
+[33mcommit e05215e6f7c95293fcc7312b5d84279aef910f6b[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Mon Sep 29 13:19:59 2025 -0700
+
+    Update README.md
+
+[33mcommit f0dff5d96886b8463309f929f67a821905c27688[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Mon Sep 29 13:19:31 2025 -0700
+
+    Update README.md
+
+[33mcommit 9945a7cfa9da74c9255c9a7bd092cafdd277c9a8[m
+Author: Sebastjan Bas <60714956+sebastjanbas@users.noreply.github.com>
+Date:   Sat Sep 27 23:51:07 2025 -0700
+
+    Upload sequence diagram
+
+[33mcommit 8fa61bbc203ec136363dc3974152d124ae300aab[m
+Author: Sebastjan Bas <60714956+sebastjanbas@users.noreply.github.com>
+Date:   Sat Sep 27 23:45:18 2025 -0700
+
+    Upload class diagram
+
+[33mcommit 00abf66b94c0d5df738687c0ca4a557bacba268c[m
+Author: alija <alijaacharya05@gmail.com>
+Date:   Sat Sep 27 21:45:34 2025 -0700
+
+    Add files via upload
+
+[33mcommit f5d80a69985a9e527cadc9322fb22d67159cf031[m
+Author: owenkmc <75801735+owenkmc@users.noreply.github.com>
+Date:   Sat Sep 27 21:26:59 2025 -0700
+
+    Class diagram
+
+[33mcommit 00c675a4bbcab37bee8bbb4060795dfb38c9a87c[m
+Author: owenkmc <75801735+owenkmc@users.noreply.github.com>
+Date:   Sat Sep 27 21:26:20 2025 -0700
+
+    Sequence Diagram
+
+[33mcommit 0940fc6c55bb1638b7322bf5bbbe817034dd11f7[m
+Merge: b46945f d0d05a3
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Sep 27 20:28:29 2025 -0700
+
+    Merge branch 'main' of https://github.com/sashasagebd/chance-of-drizzle
+    Merge
+
+[33mcommit b46945f9ba0df117bd0317cdbe95d22018166de9[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Sep 27 20:28:13 2025 -0700
+
+    Add sequence diagram
+
+[33mcommit d0d05a366c619e123cafa528f0b4a6c89051569f[m
+Author: alija <alijaacharya05@gmail.com>
+Date:   Sat Sep 27 20:17:23 2025 -0700
+
+    Add files via upload
+
+[33mcommit b98e40c07cb0bf69fb7294e040c213f2d5afb819[m
+Author: alija <alijaacharya05@gmail.com>
+Date:   Sat Sep 27 20:16:38 2025 -0700
+
+    Add files via upload
+
+[33mcommit aa0410a51c6d3b172a86b99d6f863018c8bdf9a5[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sat Sep 27 19:23:32 2025 -0700
+
+    Create README.md
+
+[33mcommit 629db094c92c5053ad66c91a9d3c5eb2e8e3192f[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sat Sep 27 19:19:22 2025 -0700
+
+    Add files via upload
+
+[33mcommit 1eda928885904fbba201569e27a4516281869269[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sat Sep 27 19:19:07 2025 -0700
+
+    Delete doc/individual/Sasha/Champion Document Sasha Bearman-Drummond.pdf
+
+[33mcommit ec7ad4777831742dade2e58877d8c8fba0245317[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sat Sep 27 19:14:51 2025 -0700
+
+    Add files via upload
+
+[33mcommit 6281c77108b81617f217d8ecd66070a1bc56f97e[m
+Merge: 513f790 3787725
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Fri Sep 26 13:31:12 2025 -0700
+
+    Merge branch 'main' of https://github.com/sashasagebd/chance-of-drizzle
+    a
+
+[33mcommit 513f79097d3ae999f9a4a538996a1912dd05f2d9[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Fri Sep 26 13:30:45 2025 -0700
+
+    Add class diagram
+
+[33mcommit 378772513d2f96bf130e163a4cb3f80a65a5b0e3[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Thu Sep 25 09:38:59 2025 -0700
+
+    Update README.md
+
+[33mcommit bb412a823c37adc4c253847b711908034d522192[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Wed Sep 24 14:31:48 2025 -0700
+
+    Update README.md
+
+[33mcommit 6c2e89763a785647e0ee47fdc938a03301d080cf[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Wed Sep 24 14:30:53 2025 -0700
+
+    Delete doc/videolinks.txt
+
+[33mcommit f75a556c236ab9b5cb6e555a4198dbf68cd72998[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Wed Sep 24 09:43:47 2025 -0700
+
+    Update README.md
+
+[33mcommit d5f5443fe852bfe7df05e04a12b9f30f7ca7d1fc[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Wed Sep 24 09:41:12 2025 -0700
+
+    Create README.md for doc folder
+
+[33mcommit 82cb7f245c67b3031abcd23f048a5c8e98924d50[m
+Author: Owen <owenkmc13@gmail.com>
+Date:   Tue Sep 23 09:47:21 2025 -0700
+
+    new testfile in class
+
+[33mcommit 804d6fab513ec4f6dfd434fcf252ae24fdaa458a[m
+Author: eviled <erikdamonpv@gmail.com>
+Date:   Tue Sep 23 09:27:16 2025 -0700
+
+    Added my Epic File
+
+[33mcommit 661e69c1576bb6fb52551c2984ad6c94ac99c412[m
+Author: alija <alijaacharya05@gmail.com>
+Date:   Mon Sep 22 14:43:48 2025 -0700
+
+    Add files via upload
+    
+    Champion Docs
+
+[33mcommit 17247acaad64f1c760350381a10b7448a714223a[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sun Sep 21 15:11:40 2025 -0700
+
+    Add files via upload
+
+[33mcommit fc6e1df79c2597fecc7a8de26ba651df2e0a37a1[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sun Sep 21 15:10:53 2025 -0700
+
+    Delete doc/Chance Of Drizzle RFP.pdf
+
+[33mcommit ec62fca92485ed50edc972b4d49f1eb8d865036c[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Sun Sep 21 00:32:21 2025 -0700
+
+    Champion document
+
+[33mcommit d4ade7e76c3430fe4cefe96a104d28d76b0fcd7e[m
+Author: eviled <77637435+eviled123123123@users.noreply.github.com>
+Date:   Sat Sep 20 23:55:14 2025 -0700
+
+    Add files via upload
+    
+    Only partially completed unfortunately
+
+[33mcommit aabd480987d24f9fb22ffcab4a9d2e2e8684e98d[m
+Author: Sebastjan Bas <60714956+sebastjanbas@users.noreply.github.com>
+Date:   Sat Sep 20 23:55:01 2025 -0700
+
+    Upload champion document
+
+[33mcommit 6f290da378dfa74064ee217b665bef1ce84d1137[m
+Author: owenkmc <75801735+owenkmc@users.noreply.github.com>
+Date:   Sat Sep 20 23:08:11 2025 -0700
+
+    Add files via upload
+
+[33mcommit 18c82778c90b204c6ba084f6b7616338682794b2[m
+Author: ichigojin <ky246.code@gmail.com>
+Date:   Sat Sep 20 22:30:10 2025 -0700
+
+    Add champion Document
+
+[33mcommit 828f96180482416194e518819827039ba835e259[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Fri Sep 19 17:07:53 2025 -0700
+
+    Add files via upload
+
+[33mcommit d567b32d1358ba1e681f1c4b568f0c619e8bfe0c[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Fri Sep 19 17:07:35 2025 -0700
+
+    Delete doc/Chance Of Drizzle RFP.pdf
+
+[33mcommit 078967c240971738017515277bbbb274eabab6d6[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Thu Sep 18 14:00:43 2025 -0700
+
+    deleted unnecessary file
+
+[33mcommit 33186922df7e2ec32fd3b50b96d33610da4cc0a8[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Thu Sep 18 13:54:20 2025 -0700
+
+    improved readme
+
+[33mcommit cf207e41141848dfb280e9aeba02ab7dfd286db8[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Thu Sep 18 13:49:00 2025 -0700
+
+    added rfp
+
+[33mcommit 084a7a63b96959b8afa1db4bbd8a1db147ac9edd[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Thu Sep 18 09:04:25 2025 -0700
+
+    Create videolinks.txt
+
+[33mcommit 0b3cdc35adecfb90894afa9e1afd47dab069543b[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Mon Sep 15 15:09:17 2025 -0700
+
+    added presentation folder
+
+[33mcommit 33a193c6a4c586389fec027616ea99ddaf98f8d8[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Mon Sep 15 14:49:58 2025 -0700
+
+    moved log to doc folder
+
+[33mcommit 7af552703106f308e090d6455db9dced5e1d2247[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Mon Sep 15 14:42:15 2025 -0700
+
+    Add files via upload
+
+[33mcommit 6e31005630317fd36eb1a09e6ddbd5f7804b26e7[m
+Author: Sasha <sashasagebd@gmail.com>
+Date:   Tue Sep 9 09:35:55 2025 -0700
+
+    rename
+
+[33mcommit 8597f67720c4bae4730950a3b9319739a066a709[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Sun Sep 7 14:24:07 2025 -0700
+
+    added subfolders for presentations
+
+[33mcommit 810e47b69ba0945952309d121ca57d9852c1fcdc[m
+Author: Sasha - Desktop <sashasagebd@gmail.com>
+Date:   Thu Sep 4 16:03:27 2025 -0700
+
+    src, tst, and prefab folders + gitinfo text file
+
+[33mcommit 88c3ec92741e674e9b3003a9da4949ba48223f19[m
+Author: Sasha Bearman-Drummond <165858314+sashasagebd@users.noreply.github.com>
+Date:   Thu Sep 4 13:00:38 2025 -0700
+
+    Update README.md
+
+[33mcommit 922c89dff89f37e6f098ed4027427cd7ce0080a1[m
+Author: Sasha <sashasagebd@gmail.com>
+Date:   Thu Sep 4 12:01:10 2025 -0700
+
+    unity set up
+
+[33mcommit b8bded19d7fc992357c7d08133d0e0ec7f089ff1[m
+Author: Sasha <sashasagebd@gmail.com>
+Date:   Thu Sep 4 10:12:54 2025 -0700
+
+    gameinfo
+
+[33mcommit 3a08138964c3cea9de6af21addf5ebe4565cd7ca[m
+Author: Sasha <sashasagebd@gmail.com>
+Date:   Thu Sep 4 09:39:36 2025 -0700
+
+    first commit
