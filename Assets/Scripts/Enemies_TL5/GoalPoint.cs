@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GoalPoint : MonoBehaviour{
   GameObject player;
@@ -7,7 +8,7 @@ public class GoalPoint : MonoBehaviour{
   }
   void Update(){
     if(isInRange()){
-      print("You win!");
+      SceneManager.LoadScene("WinGame");
     }
   }
   private bool isInRange(){
