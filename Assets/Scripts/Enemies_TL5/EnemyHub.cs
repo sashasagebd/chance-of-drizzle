@@ -44,11 +44,15 @@ public class EnemyHub : MonoBehaviour{
   private List<Laser> lasers = new List<Laser>();
   private Color bulletColor = new Color(1.0f, 0.0f, 0.0f);
 
+  // For spotting player
+  private float enemyLastShotAtByPlayer = -1f;
+  private float secondsToRememberLastShot = 2f;
+
   private int frameCount = 0;
 
   void Awake(){
     // Set up references to other scripts / GameObjects in this, Enemy, and Laser
-    GameObject player = GameObject.Find("Player");
+    GameObject player = GameObject.Find("Player ");
     Laser.setStaticValues(player, this);
     Enemy.setStaticValues(player, this);
 
@@ -68,23 +72,32 @@ public class EnemyHub : MonoBehaviour{
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight-double");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "quad");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-egg-beater");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "homing-shot");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "basic");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "basic");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "drizzle-of-doom");
     
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-missile");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee-quad");
-    spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee");
+    //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-double");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-ufo");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-sniper");
     //spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-pyramid");
+
+    for(int i = 0; i < 1; i++){
+      Vector2 randomPosition = new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ));
+      for(int j = 0; j < 3; j++){
+        //Vector2 randomPosition2 = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        //spawnEnemyAtTerrainHeight(randomPosition + randomPosition2, "flying", 1f, i);
+      }
+    }
   }
   void Update(){
     frameCount++;
+    enemyLastShotAtByPlayer -= Time.deltaTime;
 
     // Run pathfinding every 10 frames to minimize footprint
     if(frameCount % 10 == 0){
@@ -458,7 +471,7 @@ public class EnemyHub : MonoBehaviour{
     int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
     int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
 
-    GameObject player = GameObject.Find("Player");
+    GameObject player = GameObject.Find("Player ");
     Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
     playerHexagonalPosition = getHexagonPosition(playerPosition);
 
@@ -581,14 +594,14 @@ public class EnemyHub : MonoBehaviour{
     // If either enemy or player is out of bounds, return player position
     if(hexagonalPosition[0] < 0 || hexagonalPosition[0] >= terrainWidth || hexagonalPosition[1] < 0 || hexagonalPosition[1] >= terrainDepth
     || playerHexagonalPosition[0] < 0 || playerHexagonalPosition[0] >= terrainWidth || playerHexagonalPosition[1] < 0 || playerHexagonalPosition[1] >= terrainDepth){
-      GameObject player = GameObject.Find("Player");
+      GameObject player = GameObject.Find("Player ");
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
 
     // If the two hexagons are in the same group, return player position (the group is convex, so enemy can move in a straight line without going out of group)
     if(terrainGroups[playerHexagonalPosition[0], playerHexagonalPosition[1]] == terrainGroups[hexagonalPosition[0], hexagonalPosition[1]]){
-      GameObject player = GameObject.Find("Player");
+      GameObject player = GameObject.Find("Player ");
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
@@ -663,6 +676,29 @@ public class EnemyHub : MonoBehaviour{
     // Create sword
     return new Sword(addLineRenderer(), parentTransform, range, damage);
   }
+  public bool isPlayerMakingNoise(){
+    return enemyLastShotAtByPlayer > 0;
+  }
+  public void relayHiveMessage(int hiveMemberID, string message){
+    if(message == "shot-at"){
+      enemyLastShotAtByPlayer = secondsToRememberLastShot;
+      if(hiveMemberID >= 0){
+        for(int i = 0; i < enemies.Count; i++){
+          if(enemies[i].getHiveMemberID() == hiveMemberID){
+            enemies[i].hiveMemberShotAt();
+          }
+        }
+      }
+    }else if(message == "spotted"){
+      if(hiveMemberID >= 0){
+        for(int i = 0; i < enemies.Count; i++){
+          if(enemies[i].getHiveMemberID() == hiveMemberID){
+            enemies[i].hiveMemberSpotted();
+          }
+        }
+      }
+    }
+  }
 
 
   public void enemyDied(Enemy enemy, GameObject enemyInstance){
@@ -725,7 +761,7 @@ public class EnemyHub : MonoBehaviour{
         }
       break;
       case "PLAYER_HEXAGONAL_POSITION":
-        GameObject player = GameObject.Find("Player");
+        GameObject player = GameObject.Find("Player ");
         if(player == null){
           return 1;
         }

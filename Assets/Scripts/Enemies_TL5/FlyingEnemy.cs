@@ -95,6 +95,7 @@ public class FlyingEnemy : Enemy {
     // Run setup functions
     this.applyStrengthScaling(strengthScaling);
     this.setGunPositionDistance();
+    this.setFindRanges();
   }
   protected virtual Vector3 moveClose(ref Vector3 toPlayerPosition, float hoverHeightCurrent){
     // Spin in circles around player when close (overridden in FlyingMeleeEnemy)
@@ -146,5 +147,13 @@ public class FlyingEnemy : Enemy {
     // Apply rotation
     this.enemy.transform.rotation = Quaternion.RotateTowards(this.enemy.transform.rotation, lookRotation, 2f);
     this.rb.angularVelocity *= 0.75f;
+  }
+  protected override void stopAtHeightDifference(){
+    // Hover over obstacles instead of stopping (called in wander)
+
+    float terrainHeight = this.getHeightInFront(this.rb.linearVelocity);
+    float hoverHeightCurrent = this.hoverHeight + this.hoverBobbingAmplitude + 3f;
+    this.rb.linearVelocity = new Vector3(this.rb.linearVelocity.x, 0.75f * this.rb.linearVelocity.y, this.rb.linearVelocity.z);
+    this.rb.linearVelocity += this.wanderSpeed * 0.8f * new Vector3(0f, (hoverHeightCurrent + terrainHeight) - this.enemy.transform.position.y, 0f);
   }
 }

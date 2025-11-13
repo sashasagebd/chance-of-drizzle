@@ -22,7 +22,7 @@ public class Equipment : Item
         {
             if(VisualEffects.Instance != null)
             {
-                VisualEffects.Instance.PlayVisual("Explosion01", player.transform.position);
+                VisualEffects.Instance.PlayVisual("Explosion02_Mobile", player.transform.position);
             }           
         }
     }

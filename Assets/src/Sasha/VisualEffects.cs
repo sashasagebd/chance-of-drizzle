@@ -32,10 +32,8 @@ public class VisualEffects : MonoBehaviour
     {
         if (vfxPrefabs.TryGetValue(vfxId, out var prefab) && prefab != null)
         {
-            // Instantiate the VFX prefab at the desired position
             GameObject instance = Instantiate(prefab, position, Quaternion.identity);
 
-            // If it has a particle system, auto-destroy when done
             ParticleSystem ps = instance.GetComponent<ParticleSystem>();
             if (ps != null)
                 Destroy(instance, ps.main.duration);

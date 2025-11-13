@@ -16,6 +16,25 @@ public class Armor : Item
 
     public override void Use(object target)
     {
-        
+            
     }
+
+    public override void TriggerVisualEffects(object target)
+    {
+    if (target is PlayerController3D player)
+        {
+            if(VisualEffects.Instance != null)
+            {
+                if(ArmorType == "chestplate")
+                {
+                    VisualEffects.Instance.PlayVisual("PuffLarge", player.transform.position);
+                }
+                else
+                {
+                    VisualEffects.Instance.PlayVisual("Puff_HighPerformance", player.transform.position);
+                }
+            }
+            
+        }     
+    }  
 }

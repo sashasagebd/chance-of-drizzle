@@ -15,7 +15,13 @@ public class LevelManager : MonoBehaviour
             GameObject spawns = sp.gameObject;
             ObjectSpawner spawnerScript = spawns.GetComponent<ObjectSpawner>();
 
-            if (spawnerScript != null) spawnerScript.Initialize();
+
+            if (spawnerScript != null)
+            
+                if (spawnerScript.SpawnerRandomize())
+                    if (spawnerScript is EnemySpawner enemyScript) enemyScript.Initialize();
+                    else spawnerScript.Initialize();
+                else Destroy(spawns);
             else {
                 Debug.Log(spawns.name + " Not valid");
             }
