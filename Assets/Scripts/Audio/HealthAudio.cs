@@ -17,7 +17,7 @@ public class HealthAudio : MonoBehaviour
     [SerializeField] private float lowHealthCooldown = 5f; // Prevent spam
     
     private Health _health;
-    private int _lastHealth;
+    private float _lastHealth;
     private float _lastLowHealthWarning;
     private bool _hasWarnedLowHealth;
     
