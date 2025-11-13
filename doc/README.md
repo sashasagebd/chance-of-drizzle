@@ -15,3 +15,5 @@
 [Storyboard](https://vandalsuidaho-my.sharepoint.com/:p:/r/personal/bear5468_vandals_uidaho_edu/_layouts/15/Doc.aspx?sourcedoc=%7BE0C13BE8-84E3-47F3-81C2-039725F63271%7D&file=Team%202%20Storyboard.pptx&action=edit&mobileredirect=true&wdOrigin=APPHOME-WEB.OTHER%2CAPPHOME-WEB.FILEBROWSER.RECENT&wdPreviousSession=158f7488-5571-4de2-a270-411bc0e444a4&wdPreviousSessionSrc=AppHomeWeb&ct=1758745006255)
 
 [SA Presentation](https://vandalsuidaho-my.sharepoint.com/:p:/r/personal/bear5468_vandals_uidaho_edu/_layouts/15/doc2.aspx?sourcedoc=%7BF7045E5B-6D54-4BCA-8338-001DE2954C85%7D&file=SA%20Presentation%20Team%202%20Studios.pptx&action=edit&mobileredirect=true&DefaultItemOpen=1&wdOrigin=SEARCHENGINE.GOOGLE%2CAPPHOME-WEB.FILEBROWSER.RECENT&wdPreviousSession=f7137183-a0ce-4d9f-9c91-b13ef53440e0&wdPreviousSessionSrc=AppHomeWeb&ct=1758815915088)
+
+[Gantt Chart](https://docs.google.com/spreadsheets/d/1VAWC5s_Z2iK_OakRq-8AAf1T0AEr5QystO3_BVnTO5c/edit?usp=sharing)
