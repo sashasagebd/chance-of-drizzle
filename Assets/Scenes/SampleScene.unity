@@ -1574,7 +1574,7 @@ GameObject:
   - component: {fileID: 898163860}
   - component: {fileID: 898163864}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: AmmoHUB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1680,7 +1680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AmmoHUD
   ammoText: {fileID: 2072878046}
-  inventory: {fileID: 0}
+  inventory: {fileID: 1288128892}
 --- !u!1 &908840785
 GameObject:
   m_ObjectHideFlags: 0
@@ -2711,7 +2711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1288128891
 Transform:
   m_ObjectHideFlags: 0
