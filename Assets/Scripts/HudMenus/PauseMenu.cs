@@ -3,20 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-/*
     [Header("References")]
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    [SerializeField] private GameObject pauseMenuPanel; // Assign your Pause Panel in Inspector
-    [SerializeField] private MonoBehaviour playerScript; // Drag your player movement/looking script here
-=======
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private MonoBehaviour playerScript;
->>>>>>> Stashed changes
-=======
-    [SerializeField] private GameObject pauseMenuPanel;
-    [SerializeField] private MonoBehaviour playerScript;
->>>>>>> Stashed changes
 
     private bool isPaused = false;
     public static bool GameIsPaused = false;
@@ -77,39 +66,13 @@ public class PauseMenu : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        SceneManager.LoadScene("Menu"); // Replace with your main menu scene name
-    }
-
-
-        public void RestartGame()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    // Button to quit the game
-public void QuitGame()
-{
-#if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
-#else
-    Application.Quit();
-#endif
-}
-
-=======
-=======
->>>>>>> Stashed changes
-        SceneManager.LoadScene("Menu"); // Exact name from Build Settings
+        SceneManager.LoadScene("Menu");
     }
 
     public void RestartGame()
     {
-    Time.timeScale = 1f; // Reset time scale
-    Scene currentScene = SceneManager.GetActiveScene();
-    SceneManager.LoadScene(currentScene.name);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     // Button to quit the game
@@ -121,8 +84,4 @@ public void QuitGame()
         Application.Quit();
 #endif
     }
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes*/
 }
