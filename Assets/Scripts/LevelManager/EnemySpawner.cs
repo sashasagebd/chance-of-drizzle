@@ -4,9 +4,10 @@ using System.Collections.Generic;
 public class EnemySpawner : ObjectSpawner
 {
 
-    [Header("Difficulty scaling Settings")]
-    [SerializeField] protected float strengthScaling = 1.0f;
-    [SerializeField] protected int hiveMemID = -1;
+    private static float strengthScaling = 0.1f;
+    // [Header("Difficulty scaling Settings")]
+    // [SerializeField] protected float strengthScaling = 1.0f;
+    // [SerializeField] protected int hiveMemID = -1;
     [Header("Multi-spawn Settings")]
     [SerializeField] protected bool multipleEnemies = false;
     [SerializeField] protected int enemyCountMin = 1;
@@ -47,20 +48,22 @@ public class EnemySpawner : ObjectSpawner
 
     public override void Initialize() {
         if (beenInitialized && typeChoice != "") {
-            Debug.Log("Spawning object!");
+            // Debug.Log("Spawning object!");
             if (!multipleEnemies) {
-                Debug.Log("Hello!");
-                Enemy.createEnemy(transform.position,typeChoice,strengthScaling,hiveMemID);
-                // Instantiate(spawnedEnemy, transform.position, Quaternion.identity);
-            } 
-            else {
-
+                // Debug.Log("Hello!");
+                Enemy.createEnemy(transform.position,typeChoice,strengthScaling,0);
+            }  else {
+                int randCount;
+                if (enemyCountMin<=enemyCountMax) randCount = Random.Range(enemyCountMin,enemyCountMax);
+                else randCount = Random.Range(enemyCountMax,enemyCountMin);
+                
             }
             Destroy(gameObject);
         }
     }
 
-    public void changeStrengthScaling(float newScale) {
+    public static void changeStrengthScaling(float newScale) {
         strengthScaling = newScale;
+        // Debug.Log("Strength Scaling changed to "+newScale);
     }
 }
