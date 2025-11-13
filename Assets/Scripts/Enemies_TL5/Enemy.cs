@@ -22,6 +22,7 @@ public class Enemy{
   protected int frameCount = 0;
 
   // Basic stats
+  protected string type = "";
   protected float health = 0f;
   protected float maxHealth = 0f;
   protected float damage = 0f;
@@ -120,6 +121,7 @@ public class Enemy{
 
     // Set hive membership
     this.hiveMemberID = hiveMemberID;
+    this.type = type;
 
     // Individual stats for various enemy types
     switch(type){
@@ -523,5 +525,22 @@ public class Enemy{
     // Set references to other scripts / GameObjects
     Enemy.player = player;
     Enemy.enemyHub = enemyHub;
+  }
+
+
+
+  public int runTests(string testName){
+    switch(testName){
+      case "GAME_OBJECT_EXISTS":
+        return this.enemy == null ? 1 : 0;
+      break;
+      case "PARAMETERS_ARE_DEFINED":
+        if(this.maxHealth == 0f) return 1;
+        if(this.damage == 0f) return 2;
+        if(this.reloadTime >= 1e3f && !Enemy.isMelee(this.type)) return 3;
+        if(this.movementSpeed == 0f && this.type != "flying-pyramid") return 4;
+      break;
+    }
+    return 0;
   }
 }
