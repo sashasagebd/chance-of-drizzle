@@ -16,6 +16,17 @@ public class Equipment : Item
         CanStack = true;
     }
 
+    public override void TriggerVisualEffects(object target)
+    {
+        if (target is PlayerController3D player)
+        {
+            if(VisualEffects.Instance != null)
+            {
+                VisualEffects.Instance.PlayVisual("Explosion02_Mobile", player.transform.position);
+            }           
+        }
+    }
+
     public override void Use(object target)
     {
         if (target is PlayerController3D player)
