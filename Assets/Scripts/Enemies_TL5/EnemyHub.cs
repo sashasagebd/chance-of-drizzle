@@ -18,6 +18,9 @@ public class EnemyHub : MonoBehaviour{
   private float terrainMaxZ =  47.0f;
   private float terrainPartitionStepSize = 1.5f;
 
+  private int terrainWidth;
+  private int terrainDepth;
+
   // Mathematical Constants (for hexagonal tiling)
   private const float SQRT3   = 1.7320508075688772f; // sqrt(3)
   private const float SQRT3_2 = 0.8660254037844386f; // sqrt(3) / 2
@@ -58,6 +61,9 @@ public class EnemyHub : MonoBehaviour{
 
     // Set up raycast mask for terrain analysis
     rayMask = LayerMask.GetMask("Terrain");
+
+    terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / (terrainPartitionStepSize * SQRT3_2));
+    terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize));
   }
   void Start(){
     // Run terrain analysis in Start(), hopefully after terrain has been generated
@@ -133,9 +139,6 @@ public class EnemyHub : MonoBehaviour{
     return null;
   }
   private void getTerrain(){
-    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
-    
     // Split the map into hexagons, and get the heights of each hexagon
     terrainHeights = new float[terrainWidth, terrainDepth];
     for(int i = 0; i < terrainWidth; i++){
@@ -151,7 +154,7 @@ public class EnemyHub : MonoBehaviour{
           );
         }
         if(terrainHeights[i, j] < -99f){
-          print("Error: The map parsing did not work (No ray intersection). Continuing as if unparsed section is wall");
+          print("Error: The map parsing did not work (No ray intersection). Continuing as if unparsed section is wall (" + x + ", " + z + ")");
         }
       }
     }
@@ -376,9 +379,6 @@ public class EnemyHub : MonoBehaviour{
   private int[,] reverseSearch(int[] hexagonalPosition){
     // Runs reverse search from player, so enemies can look at this map when pathfinding
 
-    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
-
     // Uses a garbage value if player is out of bounds (prevent the map from getting filled with error causing values)
     if(hexagonalPosition[0] < 0 || hexagonalPosition[1] < 0 || hexagonalPosition[0] >= terrainWidth || hexagonalPosition[1] >= terrainDepth){
       hexagonalPosition = new int[]{0, 0};
@@ -468,9 +468,6 @@ public class EnemyHub : MonoBehaviour{
   }
   private void getPathToPlayer(){
     // Set up for reverse search to generate distance map
-    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
-
     GameObject player = GameObject.Find("Player ");
     Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
     playerHexagonalPosition = getHexagonPosition(playerPosition);
@@ -489,9 +486,6 @@ public class EnemyHub : MonoBehaviour{
   }
   private Vector3 getRecursivePath(int[] hexagonalPosition, int iteration){
     // Uses the generated distance map to find the best path
-
-    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
 
     int i = hexagonalPosition[0];
     int j = hexagonalPosition[1];
@@ -585,9 +579,6 @@ public class EnemyHub : MonoBehaviour{
   }
   public Vector3 EnemyPathToPlayer(Vector3 position){
     // Get vector enemy should move to to reach player (pathfinding)
-    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
-
     // enemy's position in hexagonal tilespace
     int [] hexagonalPosition = getHexagonPosition(new Vector2(position.x, position.z));
 
@@ -712,8 +703,6 @@ public class EnemyHub : MonoBehaviour{
 
   public int runTests(string testName){
     // Run tests (communicates with testing scripts to allow for testing of private methods)
-    int terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / terrainPartitionStepSize);
-    int terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize * SQRT3_2));
     switch(testName){
       case "SPAWN_ENEMIES":
         return spawnEnemy(new Vector3(Random.Range(terrainMinX, terrainMaxX), 5f, Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
