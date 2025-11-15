@@ -11,22 +11,37 @@ public class LevelAudio : MonoBehaviour
     [SerializeField] private bool playAmbientOnStart = true;
     [SerializeField] private bool playTransitionSound = true;
     
-    
-    void OnEnable()
+    static LevelAudio _instance;
+
+    void Awake()
     {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    
-    void OnDisable()
+
+    void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (_instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log($"[LevelAudio] Scene Loaded: {scene.name}");
         if (SoundManager.Instance != null)
         {
-            SoundManager.Instance.StopAmbient();
+             Debug.Log($"[LevelAudio] SoundManager exists: {SoundManager.Instance.name}");
+
+            SoundManager.Instance.StopAmbient(0f);
             
             if(scene.name.Contains("Level"))
             {
@@ -35,6 +50,10 @@ public class LevelAudio : MonoBehaviour
                 if (playAmbientOnStart)
                     SoundManager.Instance.StartAmbient();
             }
+        }
+        else
+        {
+            Debug.LogError("[LevelAudio] SoundManager.Instance is NULL!");
         }
     }
     

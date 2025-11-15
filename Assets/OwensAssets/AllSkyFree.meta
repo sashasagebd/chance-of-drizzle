@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/OwensAssets/AllSkyFree/_AllSkyFreeDemoEnvironment.meta
+guid: 4392334f044e44affbf9f5162eb718ae
+========
 guid: 72589719770b04ead999af902c0459f8
+>>>>>>>> origin/main:Assets/OwensAssets/AllSkyFree.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

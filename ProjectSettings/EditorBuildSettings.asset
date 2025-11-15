@@ -15,5 +15,5 @@ EditorBuildSettings:
     path: Assets/Scenes/WinGame.unity
     guid: 30f08ff79635ebe47bd1446dbbdb4c92
   m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: f8a5093eef91b8e4393a5d6b46ce6750, type: 3}
   m_UseUCBPForAssetBundles: 0

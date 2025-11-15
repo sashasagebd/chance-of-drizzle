@@ -541,7 +541,6 @@ public class Enemy{
     switch(testName){
       case "GAME_OBJECT_EXISTS":
         return this.enemy == null ? 1 : 0;
-      break;
       case "PARAMETERS_ARE_DEFINED":
         if(this.maxHealth == 0f) return 1;
         if(this.damage == 0f) return 2;
