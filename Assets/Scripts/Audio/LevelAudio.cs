@@ -11,14 +11,6 @@ public class LevelAudio : MonoBehaviour
     [SerializeField] private bool playAmbientOnStart = true;
     [SerializeField] private bool playTransitionSound = true;
     
-    void Start()
-    {
-        // Start ambient sounds when level loads
-        if (playAmbientOnStart && SoundManager.Instance != null)
-        {
-            SoundManager.Instance.StartAmbient();
-        }
-    }
     
     void OnEnable()
     {
@@ -34,11 +26,15 @@ public class LevelAudio : MonoBehaviour
     {
         if (SoundManager.Instance != null)
         {
-            SoundManager.Instance.StopAmbient(); // stop old music
-            if (playTransitionSound)
-                SoundManager.Instance.PlayMapTransition();
-            if (playAmbientOnStart)
-                SoundManager.Instance.StartAmbient();
+            SoundManager.Instance.StopAmbient();
+            
+            if(scene.name.Contains("Level"))
+            {
+                if (playTransitionSound)
+                    SoundManager.Instance.PlayMapTransition();
+                if (playAmbientOnStart)
+                    SoundManager.Instance.StartAmbient();
+            }
         }
     }
     
