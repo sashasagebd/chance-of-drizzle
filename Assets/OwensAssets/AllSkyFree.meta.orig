@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/OwensAssets/AllSkyFree/_AllSkyFreeDemoEnvironment.meta
+guid: 4392334f044e44affbf9f5162eb718ae
+========
+guid: 72589719770b04ead999af902c0459f8
+>>>>>>>> origin/main:Assets/OwensAssets/AllSkyFree.meta
+=======
+<<<<<<<< HEAD:Assets/OwensAssets/SimpleNaturePack.meta
+guid: 30341396a589664418cb8e33d2b6dc29
+========
+guid: 72589719770b04ead999af902c0459f8
+>>>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf:Assets/OwensAssets/AllSkyFree.meta
+>>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
