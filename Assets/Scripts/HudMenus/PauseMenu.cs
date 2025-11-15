@@ -1,36 +1,44 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject pauseMenuPanel;
-    [SerializeField] private MonoBehaviour playerScript;
+    [SerializeField] private GameObject pauseMenuPanel; 
+    [SerializeField] private MonoBehaviour playerScript; 
 
     private bool isPaused = false;
     public static bool GameIsPaused = false;
 
-    void Start()
-    {
-        if (pauseMenuPanel != null)
-            pauseMenuPanel.SetActive(false);
+    private UIInputActions inputActions;
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+    private void Awake()
+    {
+        inputActions = new UIInputActions();
     }
 
-    void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-                ResumeGame();
-            else
-                PauseGame();
-        }
+        inputActions.UI.Pause.performed += OnPause;
+        inputActions.UI.Enable();
     }
 
-    public void PauseGame()
+    private void OnDisable()
+    {
+        inputActions.UI.Pause.performed -= OnPause;
+        inputActions.UI.Disable();
+    }
+
+    private void OnPause(InputAction.CallbackContext context)
+    {
+        if (isPaused)
+            ResumeGame();
+        else
+            PauseGame();
+    }
+
+    private void PauseGame()
     {
         if (pauseMenuPanel != null)
             pauseMenuPanel.SetActive(true);
@@ -62,7 +70,6 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
     }
 
-    // Button to go back to Main Menu
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
@@ -75,7 +82,6 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // Button to quit the game
     public void QuitGame()
     {
 #if UNITY_EDITOR
