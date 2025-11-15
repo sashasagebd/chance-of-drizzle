@@ -21,7 +21,7 @@ public class Health : MonoBehaviour
             healthHUD.ApplyHealthChange(maxHp, maxHp);
     }
 
-    public void ApplyDamage(int amount)
+    public void ApplyDamage(float amount)
     {
         float oldHp = Current;
 
