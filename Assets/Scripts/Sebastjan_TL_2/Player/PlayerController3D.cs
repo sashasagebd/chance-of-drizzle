@@ -32,7 +32,7 @@ public class PlayerController3D : MonoBehaviour
 
     [Header("Weapon")]
     public WeaponInventory inventory;
-    public Transform muzzle;
+    public Transform muzzle;  // Fallback muzzle if weapon doesn't have one
 
     [Header("Animation")]
     public PlayerAnimationController animationController;  // Reference to animation controller
@@ -151,19 +151,6 @@ public class PlayerController3D : MonoBehaviour
         bool isSprinting = _sprintAction != null && _sprintAction.IsPressed();
         IsSprinting = isSprinting && !_isCrouching; // Can't sprint while crouching
 
-        // Debug sprint input - only log when shift is pressed or sprint action is null
-        if (_sprintAction == null)
-        {
-            Debug.LogWarning("Sprint Action is NULL! Check if 'Sprint' action exists in Input Actions asset.");
-        }
-        else if (_sprintAction.IsPressed() || IsSprinting)
-        {
-            Debug.Log($"=== SPRINT INPUT DEBUG ===");
-            Debug.Log($"Sprint Action IsPressed: {_sprintAction.IsPressed()}");
-            Debug.Log($"IsCrouching: {_isCrouching}");
-            Debug.Log($"Final IsSprinting Property: {IsSprinting}");
-        }
-
         float currentMoveSpeed;
         if (_isCrouching)
         {
@@ -218,7 +205,9 @@ public class PlayerController3D : MonoBehaviour
         {
             if (_fireAction.IsPressed())
             {
-                Vector3 origin = muzzle ? muzzle.position : cam.position;
+                // Use weapon's muzzle if available, otherwise fallback to player muzzle or camera
+                Transform weaponMuzzle = weapon.muzzle ? weapon.muzzle : muzzle;
+                Vector3 origin = weaponMuzzle ? weaponMuzzle.position : cam.position;
                 Vector3 forward = cam ? cam.forward : transform.forward;
                 bool didFire = weapon.TryFire(origin, forward);
 

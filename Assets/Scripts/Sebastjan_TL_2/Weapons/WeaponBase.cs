@@ -7,6 +7,9 @@ public abstract class WeaponBase : MonoBehaviour {
     public float fireRate = 6f;
     public int damage = 10;
 
+    [Header("Visual")]
+    public Transform muzzle;  // Bullet spawn point for this weapon
+
     [Header("Runtime")]
     public int ammo;
     float _nextFireTime;

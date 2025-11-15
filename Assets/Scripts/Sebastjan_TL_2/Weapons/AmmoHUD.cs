@@ -50,6 +50,7 @@ public class AmmoHUD : MonoBehaviour
                 // No weapon selected
                 ammoText.text = "--/--";
                 ClearIcons();
+                ammoText.text = "--/--";
             }
         }
     }
@@ -104,5 +105,6 @@ public class AmmoHUD : MonoBehaviour
         {
             bulletIcons[i].enabled = (i < current);
         }
+        ammoText.text = $"{current}/{max}";
     }
 }
