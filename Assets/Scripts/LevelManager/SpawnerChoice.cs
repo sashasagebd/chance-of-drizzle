@@ -22,11 +22,12 @@ public class SpawnerChoice : MonoBehaviour
 
     public void Initialize() {
         
+        // for (in)
         int randIndex = Random.Range(0, eligibleSpawners.Count);
         GameObject designatedSpawner = eligibleSpawners[randIndex];
         if (designatedSpawner.GetComponent<ObjectSpawner>()!=null) {
             designatedSpawner.GetComponent<ObjectSpawner>().Initialize();
-            eligibleSpawners.Remove(designatedSpawner)
+            eligibleSpawners.Remove(designatedSpawner);
         }
 
         Destroy(gameObject);
