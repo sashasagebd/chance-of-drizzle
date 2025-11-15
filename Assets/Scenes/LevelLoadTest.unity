@@ -4154,8 +4154,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932295133}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-<<<<<<< HEAD
-=======
 --- !u!4 &1932295144
 Transform:
   m_ObjectHideFlags: 0
@@ -4820,7 +4818,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
->>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf
 --- !u!1001 &4580873407599924475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4873,14 +4870,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
-<<<<<<< HEAD
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1418754409484702239, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2056952878}
-=======
     - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
       propertyPath: exitDestinations.Array.size
       value: 1
@@ -4904,7 +4893,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 90858089231694274, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1746120115}
->>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
 --- !u!1001 &7635551824930094651
@@ -4998,13 +4986,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1426054125}
   - {fileID: 1617537695}
-<<<<<<< HEAD
-  - {fileID: 152268932}
-  - {fileID: 2110639584}
-  - {fileID: 843449165}
-  - {fileID: 4580873407599924475}
-  - {fileID: 507144816}
-=======
   - {fileID: 4580873407599924475}
   - {fileID: 507144816}
   - {fileID: 251770376}
@@ -5013,4 +4994,3 @@ SceneRoots:
   - {fileID: 847792404}
   - {fileID: 935415541}
   - {fileID: 2124924061}
->>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf
