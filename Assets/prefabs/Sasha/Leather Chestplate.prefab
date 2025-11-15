@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5598767418677856637}
   - component: {fileID: 2809091955796187587}
   - component: {fileID: 9061274212215483079}
+  - component: {fileID: 2613124108303023045}
   m_Layer: 0
   m_Name: Leather Chestplate
   m_TagString: Untagged
@@ -124,4 +125,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1534ccf1072a4448b45661cf5ec2712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  hudManager: {fileID: 0}
+  itemIcon: {fileID: 0}
+  iconDuration: 3
   itemID: leatherchestplate
+--- !u!114 &2613124108303023045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551493656785838994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea6dd3464d08477891051fdd7afefa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::ItemPickupAudio
+  playPickupSound: 1

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7587942831077343108}
   - component: {fileID: 8565014583694177506}
   - component: {fileID: 7648549411598935029}
+  - component: {fileID: 5464133764550877577}
   m_Layer: 0
   m_Name: Ancient Pants
   m_TagString: Untagged
@@ -124,4 +125,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1534ccf1072a4448b45661cf5ec2712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  hudManager: {fileID: 0}
+  itemIcon: {fileID: 0}
+  iconDuration: 3
   itemID: ancientpants
+--- !u!114 &5464133764550877577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7820790313105502847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea6dd3464d08477891051fdd7afefa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::ItemPickupAudio
+  playPickupSound: 1
