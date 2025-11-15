@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 // Class for demo mode
 public class AIPlayer{
@@ -20,7 +21,7 @@ public class AIPlayer{
     this.playerController = player.GetComponent<PlayerController3D>();
     this.enemyHub = enemyHub;
     this.characterController = player.GetComponent<CharacterController>();
-    this.camera = player.GetComponentInChildren<Camera>();
+    this.camera = GameObject.Find("Main Camera").GetComponentInChildren<Camera>();
   }
   public bool run(){
     // Go to closest enemy
@@ -56,6 +57,6 @@ public class AIPlayer{
 
     // Return true if any key / mouse is pressed
     // Uses Unity's old input system
-    return Input.anyKeyDown;
+    return Keyboard.current.anyKey.isPressed || Mouse.current.leftButton.isPressed || Mouse.current.rightButton.isPressed;
   }
 }

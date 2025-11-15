@@ -33,7 +33,6 @@ public class EnemyHub : MonoBehaviour{
   private bool debugVariablePrintDistanceToPlayer = false;
 
   // Variables for enemy spawning
-  private int enemyCount = 0;
   private List<Enemy> enemies = new List<Enemy>();
 
   // Variables for pathfinding / group generation
@@ -52,6 +51,8 @@ public class EnemyHub : MonoBehaviour{
   private float secondsToRememberLastShot = 2f;
 
   private int frameCount = 0;
+
+  AIPlayer aiPlayer;
 
   void Awake(){
     // Set up references to other scripts / GameObjects in this, Enemy, and Laser
@@ -100,6 +101,9 @@ public class EnemyHub : MonoBehaviour{
         //spawnEnemyAtTerrainHeight(randomPosition + randomPosition2, "flying", 1f, i);
       }
     }
+
+    GameObject player = GameObject.Find("Player ");
+    aiPlayer = new AIPlayer(player, this);
   }
   void Update(){
     frameCount++;
@@ -111,6 +115,8 @@ public class EnemyHub : MonoBehaviour{
     }
 
     runLasers();
+
+    print(aiPlayer.run());
   }
 
   public GameObject createEnemyGameObject(){
@@ -706,16 +712,12 @@ public class EnemyHub : MonoBehaviour{
     switch(testName){
       case "SPAWN_ENEMIES":
         return spawnEnemy(new Vector3(Random.Range(terrainMinX, terrainMaxX), 5f, Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
-      break;
       case "SPAWN_FLYING_ENEMIES":
         return spawnEnemy(new Vector3(Random.Range(terrainMinX, terrainMaxX), 5f, Random.Range(terrainMinZ, terrainMaxZ)), "flying") == null ? 1 : 0;
-      break;
       case "SPAWN_ENEMIES_AT_TERRAIN_HEIGHT":
         return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ))) == null ? 1 : 0;
-      break;
       case "SPAWN_FLYING_ENEMIES_ABOVE_TERRAIN_HEIGHT":
         return spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying") == null ? 1 : 0;
-      break;
       case "CHECK_TERRAIN_EXISTS":
         for(int i = 0; i < 100; i++){
           if(getHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ))) < -99f){
