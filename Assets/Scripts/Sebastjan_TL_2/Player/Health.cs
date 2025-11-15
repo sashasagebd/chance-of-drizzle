@@ -6,6 +6,7 @@ public class Health : MonoBehaviour {
     [SerializeField]  private bool destroyOnDeath = false;
     public float Current { get; private set; }
     public event Action OnDied;
+    public event Action<float, float> OnHealthChanged; // (current, max)
     private PlayerController3D playerController; // need for accessing armor modifier
 
     void Awake()
@@ -28,6 +29,7 @@ public class Health : MonoBehaviour {
 
         Current = Mathf.Max(0, Current - damageTaken);
         Debug.Log($"{name} took {amount} damage but armor defended {percentDefense * 100}% so only {damageTaken} damage taken. CURRENT HP: {Current}");
+        OnHealthChanged?.Invoke(Current, maxHp);
         if (Current <= 0)
         {
             if (destroyOnDeath) Destroy(gameObject);
@@ -45,16 +47,19 @@ public class Health : MonoBehaviour {
         {
             Current = maxHp;
         }
+        OnHealthChanged?.Invoke(Current, maxHp);
     }
 
     public void IncreaseMaxHealth(int amount)
     {
         maxHp += amount;
         Debug.Log($"Max health is now {maxHp}");
+        OnHealthChanged?.Invoke(Current, maxHp);
     }
-    
+
     public void SetHealth(int value)
     {
         Current = Mathf.Clamp(value, 1, maxHp);
+        OnHealthChanged?.Invoke(Current, maxHp);
     }
 }

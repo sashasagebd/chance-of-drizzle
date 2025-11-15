@@ -24,13 +24,13 @@ public class AmmoHUD : MonoBehaviour {
             }
             else
             {
-                ammoText.text = "Ammo \n--/--";
+                ammoText.text = "--/--";
             }
         }
     }
 
     void OnAmmo(int current, int max)
     {
-        ammoText.text = $"Ammo \n{current}/{max}";
+        ammoText.text = $"{current}/{max}";
     }
 }
