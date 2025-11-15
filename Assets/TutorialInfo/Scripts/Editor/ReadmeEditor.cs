@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// Decimated by Kynan in a possibly futile attempt to quell build errors
+/*
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -240,3 +242,4 @@ public class ReadmeEditor : Editor
         return GUI.Button(position, label, LinkStyle);
     }
 }
+*/

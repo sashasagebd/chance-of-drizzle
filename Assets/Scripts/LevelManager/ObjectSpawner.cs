@@ -10,6 +10,8 @@ public class ObjectSpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     // [SerializeField] protected int spawnCount = 1;
+    [SerializeField] protected bool spawnAtTerrainHeight = true;
+    [SerializeField] protected Vector3 constDisplace = new Vector3();
     [SerializeField] protected List<GameObject> toSpawn = new List<GameObject>();
     // [SerializeField] private GameObject visual;
 
@@ -66,15 +68,22 @@ public class ObjectSpawner : MonoBehaviour
 
         if (beenInitialized && spawnChoice != null) {
             Debug.Log("Spawning object!");
-            /*
-            for (int i = 0; i < spawnCount; i++) {
-                Vector3 randomDisplace = new Vector3(Random.Range(-5,5),0,Random.Range(-5,5));
+            
+            GameObject item;
 
-                Instantiate(spawnChoice, transform.position + randomDisplace, Quaternion.identity);
-                Destroy(gameObject);
+            if (spawnAtTerrainHeight && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Terrain")))
+            {
+                item = Instantiate(spawnChoice, hit.point + constDisplace, Quaternion.identity);
+            } else {
+                item = Instantiate(spawnChoice, transform.position, Quaternion.identity);
             }
-            */
-            Instantiate(spawnChoice, transform.position, Quaternion.identity);
+
+            if (item!=null && item.GetComponent<ItemPickup>()) {
+                ItemPickup pickup = spawnChoice.GetComponent<ItemPickup>();
+                pickup.hudManager = GameObject.Find("Hud/HudManager").GetComponent<HUDManager>();
+            }
+                
+
             Destroy(gameObject);
         }
     }
