@@ -52,8 +52,6 @@ public class EnemyHub : MonoBehaviour{
 
   private int frameCount = 0;
 
-  AIPlayer aiPlayer;
-
   void Awake(){
     // Set up references to other scripts / GameObjects in this, Enemy, and Laser
     GameObject player = GameObject.Find("Player ");
@@ -101,9 +99,6 @@ public class EnemyHub : MonoBehaviour{
         //spawnEnemyAtTerrainHeight(randomPosition + randomPosition2, "flying", 1f, i);
       }
     }
-
-    GameObject player = GameObject.Find("Player ");
-    aiPlayer = new AIPlayer(player, this);
   }
   void Update(){
     frameCount++;
@@ -115,8 +110,6 @@ public class EnemyHub : MonoBehaviour{
     }
 
     runLasers();
-
-    print(aiPlayer.run());
   }
 
   public GameObject createEnemyGameObject(){
