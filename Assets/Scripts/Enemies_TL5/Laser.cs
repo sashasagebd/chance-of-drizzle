@@ -56,8 +56,12 @@ public class Laser{
     if(Physics.Linecast(this.position, this.position + this.direction, out hit)){
       if (hit.transform.gameObject == Laser.player){
         Health health = hit.transform.gameObject.GetComponent<Health>();
-        int damage = (int)(Mathf.Floor(this.damage)) + (Random.Range(0f, 1f) < this.damage % 1f ? 1 : 0);
-        if(damage != 0) health.ApplyDamage(damage);
+        
+        // Back when only dealing integer damage
+        // int damage = (int)(Mathf.Floor(this.damage)) + (Random.Range(0f, 1f) < this.damage % 1f ? 1 : 0);
+        // if(damage != 0) health.ApplyDamage(damage);
+        
+        health.ApplyDamage(this.damage);
       }
 
       // Stop laser at hit point for one last render
