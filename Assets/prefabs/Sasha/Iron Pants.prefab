@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 175199701964989546}
   - component: {fileID: 5812580884295846926}
   - component: {fileID: 7334391679311304056}
+  - component: {fileID: -3430043860083137120}
   m_Layer: 0
   m_Name: Iron Pants
   m_TagString: Untagged
@@ -103,6 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1534ccf1072a4448b45661cf5ec2712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  hudManager: {fileID: 0}
+  itemIcon: {fileID: 0}
+  iconDuration: 3
   itemID: ironpants
 --- !u!65 &7334391679311304056
 BoxCollider:
@@ -125,3 +129,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5183833, y: 0.8785815, z: 0.31853518}
   m_Center: {x: -0.00000002980232, y: -0.07077416, z: 0.010894111}
+--- !u!114 &-3430043860083137120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7108782346833156538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea6dd3464d08477891051fdd7afefa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::ItemPickupAudio
+  playPickupSound: 1

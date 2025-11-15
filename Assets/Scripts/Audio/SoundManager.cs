@@ -49,7 +49,7 @@ public class SoundManager : MonoBehaviour
 		{
 			if (_instance == null)
 			{
-				_instance = FindFirstObjectByType<SoundManager>();
+				_instance = FindObjectOfType<SoundManager>();
 				if (_instance == null)
 				{
 					var go = new GameObject("SoundManager");
@@ -65,12 +65,14 @@ public class SoundManager : MonoBehaviour
 	AudioSource _ambientSource;
 	AudioSource[] _oneShotSources;
 	int _oneShotIndex;
+	private Coroutine FadeAmbientInRoutine;
+    private Coroutine FadeAmbientOutRoutine;
 
 	void Awake()
 	{
 		if (_instance != null && _instance != this)
 		{
-			Destroy(gameObject);
+			DestroyImmediate(gameObject);
 			return;
 		}
 		_instance = this;
@@ -96,7 +98,7 @@ public class SoundManager : MonoBehaviour
 		for (int i = 0; i < sfxPoolSize; i++)
 		{
 			var src = new GameObject($"SFX_Source_{i}").AddComponent<AudioSource>();
-			src.transform.SetParent(transform);
+			src.transform.SetParent(null);
 			src.spatialBlend = 1f; // 3D by default
 			src.playOnAwake = false;
 			_sfxPool.Enqueue(src);
@@ -121,7 +123,7 @@ public class SoundManager : MonoBehaviour
 		}
 		// If exhausted, create a temporary one
 		var temp = new GameObject("SFX_Source_Temp").AddComponent<AudioSource>();
-		temp.transform.SetParent(transform);
+		temp.transform.SetParent(null);
 		temp.spatialBlend = 1f;
 		temp.playOnAwake = false;
 		return temp;
@@ -187,37 +189,52 @@ public class SoundManager : MonoBehaviour
 	}
 	
 	public void PlayAmbient(AudioClip clip, float volume = 0.3f, bool fadeIn = true)
-	{
-		if (_ambientSource == null) return;
-		_ambientSource.clip = clip;
-		_ambientSource.volume = Mathf.Clamp01(volume);
-		if (clip == null)
-		{
-			_ambientSource.Stop();
-			return;
-		}
-		if (fadeIn)
-		{
-			StartCoroutine(FadeAmbientIn());
-		}
-		else
-		{
-			_ambientSource.Play();
-		}
-	}
+    {
+        if (_ambientSource == null || clip == null) return;
+
+        // Stop only existing ambient fades
+        if (FadeAmbientInRoutine != null) StopCoroutine(FadeAmbientInRoutine);
+        if (FadeAmbientOutRoutine != null) StopCoroutine(FadeAmbientOutRoutine);
+
+        // Reset source
+        _ambientSource.Stop();
+        _ambientSource.clip = clip;
+        _ambientSource.volume = Mathf.Clamp01(volume);
+
+        if (fadeIn)
+        {
+            FadeAmbientInRoutine = StartCoroutine(FadeAmbientIn());
+        }
+        else
+        {
+            _ambientSource.Play();
+        }
+    }
 	
 	public void StopAmbient(float fadeOutSeconds = 1f)
-	{
-		if (_ambientSource == null || !_ambientSource.isPlaying) return;
-		if (fadeOutSeconds > 0f)
-		{
-			StartCoroutine(FadeAmbientOut(fadeOutSeconds));
-		}
-		else
-		{
-			_ambientSource.Stop();
-		}
-	}
+    {
+        if (_ambientSource == null || !_ambientSource.isPlaying) return;
+
+        if (FadeAmbientInRoutine != null)
+        {
+            StopCoroutine(FadeAmbientInRoutine);
+			FadeAmbientInRoutine = null;
+        } 
+        if (FadeAmbientOutRoutine != null)
+        {
+            StopCoroutine(FadeAmbientOutRoutine);
+			FadeAmbientOutRoutine = null;
+        } 
+
+        if (fadeOutSeconds > 0f)
+        {
+            FadeAmbientOutRoutine = StartCoroutine(FadeAmbientOut(fadeOutSeconds));
+        }
+        else
+        {
+            _ambientSource.Stop();
+        }
+    }
 	
 	IEnumerator FadeMusic(AudioClip newClip, bool loop, float targetVolume, float duration)
 	{
@@ -267,6 +284,7 @@ public class SoundManager : MonoBehaviour
 			yield return null;
 		}
 		_ambientSource.volume = targetVolume;
+		FadeAmbientInRoutine = null;
 	}
 	
 	IEnumerator FadeAmbientOut(float duration)
@@ -281,6 +299,7 @@ public class SoundManager : MonoBehaviour
 			yield return null;
 		}
 		_ambientSource.Stop();
+		FadeAmbientOutRoutine = null;
 	}
 
 	IEnumerator ReturnWhenDone(AudioSource src)
@@ -326,10 +345,7 @@ public class SoundManager : MonoBehaviour
 	public void PlayMapTransition(float volume = 1f) => PlaySfx2D(sfxMapTransition, volume);
 	public void PlayLevelComplete(float volume = 1f) => PlaySfx2D(sfxLevelComplete, volume);
 
-void Start()
-{
-    StartStageMusic();   // this will play your background music
-}
+
 
 }
 

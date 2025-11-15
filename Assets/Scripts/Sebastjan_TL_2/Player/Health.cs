@@ -46,9 +46,12 @@ public class Health : MonoBehaviour
         OnHealthChanged?.Invoke(Current, maxHp);
         if (Current <= 0)
         {
+            SoundManager.Instance?.PlayPlayerDeath(1f); // play death sound
             if (destroyOnDeath) Destroy(gameObject);
             OnDied?.Invoke();
         }
+
+        SoundManager.Instance?.PlayPlayerDamage(.5f); // play hit sound
     }
 
     public void Heal(int amount)

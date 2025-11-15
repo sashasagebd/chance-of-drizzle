@@ -13,6 +13,7 @@ public abstract class WeaponBase : MonoBehaviour {
     [Header("Runtime")]
     public int ammo;
     float _nextFireTime;
+    private WeaponAudio weaponAudio;
 
     // notify HUD when ammo changes
     public event Action<int,int> OnAmmoChanged;
@@ -23,6 +24,10 @@ public abstract class WeaponBase : MonoBehaviour {
     }
 
     public void Reload() {
+        if (weaponAudio == null)
+            weaponAudio = GetComponent<WeaponAudio>();
+        weaponAudio?.OnWeaponReload(transform.position);
+
         ammo = magazineSize;
         OnAmmoChanged?.Invoke(ammo, magazineSize);
         OnReloaded();

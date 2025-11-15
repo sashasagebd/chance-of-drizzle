@@ -11,30 +11,49 @@ public class LevelAudio : MonoBehaviour
     [SerializeField] private bool playAmbientOnStart = true;
     [SerializeField] private bool playTransitionSound = true;
     
-    void Start()
+    static LevelAudio _instance;
+
+    void Awake()
     {
-        // Start ambient sounds when level loads
-        if (playAmbientOnStart && SoundManager.Instance != null)
+        if (_instance != null && _instance != this)
         {
-            SoundManager.Instance.StartAmbient();
+            Destroy(gameObject);
+            return;
         }
-    }
-    
-    void OnEnable()
-    {
+        _instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-    
-    void OnDisable()
+
+    void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (_instance == this)
+            SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (playTransitionSound && SoundManager.Instance != null)
+        Debug.Log($"[LevelAudio] Scene Loaded: {scene.name}");
+        if (SoundManager.Instance != null)
         {
-            SoundManager.Instance.PlayMapTransition();
+             Debug.Log($"[LevelAudio] SoundManager exists: {SoundManager.Instance.name}");
+
+            SoundManager.Instance.StopAmbient(0f);
+            
+            if(scene.name.Contains("Level"))
+            {
+                if (playTransitionSound)
+                    SoundManager.Instance.PlayMapTransition();
+                if (playAmbientOnStart)
+                    SoundManager.Instance.StartAmbient();
+            }
+        }
+        else
+        {
+            Debug.LogError("[LevelAudio] SoundManager.Instance is NULL!");
         }
     }
     

@@ -7,10 +7,15 @@ public class ProjectileWeapon : WeaponBase
     public float muzzleSpeed = 60f;      // m/s
     public bool useGravity = false;      // toggle if you want drop
     public LayerMask bulletHitMask;      // same as bullet.hitMask
+    private WeaponAudio weaponAudio;
 
     protected override bool DoFire(Vector3 origin, Vector3 direction)
     {
         if (!bulletPrefab) return false;
+
+        if (weaponAudio == null)
+            weaponAudio = GetComponent<WeaponAudio>();
+        weaponAudio?.OnWeaponFire(transform.position);
 
         var go = Object.Instantiate(bulletPrefab, origin, Quaternion.LookRotation(direction));
         var bullet  = go.GetComponent<Bullet>();

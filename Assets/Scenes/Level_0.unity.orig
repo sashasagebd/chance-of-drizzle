@@ -902,6 +902,7 @@ GameObject:
   - component: {fileID: 660376601}
   - component: {fileID: 660376600}
   - component: {fileID: 660376599}
+  - component: {fileID: 660376604}
   m_Layer: 3
   m_Name: Gun 2
   m_TagString: Untagged
@@ -1134,6 +1135,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660376597}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &660376604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660376597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e13c69db8d174293be4c8456b053a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::WeaponAudio
+  playFireSound: 1
+  playReloadSound: 1
+  playDryFireSound: 1
 --- !u!1 &665099776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,11 +1934,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AmmoHUD
   ammoText: {fileID: 2072878046}
+<<<<<<< HEAD:Assets/Scenes/Level_0.unity
+  iconContainer: {fileID: 0}
+  bulletPrefab: {fileID: 0}
+  inventory: {fileID: 1288128892}
+  iconSize: {x: 16, y: 16}
+  iconsPerRow: 10
+=======
   iconContainer: {fileID: 700953404}
   bulletPrefab: {fileID: 3010172217413453092, guid: 58464191b67d3a24abebb2114b8fcfd8, type: 3}
   inventory: {fileID: 1288128892}
   iconSize: {x: 30, y: 30}
   iconsPerRow: 20
+>>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf:Assets/Scenes/SampleScene.unity
   spacingX: 2
   spacingY: 2
 --- !u!1 &908840785
@@ -2914,7 +2938,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHp: 100
   destroyOnDeath: 0
+<<<<<<< HEAD:Assets/Scenes/Level_0.unity
+  healthHUD: {fileID: 0}
+=======
   healthHUD: {fileID: 249593718}
+>>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf:Assets/Scenes/SampleScene.unity
 --- !u!114 &1273956415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3595,6 +3623,7 @@ GameObject:
   - component: {fileID: 1571014894}
   - component: {fileID: 1571014893}
   - component: {fileID: 1571014892}
+  - component: {fileID: 1571014897}
   m_Layer: 3
   m_Name: Gun
   m_TagString: Untagged
@@ -3827,6 +3856,21 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571014890}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1571014897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571014890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e13c69db8d174293be4c8456b053a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::WeaponAudio
+  playFireSound: 1
+  playReloadSound: 1
+  playDryFireSound: 1
 --- !u!1 &1628261422
 GameObject:
   m_ObjectHideFlags: 0
