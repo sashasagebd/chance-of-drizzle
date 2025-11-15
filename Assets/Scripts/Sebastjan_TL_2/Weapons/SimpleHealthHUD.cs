@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthHUD : MonoBehaviour
+public class SimpleHealthHUD : MonoBehaviour
 {
     [Header("UI References")]
     public TextMeshProUGUI healthText;  // Drag your HealthText here

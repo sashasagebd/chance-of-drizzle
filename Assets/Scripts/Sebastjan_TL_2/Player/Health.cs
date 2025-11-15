@@ -12,8 +12,6 @@ public class Health : MonoBehaviour
 
     public HealthHUD healthHUD;
 
-    private PlayerController3D playerController; // optional: for armor
-
     void Awake()
     {
         Current = maxHp;
