@@ -27,7 +27,13 @@ public class SpawnerChoice : MonoBehaviour
         int randIndex = Random.Range(0, eligibleSpawners.Count);
         GameObject designatedSpawner = eligibleSpawners[randIndex];
         if (designatedSpawner.GetComponent<ObjectSpawner>()!=null) {
-            designatedSpawner.GetComponent<ObjectSpawner>().Initialize();
+
+            ObjectSpawner spawnerScript = designatedSpawner.GetComponent<ObjectSpawner>();
+            
+            if (spawnerScript is EnemySpawner enemyScript) enemyScript.Initialize();
+            else if (spawnerScript is ItemSpawner itemScript) itemScript.Initialize();
+             else spawnerScript.Initialize();
+
             eligibleSpawners.Remove(designatedSpawner);
         }
 

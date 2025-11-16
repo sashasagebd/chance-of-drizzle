@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
                 if (spawnerScript.SpawnerRandomize()) {
 
                     if (spawnerScript is EnemySpawner enemyScript) enemyScript.Initialize();
-                    // else if (spawnerScript is ItemSpawner itemScript) itemScript.Initialize();
+                    else if (spawnerScript is ItemSpawner itemScript) itemScript.Initialize();
                     else spawnerScript.Initialize();
 
                 } else Destroy(spawns);
