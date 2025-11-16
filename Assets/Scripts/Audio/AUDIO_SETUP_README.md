@@ -1,8 +1,5 @@
-# Audio System Setup Guide
 
-This audio system is designed to work **without modifying other team members' code** to avoid merge conflicts.
 
-## Core Files (Your Audio Files)
 
 All audio scripts are located in: `Assets/Scripts/Audio/`
 
@@ -55,19 +52,9 @@ All audio scripts are located in: `Assets/Scripts/Audio/`
 - Add `HealthAudio` component to your player GameObject
 - Configure low health threshold and cooldown in Inspector
 
-### 3. Enemy Audio (Optional - requires coordination)
-Since we can't modify Enemy.cs, you have two options:
 
-**Option A: Use UnityEvents (Recommended)**
-- Add `EnemyAudio` component to enemy prefabs
-- Use UnityEvents in Inspector to call the audio methods when needed
-- Or ask TL5 to add a simple call like: `GetComponent<EnemyAudio>()?.OnEnemyAttack(position);`
 
-**Option B: Create wrapper scripts**
-- Create your own enemy wrapper that calls EnemyAudio methods
-- This keeps your code separate from TL5's code
-
-### 4. Weapon Audio
+### 3. Weapon Audio
 Since WeaponBase has virtual methods, create custom weapon classes:
 
 ```csharp
@@ -103,15 +90,15 @@ public class AudioProjectileWeapon : ProjectileWeapon
 
 Then use `AudioProjectileWeapon` instead of `ProjectileWeapon` for weapons that need audio.
 
-### 5. UI Audio
+### 4. UI Audio
 - Add `UIAudio` component to all UI Button GameObjects
 - It will automatically play click sounds
 
-### 6. Item Pickup Audio
+### 5. Item Pickup Audio
 - Add `ItemPickupAudio` component to item pickup prefabs
 - Sound plays automatically when item is picked up (destroyed)
 
-### 7. Level Audio
+### 6. Level Audio
 - Add `LevelAudio` component to a GameObject in your scene
 - It handles ambient sounds and level transitions automatically
 
@@ -156,7 +143,6 @@ All methods are accessible via `SoundManager.Instance`:
 
 ## Notes
 
-- All audio clips are optional - assign only what you have
 - The system gracefully handles null clips (won't crash)
 - SoundManager persists across scenes (DontDestroyOnLoad)
 - 3D sounds use spatial audio (positional)
