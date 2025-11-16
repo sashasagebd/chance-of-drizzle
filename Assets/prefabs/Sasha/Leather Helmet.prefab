@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2548105234436092530}
   - component: {fileID: 6641339886793477980}
   - component: {fileID: 6264111736396841762}
+  - component: {fileID: -846205330967810687}
   m_Layer: 0
   m_Name: Leather Helmet
   m_TagString: Untagged
@@ -103,6 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1534ccf1072a4448b45661cf5ec2712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
+  hudManager: {fileID: 0}
+  itemIcon: {fileID: 0}
+  iconDuration: 3
   itemID: leatherhelmet
 --- !u!65 &6264111736396841762
 BoxCollider:
@@ -125,3 +129,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.87265784, y: 0.43039927, z: 0.3317039}
   m_Center: {x: 0.00000002980232, y: -0.024219928, z: -0.0094233}
+--- !u!114 &-846205330967810687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004777539500749732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ea6dd3464d08477891051fdd7afefa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::ItemPickupAudio
+  playPickupSound: 1

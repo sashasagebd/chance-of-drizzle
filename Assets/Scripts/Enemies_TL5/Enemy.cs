@@ -95,6 +95,9 @@ public class Enemy{
   // List of where the weapons fire from
   protected List<Transform> gunPositions = new List<Transform>();
 
+  // Audio stuff
+  protected EnemyAudio enemyAudio;
+
   //protected Vector3 velocity;
   public Enemy(Vector3 position, string type, float strengthScaling, int hiveMemberID){
     // Set up Unity integration
@@ -330,6 +333,11 @@ public class Enemy{
   }
   protected void fire(int i){
     // Where bullet is fired from
+    
+    // Audio stuff (inserted by Sasha + Alija)
+    if (this.enemyAudio == null) this.enemyAudio = this.enemy.GetComponent<EnemyAudio>();
+    this.enemyAudio?.OnEnemyAttack(this.enemy.transform.position);
+
     Vector3 fireLocation = this.gunPositions[i].position + this.rb.linearVelocity * Time.deltaTime;
     Quaternion lookRotation;
     if(this.overrideDirection){

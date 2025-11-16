@@ -8,10 +8,14 @@ public class LazerWeapon : WeaponBase
     public LayerMask hitMask;       // set to Hittable in Inspector
     public LineRenderer line;       // optional laser line
     public float lineTime = 0.05f;
+    private WeaponAudio weaponAudio;
 
-   
     protected override bool DoFire(Vector3 origin, Vector3 direction)
     {
+        if (weaponAudio == null)
+            weaponAudio = GetComponent<WeaponAudio>();
+        weaponAudio?.OnWeaponFire(transform.position);
+
         Vector3 end = origin + direction.normalized * range;
 
         if (Physics.Raycast(origin, direction.normalized, out RaycastHit hit, range, hitMask))

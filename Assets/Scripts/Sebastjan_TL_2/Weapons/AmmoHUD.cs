@@ -55,6 +55,11 @@ public class AmmoHUD : MonoBehaviour
         }
     }
 
+    void OnAmmo(int current, int max)
+    {
+        ammoText.text = $"Ammo \n{current}/{max}";
+    }
+
     void BuildIcons(int count)
     {
         ClearIcons();

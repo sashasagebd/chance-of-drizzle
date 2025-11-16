@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 5701935680364254471}
   - component: {fileID: -4370382643012729988}
   - component: {fileID: 8576069544747874332}
+  - component: {fileID: -6134243409751157024}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -468,6 +469,22 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &-6134243409751157024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765494066999471437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389747320dc554b09a8ab5fcba11740d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::EnemyAudio
+  playAttackSound: 1
+  playHitSound: 1
+  playDeathSound: 1
+  attackSoundCooldown: 0.1
 --- !u!1 &1865567421934811592
 GameObject:
   m_ObjectHideFlags: 0

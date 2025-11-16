@@ -7,8 +7,13 @@ public class EnemyHub : MonoBehaviour{
   [SerializeField] private GameObject enemyTemplate;
   [SerializeField] private GameObject enemyBulletTemplate;
 
+  [SerializeField] private float actualMinX = -47.0f;
+  [SerializeField] private float actualMaxX =  47.0f;
+  [SerializeField] private float actualMinZ = -47.0f;
+  [SerializeField] private float actualMaxZ =  47.0f;
+
   // Terrain Analysis Variables
-  private float maxTerrainHeight = 20.0f;
+  private float maxTerrainHeight = 100.0f;
   private float minTerrainHeight = -1.0f;
   private float maxHeightDifference = 1.4f;
   private LayerMask rayMask;
@@ -69,9 +74,8 @@ public class EnemyHub : MonoBehaviour{
 
     //debugVariablePrintHexagonalMap = true;
     //debugVariablePrintGroups = true;
-    getTerrain();
+    runOnceMapLoads();
 
-    getPathToPlayer();
 
 
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "melee-figure-eight");
@@ -82,7 +86,7 @@ public class EnemyHub : MonoBehaviour{
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "homing-shot");
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "basic");
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "drizzle-of-doom");
-    
+    // 
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying");
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-missile");
     // spawnEnemyAtTerrainHeight(new Vector2(Random.Range(terrainMinX, terrainMaxX), Random.Range(terrainMinZ, terrainMaxZ)), "flying-melee-quad");
@@ -106,12 +110,35 @@ public class EnemyHub : MonoBehaviour{
 
     // Run pathfinding every 10 frames to minimize footprint
     if(frameCount % 10 == 0){
+      if(frameCount % 600 == 0 && (
+        terrainMinX != actualMinX ||
+        terrainMaxX != actualMaxX ||
+        terrainMinZ != actualMinZ ||
+        terrainMaxZ != actualMaxZ
+      )){
+        runOnceMapLoads();
+      }
+
       getPathToPlayer();
     }
 
     runLasers();
   }
 
+  public void runOnceMapLoads(){
+    GameObject player = GameObject.Find("Player ");
+
+    terrainMinX = Mathf.Max(player.transform.position.x - 35f, actualMinX);
+    terrainMaxX = Mathf.Min(player.transform.position.x + 35f, actualMaxX);
+    terrainMinZ = Mathf.Max(player.transform.position.z - 35f, actualMinZ);
+    terrainMaxZ = Mathf.Min(player.transform.position.z + 35f, actualMaxZ);
+
+    terrainWidth = (int)Mathf.Ceil((terrainMaxX - terrainMinX) / (terrainPartitionStepSize * SQRT3_2));
+    terrainDepth = (int)Mathf.Ceil((terrainMaxZ - terrainMinZ) / (terrainPartitionStepSize));
+    
+    getTerrain();
+    getPathToPlayer();
+  }
   public GameObject createEnemyGameObject(){
     // https://chamucode.com/unity-enemy-spawn/
     GameObject enemyInstance = Instantiate(enemyTemplate, Vector3.zero, Quaternion.identity);
