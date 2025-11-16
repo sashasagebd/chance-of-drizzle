@@ -14,21 +14,13 @@ public class PlayerController3D : MonoBehaviour
     public float jumpSpeed = 5.5f;
     public float gravity = -9.81f;
 
-    [Header("Look")]
-    public Transform cam;             // drag your camera here (NOT a child for TPS)
-    public float lookSensitivity = 0.12f;   // tweak to taste
-    public float minPitch = -80f, maxPitch = 80f;
+    [Header("Camera Reference")]
+    public Transform cam;             // Assign your Cinemachine virtual camera's follow target or main camera
 
     [Header("Crouch")]
     public float standingHeight = 2f;       // Normal CharacterController height
     public float crouchingHeight = 1f;      // Crouching CharacterController height
     public float crouchTransitionSpeed = 10f; // How fast to transition between crouch states
-
-    [Header("Third-Person Camera")]
-    public float cameraDistance = 2.75f;       // Distance behind player
-    public float cameraHeight = 1f;          // Height above player
-    public LayerMask cameraCollisionMask = -1;  // What camera collides with
-    public float cameraCollisionBuffer = 0.2f;  // Extra space from walls
 
     [Header("Weapon")]
     public WeaponInventory inventory;
@@ -39,7 +31,7 @@ public class PlayerController3D : MonoBehaviour
 
     CharacterController _controller;
     PlayerInput _playerInput;
-    InputAction _moveAction, _lookAction, _jumpAction, _fireAction, _reloadAction, _nextAction, _prevAction, _sprintAction, _crouchAction;
+    InputAction _moveAction, _jumpAction, _fireAction, _reloadAction, _nextAction, _prevAction, _sprintAction, _crouchAction;
 
     [Header("Items")]
     public Health HealthComponent; // needed right now for items to access health class easily
@@ -52,8 +44,6 @@ public class PlayerController3D : MonoBehaviour
     public static int damageBonus = 0; // additional damage from items
 
     Vector3 _velocity; // for gravity
-    float _pitch;      // camera pitch
-    float _yaw;        // camera yaw (horizontal orbit angle)
 
     // Movement state
     private bool _isCrouching;
@@ -72,7 +62,6 @@ public class PlayerController3D : MonoBehaviour
 
         // Cache actions by name (must match your asset)
         _moveAction = _playerInput.actions["Move"];
-        _lookAction = _playerInput.actions["Look"];
         _jumpAction = _playerInput.actions["Jump"];
         _fireAction = _playerInput.actions["Fire"];
         _reloadAction = _playerInput.actions["Reload"];
@@ -90,9 +79,8 @@ public class PlayerController3D : MonoBehaviour
 
         if (cam == null)
         {
-            // Try to auto-find a child camera or main camera
-            var childCam = GetComponentInChildren<Camera>();
-            cam = childCam ? childCam.transform : Camera.main?.transform;
+            // Try to auto-find main camera (Cinemachine will control it)
+            cam = Camera.main?.transform;
         }
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -124,16 +112,6 @@ public class PlayerController3D : MonoBehaviour
         // Adjust center Y to maintain that bottom position with the new height
         float newCenterY = initialBottom + _currentHeight / 2f;
         _controller.center = new Vector3(_initialCenter.x, newCenterY, _initialCenter.z);
-
-        // ----- Third-Person Camera Orbit (mouse/gamepad) -----
-        Vector2 look = _lookAction.ReadValue<Vector2>();
-        const float mouseScale = 0.12f;
-        float yawDelta = look.x * lookSensitivity * mouseScale;
-        float pitchDelta = look.y * lookSensitivity * mouseScale;
-
-        // Update camera orbit angles
-        _yaw += yawDelta;
-        _pitch = Mathf.Clamp(_pitch - pitchDelta, minPitch, maxPitch);
 
         // ----- Move (WASD/left stick) relative to camera -----
         Vector2 move = _moveAction.ReadValue<Vector2>();
@@ -168,8 +146,12 @@ public class PlayerController3D : MonoBehaviour
         // Calculate movement direction relative to camera
         Vector3 moveDir = (camForward * input.z + camRight * input.x).normalized * currentMoveSpeed;
 
-        // Rotate player to face camera direction (mouse yaw)
-        transform.rotation = Quaternion.Euler(0f, _yaw, 0f);
+        // Rotate player to face movement direction (if moving)
+        if (moveDir.magnitude > 0.1f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(moveDir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
 
         // ----- Jump + Gravity -----
         _velocity.y += gravity * Time.deltaTime;
@@ -188,9 +170,6 @@ public class PlayerController3D : MonoBehaviour
 
         if ((flags & CollisionFlags.Below) != 0 && _velocity.y < 0f)
             _velocity.y = -2f;
-
-        // ----- Third-Person Camera Positioning -----
-        UpdateCameraPosition();
 
         // ----- Weapon Switching -----
         if (inventory)
@@ -221,37 +200,6 @@ public class PlayerController3D : MonoBehaviour
             if (_reloadAction.triggered)
                 weapon.Reload();
         }
-    }
-
-    /// <summary>
-    /// Updates the third-person camera position with collision detection
-    /// </summary>
-    void UpdateCameraPosition()
-    {
-        if (!cam) return;
-
-        // Calculate desired camera position based on orbit angles
-        Quaternion rotation = Quaternion.Euler(_pitch, _yaw, 0f);
-        Vector3 offset = rotation * new Vector3(0f, 0f, -cameraDistance);
-        Vector3 targetPosition = transform.position + Vector3.up * cameraHeight + offset;
-
-        // Perform collision detection (raycast from player to camera)
-        Vector3 rayOrigin = transform.position + Vector3.up * cameraHeight;
-        Vector3 rayDirection = targetPosition - rayOrigin;
-        float rayDistance = rayDirection.magnitude;
-
-        if (Physics.Raycast(rayOrigin, rayDirection.normalized, out RaycastHit hit, rayDistance, cameraCollisionMask))
-        {
-            // Camera would collide with something - move it closer
-            targetPosition = hit.point + hit.normal * cameraCollisionBuffer;
-        }
-
-        // Set camera position instantly for responsive aiming
-        cam.position = targetPosition;
-
-        // Make camera look at player (with height offset for better framing)
-        Vector3 lookTarget = transform.position + Vector3.up * cameraHeight;
-        cam.LookAt(lookTarget);
     }
 
     public void ApplySpeed(float amount, int duration)
