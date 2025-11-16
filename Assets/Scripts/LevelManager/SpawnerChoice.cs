@@ -31,6 +31,7 @@ public class SpawnerChoice : MonoBehaviour
             eligibleSpawners.Remove(designatedSpawner);
         }
 
+        // Debug.Log("SpawnerChoice is ago");
         Destroy(gameObject);
 
     }

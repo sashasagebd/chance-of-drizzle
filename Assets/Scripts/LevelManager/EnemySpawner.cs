@@ -39,7 +39,7 @@ public class EnemySpawner : ObjectSpawner
             // Debug.Log("Spawning object!");
 
             Vector2 randXrange = new Vector2(transform.position.x-enemyDistanceVariance,transform.position.x+enemyDistanceVariance);
-            Vector2 randZrange = new Vector2(transform.position.z-enemyDistanceVariance,transform.position.x+enemyDistanceVariance);
+            Vector2 randZrange = new Vector2(transform.position.z-enemyDistanceVariance,transform.position.z+enemyDistanceVariance);
             if (!multipleEnemies) {
                 // Debug.Log("Hello!");
                 if (spawnAtTerrainHeight)
@@ -52,7 +52,7 @@ public class EnemySpawner : ObjectSpawner
 
                 int randCount;
                 int hiveCount = -1;
-                
+
                 if (enemyCountMin<enemyCountMax) randCount = Random.Range(enemyCountMin,enemyCountMax);
                 else if (enemyCountMin>enemyCountMax) randCount = Random.Range(enemyCountMax,enemyCountMin);
                 else randCount = enemyCountMax;
