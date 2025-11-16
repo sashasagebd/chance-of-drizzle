@@ -186,7 +186,7 @@ public class ItemTestRunner
     }
 
     [Test]
-    public void HealItemDoesNothingWithoutHealthComponent()
+    public void HealItemDoesNothingWithoutHealthComponentTest()
     {
         player.HealthComponent = null; // remove component
         health.SetHealth(50);
@@ -198,7 +198,7 @@ public class ItemTestRunner
     }
 
     [Test]
-    public void UsingItemOnInvalidTargetDoesNothing()
+    public void UsingItemOnInvalidTargetDoesNothingTest()
     {
         var potion = new Consumable("item", "", "Heal", 20, 0);
 
@@ -244,7 +244,7 @@ public class ItemTestRunner
     }
 
     [Test]
-    public void SpeedBuffStopsPreviousCoroutineBeforeApplyingNewOneTest()
+    public void SpeedBoostStopsPreviousCoroutineTest()
     {
         var berry = new Consumable("item", "", "Speed", 1f, 5);
 
@@ -257,7 +257,7 @@ public class ItemTestRunner
     }
 
     [Test]
-    public void JumpBuffStopsPreviousCoroutineBeforeApplyingNewOneTest()
+    public void JumpBoostStopsPreviousCoroutineTest()
     {
         var fruit = new Consumable("item", "", "Jump", 2f, 5);
 
@@ -268,6 +268,162 @@ public class ItemTestRunner
 
         Assert.That(player.jumpSpeed, Is.EqualTo(oldJump + 2f));
     }
+
+    [Test]
+    public void JumpBoostWithZeroAmountTest()
+    {
+        float before = player.jumpSpeed;
+        var item = new Consumable("item", "", "Jump", 0, 5);
+
+        item.Use(player);
+
+        Assert.That(player.jumpSpeed, Is.EqualTo(before));
+    }
+
+    [Test]
+    public void MultipleSpeedItemsStackCorrectlyTest()
+    {
+        var b1 = new Consumable("b1", "", "Speed", 1f, 0);
+        var b2 = new Consumable("b2", "", "Speed", 3f, 0);
+
+        b1.Use(player);
+        b2.Use(player);
+
+        Assert.That(player.runSpeed, Is.EqualTo(8f));
+    }
+
+    [Test]
+    public void HealDoesNotAffectSpeedTest()
+    {
+        float r = player.runSpeed;
+        float s = player.sprintSpeed;
+
+        var heal = new Consumable("item", "", "Heal", 50, 0);
+        heal.Use(player);
+
+        Assert.That(player.runSpeed, Is.EqualTo(r));
+        Assert.That(player.sprintSpeed, Is.EqualTo(s));
+    }
+
+    [Test]
+    public void SpeedBuffDuringJumpBuffTest()
+    {
+        float originalJump = player.jumpSpeed;
+
+        var jump = new Consumable("item", "", "Jump", 2f, 0);
+        var speed = new Consumable("item", "", "Speed", 2f, 0);
+
+        jump.Use(player);
+        speed.Use(player);
+
+        Assert.That(player.jumpSpeed, Is.EqualTo(originalJump + 2f));
+    }
+
+    [Test]
+    public void JumpBuffDuringSpeedBuffTest()
+    {
+        float originalRun = player.runSpeed;
+
+        var speed = new Consumable("item", "", "Speed", 3f, 0);
+        var jump = new Consumable("item", "", "Jump", 4f, 0);
+
+        speed.Use(player);
+        jump.Use(player);
+
+        Assert.That(player.runSpeed, Is.EqualTo(originalRun + 3f));
+    }
+
+    [Test]
+    public void ConsumableStoresDataTest()
+    {
+        var c = new Consumable("Apple", "Yummy", "Heal", 5, 10);
+
+        Assert.That(c.Name, Is.EqualTo("Apple"));
+        Assert.That(c.Description, Is.EqualTo("Yummy"));
+        Assert.That(c.EffectType, Is.EqualTo("Heal"));
+        Assert.That(c.Amount, Is.EqualTo(5));
+        Assert.That(c.Duration, Is.EqualTo(10));
+    }
+
+    [Test]
+    public void DamageThenHealTest()
+    {
+        health.SetHealth(20);
+        health.ApplyDamage(10);
+
+        var potion = new Consumable("item", "", "Heal", 50, 0);
+        potion.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(60));
+    }
+
+    [Test]
+    public void SpeedBuffThenDamageTest()
+    {
+        var berry = new Consumable("item", "", "Speed", 2f, 0);
+        berry.Use(player);
+
+        float expected = player.runSpeed;
+
+        health.ApplyDamage(999);
+
+        Assert.That(player.runSpeed, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void JumpBuffThenDamageTest()
+    {
+        var fruit = new Consumable("item", "", "Jump", 2f, 0);
+        fruit.Use(player);
+
+        float expected = player.jumpSpeed;
+
+        health.ApplyDamage(999);
+
+        Assert.That(player.jumpSpeed, Is.EqualTo(expected));
+    }
+
+    [Test]
+    public void ApplySpeedTwiceWithDifferentDurationsTest()
+    {
+        var b1 = new Consumable("item", "", "Speed", 2f, 1);
+        var b2 = new Consumable("item", "", "Speed", 2f, 5);
+
+        b1.Use(player);
+        b2.Use(player);
+
+        Assert.That(player.runSpeed, Is.EqualTo(8f)); 
+    }
+
+    [Test]
+    public void SpeedBuffExpiresWhileJumpBuffStaysTest()
+    {
+        var speed = new Consumable("item", "", "Speed", 2f, 1);
+        var jump  = new Consumable("item", "", "Jump", 5f, 0);
+
+        float originalJump = player.jumpSpeed;
+
+        speed.Use(player);
+        jump.Use(player);
+
+        player.StartCoroutine(WaitAndExecute(1.1f, () =>
+        {
+            Assert.That(player.runSpeed, Is.EqualTo(4f)); // speed reset
+            Assert.That(player.jumpSpeed, Is.EqualTo(originalJump + 5f)); // jump stays
+        }));
+    }
+
+    [Test]
+    public void UsingItemOnNullDoesNotErrorTest()
+    {
+        var potion = new Consumable("item", "", "Heal", 20, 0);
+
+        Assert.DoesNotThrow(() =>
+        {
+            potion.Use(null);
+        });
+    }
+
 
 
     private IEnumerator WaitAndExecute(float time, Action callback)
