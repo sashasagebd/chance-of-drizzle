@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraShake : MonoBehaviour
 {
-    public Transform cameraTransform; 
+    public Transform cameraTransform;
     public float shakeDuration = 0.1f;
     public float shakeMagnitude = 0.1f;
     private Vector3 originalPos;
