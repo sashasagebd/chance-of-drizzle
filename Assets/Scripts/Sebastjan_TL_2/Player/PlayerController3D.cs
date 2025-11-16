@@ -28,6 +28,7 @@ public class PlayerController3D : MonoBehaviour
 
     [Header("Animation")]
     public PlayerAnimationController animationController;  // Reference to animation controller
+    public CharacterAiming characterAiming;  // Reference to character aiming (for rig weight control)
 
     CharacterController _controller;
     PlayerInput _playerInput;
@@ -190,10 +191,18 @@ public class PlayerController3D : MonoBehaviour
                 Vector3 forward = cam ? cam.forward : transform.forward;
                 bool didFire = weapon.TryFire(origin, forward);
 
-                // Trigger shoot animation if weapon fired and animation controller exists
-                if (didFire && animationController != null)
+                // Trigger shoot animation and aiming rig if weapon fired
+                if (didFire)
                 {
-                    animationController.TriggerShootAnimation();
+                    if (animationController != null)
+                    {
+                        animationController.TriggerShootAnimation();
+                    }
+
+                    if (characterAiming != null)
+                    {
+                        characterAiming.OnWeaponFired();
+                    }
                 }
             }
 
