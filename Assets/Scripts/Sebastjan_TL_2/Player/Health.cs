@@ -7,10 +7,10 @@ public class Health : MonoBehaviour
     [SerializeField] private bool destroyOnDeath = false;
     public float Current { get; private set; }
     public event Action OnDied;
+    public event Action<float, float> OnHealthChanged; // (current, max)
+    private PlayerController3D playerController; // need for accessing armor modifier
 
     public HealthHUD healthHUD;
-
-    private PlayerController3D playerController; // optional: for armor
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class Health : MonoBehaviour
             healthHUD.ApplyHealthChange(maxHp, maxHp);
     }
 
-    public void ApplyDamage(int amount)
+    public void ApplyDamage(float amount)
     {
         float oldHp = Current;
 
@@ -43,11 +43,15 @@ public class Health : MonoBehaviour
         if (healthHUD != null)
             healthHUD.ApplyHealthChange(oldHp, Current);
 
+        OnHealthChanged?.Invoke(Current, maxHp);
         if (Current <= 0)
         {
+            SoundManager.Instance?.PlayPlayerDeath(1f); // play death sound
             if (destroyOnDeath) Destroy(gameObject);
             OnDied?.Invoke();
         }
+
+        SoundManager.Instance?.PlayPlayerDamage(.5f); // play hit sound
     }
 
     public void Heal(int amount)
@@ -59,6 +63,15 @@ public class Health : MonoBehaviour
         // Update HUD
         if (healthHUD != null)
             healthHUD.ApplyHealthChange(oldHp, Current);
+        if (Current + amount <= maxHp)
+        {
+            Current += amount;
+        }
+        else
+        {
+            Current = maxHp;
+        }
+        OnHealthChanged?.Invoke(Current, maxHp);
     }
 
     public void IncreaseMaxHealth(int amount)
@@ -68,12 +81,14 @@ public class Health : MonoBehaviour
 
         if (healthHUD != null)
             healthHUD.ApplyHealthChange(Current, Current);
+        OnHealthChanged?.Invoke(Current, maxHp);
     }
 
     public void SetHealth(int value)
     {
         float oldHp = Current;
         Current = Mathf.Clamp(value, 1, maxHp);
+        OnHealthChanged?.Invoke(Current, maxHp);
 
         if (healthHUD != null)
             healthHUD.ApplyHealthChange(oldHp, Current);

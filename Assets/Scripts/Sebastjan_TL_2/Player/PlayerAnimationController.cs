@@ -73,10 +73,10 @@ public class PlayerAnimationController : MonoBehaviour
         _velocityXHash = Animator.StringToHash("VelocityX");
         _velocityZHash = Animator.StringToHash("VelocityZ");
         _speedHash = Animator.StringToHash("Speed");
-        _isGroundedHash = Animator.StringToHash("IsGrounded");
-        _isCrouchingHash = Animator.StringToHash("IsCrouching");
-        _isSprintingHash = Animator.StringToHash("IsSprinting");
-        _isAimingHash = Animator.StringToHash("IsAiming");
+        _isGroundedHash = Animator.StringToHash("isGrounded");
+        _isCrouchingHash = Animator.StringToHash("isCrouching");
+        _isSprintingHash = Animator.StringToHash("isSprinting");
+        _isAimingHash = Animator.StringToHash("isAiming");
         _shootTriggerHash = Animator.StringToHash("Shoot");
 
         _lastPosition = transform.position;
@@ -116,24 +116,6 @@ public class PlayerAnimationController : MonoBehaviour
         _animator.SetBool(_isCrouchingHash, playerController.IsCrouching);
         bool isSprinting = playerController.IsSprinting;
         _animator.SetBool(_isSprintingHash, isSprinting);
-
-        // Debug: Log movement state - check even when not sprinting to see if animator ever leaves Idle
-        if (horizontalSpeed > idleSpeedThreshold || isSprinting)
-        {
-            // Get current animator state info
-            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-            AnimatorClipInfo[] clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
-            string currentClip = clipInfo.Length > 0 ? clipInfo[0].clip.name : "None";
-            string stateName = stateInfo.IsName("Idle") ? "Idle" :
-                              stateInfo.IsName("Locomotion") ? "Locomotion" :
-                              stateInfo.IsName("Sprint_Locomotion") ? "Sprint_Locomotion" : "Unknown";
-
-            Debug.Log($"=== MOVEMENT DEBUG ===");
-            Debug.Log($"HorizontalSpeed: {horizontalSpeed}, IsSprinting: {isSprinting}");
-            Debug.Log($"Animator Speed Param: {_animator.GetFloat(_speedHash)}, VelX: {_animator.GetFloat(_velocityXHash)}, VelZ: {_animator.GetFloat(_velocityZHash)}");
-            Debug.Log($"Current State: {stateName}, Current Clip: {currentClip}, IsTransitioning: {_animator.IsInTransition(0)}");
-            Debug.Log($"IsSprinting Bool in Animator: {_animator.GetBool(_isSprintingHash)}");
-        }
 
         // Control animation speed based on movement state
         // Note: Set speed AFTER setting parameters to avoid interfering with transitions

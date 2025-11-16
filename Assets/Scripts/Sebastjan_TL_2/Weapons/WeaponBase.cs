@@ -7,9 +7,13 @@ public abstract class WeaponBase : MonoBehaviour {
     public float fireRate = 6f;
     public int damage = 10;
 
+    [Header("Visual")]
+    public Transform muzzle;  // Bullet spawn point for this weapon
+
     [Header("Runtime")]
     public int ammo;
     float _nextFireTime;
+    private WeaponAudio weaponAudio;
 
     // notify HUD when ammo changes
     public event Action<int,int> OnAmmoChanged;
@@ -20,6 +24,10 @@ public abstract class WeaponBase : MonoBehaviour {
     }
 
     public void Reload() {
+        if (weaponAudio == null)
+            weaponAudio = GetComponent<WeaponAudio>();
+        weaponAudio?.OnWeaponReload(transform.position);
+
         ammo = magazineSize;
         OnAmmoChanged?.Invoke(ammo, magazineSize);
         OnReloaded();

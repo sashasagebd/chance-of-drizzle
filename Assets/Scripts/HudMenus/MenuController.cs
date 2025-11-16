@@ -30,7 +30,7 @@ public class MenuController : MonoBehaviour
 
     public void OnStartClick()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Level_0");
     }
 
     public void OnSettingsClick()

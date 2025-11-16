@@ -50,8 +50,14 @@ public class AmmoHUD : MonoBehaviour
                 // No weapon selected
                 ammoText.text = "--/--";
                 ClearIcons();
+                ammoText.text = "--/--";
             }
         }
+    }
+
+    void OnAmmo(int current, int max)
+    {
+        ammoText.text = $"Ammo \n{current}/{max}";
     }
 
     void BuildIcons(int count)
@@ -99,5 +105,6 @@ public class AmmoHUD : MonoBehaviour
         {
             bulletIcons[i].enabled = (i < current);
         }
+        ammoText.text = $"{current}/{max}";
     }
 }

@@ -31,6 +31,7 @@ public class GoalPoint : MonoBehaviour{
     return perpendicularDistance < 0.25f;
   }
 
+  // Following function written by Erik
   public static void setExitDestination(string exitName) {
     if (Application.CanStreamedLevelBeLoaded(exitName)) levelExitID = exitName;
     else { 

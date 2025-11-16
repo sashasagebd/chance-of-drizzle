@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+<<<<<<< HEAD
+<<<<<<<< HEAD:Assets/OwensAssets/ADG_Textures.meta
+guid: d6ec46836a28bdc4ca9a833394a44719
+========
+guid: 4392334f044e44affbf9f5162eb718ae
+>>>>>>>> origin/main:Assets/OwensAssets/AllSkyFree/_AllSkyFreeDemoEnvironment.meta
+=======
+guid: 4392334f044e44affbf9f5162eb718ae
+>>>>>>> e139babfffcca8d79882b78a75766ca82959cbbf
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
