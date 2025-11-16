@@ -406,7 +406,7 @@ public class Enemy{
     Enemy.enemyHub.relayHiveMessage(this.hiveMemberID, "shot-at");
 
     this.health -= damage;
-    // Debug.Log("Health: " + this.health);
+    Debug.Log("Health: " + this.health + ", damage: " + damage);
     if(this.health <= 0f){
       Enemy.enemyHub.enemyDied(this, this.enemy);
     }

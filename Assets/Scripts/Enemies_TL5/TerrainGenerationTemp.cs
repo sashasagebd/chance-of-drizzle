@@ -5,6 +5,7 @@ public class TerrainGenerationTemp : MonoBehaviour{
 
   [SerializeField] private bool loadItems = false;
   [SerializeField] private bool loadEnemies = false;
+  [SerializeField] private int level = 1;
 
   private int edgeWidth = 4;
 
@@ -74,9 +75,9 @@ public class TerrainGenerationTemp : MonoBehaviour{
         "drizzle-of-doom",
         "flying-missile"
       };
-      for(int i = 0; i < 40; i++){
+      for(int i = 0; i < 40 + 5 * level; i++){
         int typeIndex = Mathf.FloorToInt(Mathf.Pow(Random.Range(0f, 1f), 2.0f) * enemyTypes.Length);
-        hub.spawnEnemyAtTerrainHeight(new Vector2(Random.Range(mapMinX, mapMaxX), Random.Range(mapMinZ, mapMaxZ)), enemyTypes[typeIndex]);
+        hub.spawnEnemyAtTerrainHeight(new Vector2(Random.Range(mapMinX, mapMaxX), Random.Range(mapMinZ, mapMaxZ)), enemyTypes[typeIndex], 1f + 0.25f * level);
       }
     }
   }
