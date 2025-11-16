@@ -52,7 +52,7 @@ public class TerrainGenerationTemp : MonoBehaviour{
     float px = -goalPosition.x;
     float pz = -goalPosition.y + 5f;
 
-    GameObject player = GameObject.Find("Player ");
+    GameObject player = hub.getPlayer();
     player.transform.position = new Vector3(px, hub.getHeight(new Vector2(px, pz)) + 1, pz);
 
     if(loadEnemies){
