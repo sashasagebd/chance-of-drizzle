@@ -12,6 +12,7 @@ public class ItemSpawner : ObjectSpawner
             return true;
         } else {
             // Debug.Log("False!");
+            
             return false;
         }
     }
@@ -19,7 +20,7 @@ public class ItemSpawner : ObjectSpawner
     public override void Initialize() {
         if (beenInitialized && spawnChoice != null) {
 
-            Debug.Log("Spawning object!");
+            // Debug.Log("Spawning object!");
             
             GameObject item;
 

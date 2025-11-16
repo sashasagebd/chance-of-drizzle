@@ -8,6 +8,7 @@ public class ItemPickup : MonoBehaviour
     public Sprite itemIcon;
     public float iconDuration = 3f;
     public string itemID;
+    
     private void OnTriggerEnter(Collider other)
     {
         PlayerController3D player = other.GetComponent<PlayerController3D>();
