@@ -59,7 +59,7 @@ public class EnemyHub : MonoBehaviour{
 
   void Awake(){
     // Set up references to other scripts / GameObjects in this, Enemy, and Laser
-    GameObject player = GameObject.Find("Player ");
+    GameObject player = getPlayer();
     Laser.setStaticValues(player, this);
     Enemy.setStaticValues(player, this);
 
@@ -126,7 +126,7 @@ public class EnemyHub : MonoBehaviour{
   }
 
   public void runOnceMapLoads(){
-    GameObject player = GameObject.Find("Player ");
+    GameObject player = getPlayer();
 
     terrainMinX = Mathf.Max(player.transform.position.x - 35f, actualMinX);
     terrainMaxX = Mathf.Min(player.transform.position.x + 35f, actualMaxX);
@@ -494,7 +494,7 @@ public class EnemyHub : MonoBehaviour{
   }
   private void getPathToPlayer(){
     // Set up for reverse search to generate distance map
-    GameObject player = GameObject.Find("Player ");
+    GameObject player = getPlayer();
     Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.z);
     playerHexagonalPosition = getHexagonPosition(playerPosition);
 
@@ -611,14 +611,14 @@ public class EnemyHub : MonoBehaviour{
     // If either enemy or player is out of bounds, return player position
     if(hexagonalPosition[0] < 0 || hexagonalPosition[0] >= terrainWidth || hexagonalPosition[1] < 0 || hexagonalPosition[1] >= terrainDepth
     || playerHexagonalPosition[0] < 0 || playerHexagonalPosition[0] >= terrainWidth || playerHexagonalPosition[1] < 0 || playerHexagonalPosition[1] >= terrainDepth){
-      GameObject player = GameObject.Find("Player ");
+      GameObject player = getPlayer();
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
 
     // If the two hexagons are in the same group, return player position (the group is convex, so enemy can move in a straight line without going out of group)
     if(terrainGroups[playerHexagonalPosition[0], playerHexagonalPosition[1]] == terrainGroups[hexagonalPosition[0], hexagonalPosition[1]]){
-      GameObject player = GameObject.Find("Player ");
+      GameObject player = getPlayer();
       Vector3 playerPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
       return playerPosition;
     }
@@ -725,6 +725,14 @@ public class EnemyHub : MonoBehaviour{
     //print("ENEMY DIED");
   }
 
+  public GameObject getPlayer(){
+    GameObject player = GameObject.Find("Player");
+    if(player == null){
+      player = GameObject.Find("Player ");
+    }
+    return player;
+  }
+
 
 
   public int runTests(string testName){
@@ -772,7 +780,7 @@ public class EnemyHub : MonoBehaviour{
         }
       break;
       case "PLAYER_HEXAGONAL_POSITION":
-        GameObject player = GameObject.Find("Player ");
+        GameObject player = getPlayer();
         if(player == null){
           return 1;
         }
