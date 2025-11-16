@@ -407,6 +407,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d2c125de648414a98cfe3610030c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::CrossHairTarget
+--- !u!198 &723886919 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5768772322454200894, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+  m_PrefabInstance: {fileID: 1134339538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &907599322
 GameObject:
   m_ObjectHideFlags: 0
@@ -750,6 +755,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2012133544}
   m_LocalEulerAnglesHint: {x: -8.728, y: 135.3, z: -364.362}
+--- !u!1 &982530837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5725645284214137995, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+  m_PrefabInstance: {fileID: 1134339538}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &982530841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982530837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ee23c5ab0fa42059f8e0601447d092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::BindingDemo
+  muzzleFlash: {fileID: 1875821079}
+  muzzleFlash2: {fileID: 723886919}
+  useFire: 1
 --- !u!1 &985544992
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,6 +928,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 907599328}
     - target: {fileID: 3117677742473545284, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+      propertyPath: magazineSize
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117677742473545284, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
       propertyPath: raycastDestination
       value: 
       objectReference: {fileID: 523592565}
@@ -965,7 +994,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5725645284214137995, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 982530841}
   m_SourcePrefab: {fileID: 100100000, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
 --- !u!1 &1143970181
 GameObject:
@@ -1839,6 +1871,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2012133545}
   m_SourcePrefab: {fileID: 100100000, guid: 3add884c1c1944ea8a860f4afd9de2bc, type: 3}
+--- !u!198 &1875821079 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5769051792516735640, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+  m_PrefabInstance: {fileID: 1134339538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2012133543 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3360815591244620800, guid: 3add884c1c1944ea8a860f4afd9de2bc, type: 3}
