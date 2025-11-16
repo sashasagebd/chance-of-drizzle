@@ -1,6 +1,7 @@
 using NUnit.Framework; 
 using UnityEngine;
 using System; 
+using System.Collections;
 
 [TestFixture]
 public class ItemTestRunner
@@ -49,18 +50,22 @@ public class ItemTestRunner
     [Test]
     public void SpeedBoostBoundaryTest()
     {
-        float buffAmount = 3.5f;
-        float expectedSpeed = player.baseMoveSpeed + buffAmount;
+        float buffAmount = 2f;
+        float expectedRunSpeed = player.runSpeed + buffAmount;
+        float expectedSprintSpeed = player.sprintSpeed + buffAmount;
         
         var speedberry = new Consumable("speedberry", "Boosts speed", "Speed", buffAmount, 10);
 
         speedberry.Use(player); 
-        float actualSpeed = player.currentMoveSpeed;
+        float actualRunSpeed = player.runSpeed;
+        float actualSprintSpeed = player.sprintSpeed;
         
-        Assert.That(actualSpeed, Is.EqualTo(expectedSpeed),
-            $"Speed Boost Failed. Expected speed: {expectedSpeed}, Actual speed: {actualSpeed}");
+        Assert.That(actualRunSpeed, Is.EqualTo(expectedRunSpeed),
+            $"Speed Boost Failed. Expected run speed: {expectedRunSpeed}, Actual run speed: {actualRunSpeed}");
+        Assert.That(actualSprintSpeed, Is.EqualTo(expectedSprintSpeed),
+            $"Speed Boost Failed. Expected sprint speed: {expectedSprintSpeed}, Actual sprint speed: {actualSprintSpeed}");
         
-        Debug.Log($"[SUCCESS] Speed Boost Boundary Test: Speed is {actualSpeed}.");
+        Debug.Log($"[SUCCESS] Speed Boost Boundary Test: Speed is {actualRunSpeed} (run), {actualSprintSpeed} (sprint).");
     }
 
 
@@ -82,6 +87,193 @@ public class ItemTestRunner
             $"Heal Spam Failed. Expected HP: {expectedHP}, Actual HP: {actualFinalHP}");
 
         Debug.Log($"[SUCCESS] Heal Spam Stress Test: HP correctly remained at {actualFinalHP} after {spamCount} heals.");
+    }
+
+    [Test]
+    public void HealDoesNotExceedMaxHPTest()
+    {
+        health.SetHealth(95);
+        var potion = new Consumable("healpotion", "Heals", "Heal", 20, 0);
+
+        potion.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(100));
+    }
+
+    [Test]
+    public void HealFromOneTest()
+    {
+        health.SetHealth(1);
+        var potion = new Consumable("healpotion", "", "Heal", 20, 0);
+
+        potion.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(21));
+    }
+
+    [Test]
+    public void DamageClampAtZeroTest()
+    {
+        health.SetHealth(5);
+        health.ApplyDamage(999);
+
+        Assert.That(health.Current, Is.EqualTo(0));
+    }
+
+    [Test]
+    public void SpeedBuffStackingTest()
+    {
+        var berry = new Consumable("speedberry", "", "Speed", 1f, 0);
+
+        berry.Use(player);
+        berry.Use(player);
+
+        Assert.That(player.runSpeed, Is.EqualTo(6f)); 
+        Assert.That(player.sprintSpeed, Is.EqualTo(11f));
+    }
+    [Test]
+    public void SpeedBoostRevertsTest()
+    {
+        var berry = new Consumable("speedberry", "", "Speed", 1f, 1);
+
+        berry.Use(player);
+        Assert.That(player.runSpeed, Is.EqualTo(5f));
+
+        player.StartCoroutine(WaitAndExecute(1.1f, () =>
+        {
+            Assert.That(player.runSpeed, Is.EqualTo(4f));
+        }));
+    }
+
+    [Test]
+    public void SpeedBuffNoRevertTest()
+    {
+        var berry = new Consumable("item", "", "Speed", 2f, 0);
+
+        berry.Use(player);
+
+        Assert.That(player.runSpeed, Is.EqualTo(6f));
+        
+        player.StartCoroutine(WaitAndExecute(1f, () =>
+        {
+            Assert.That(player.runSpeed, Is.EqualTo(6f));
+        }));
+    }
+
+    [Test]
+    public void JumpBuffChangesJumpSpeedTest()
+    {
+        float original = player.jumpSpeed;
+        var item = new Consumable("item", "", "Jump", 3f, 0);
+
+        item.Use(player);
+
+        Assert.That(player.jumpSpeed, Is.EqualTo(original + 3f));
+    }
+
+    [Test]
+    public void JumpBoostRevertsTest()
+    {
+        var item = new Consumable("item", "", "Jump", 3f, 1);
+
+        item.Use(player);
+        Assert.That(player.jumpSpeed, Is.EqualTo(8.5f));
+
+        player.StartCoroutine(WaitAndExecute(1.1f, () =>
+        {
+            Assert.That(player.jumpSpeed, Is.EqualTo(5.5f));
+        }));
+    }
+
+    [Test]
+    public void HealItemDoesNothingWithoutHealthComponent()
+    {
+        player.HealthComponent = null; // remove component
+        health.SetHealth(50);
+        
+        var potion = new Consumable("item", "", "Heal", 20, 0);
+        potion.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(50));
+    }
+
+    [Test]
+    public void UsingItemOnInvalidTargetDoesNothing()
+    {
+        var potion = new Consumable("item", "", "Heal", 20, 0);
+
+        int initial = (int)health.Current;
+        potion.Use(new object()); // invalid target
+
+        Assert.That((int)health.Current, Is.EqualTo(initial));
+    }
+
+    [Test]
+    public void NegativeHealDoesNotReduceHPTest()
+    {
+        var potion = new Consumable("item", "", "Heal", -20, 0);
+
+        potion.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(100));
+    }
+
+    [Test]
+    public void MultipleDifferentBuffsApplyCorrectlyTest()
+    {
+        var heal = new Consumable("item", "", "Heal", 20, 0);
+        var jump = new Consumable("item", "", "Jump", 3f, 0);
+
+        health.SetHealth(50);
+        heal.Use(player);
+        jump.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(70));
+        Assert.That(player.jumpSpeed, Is.EqualTo(8.5f));
+    }
+
+    [Test]
+    public void HealDoesNothingWhenAmountIsZeroTest()
+    {
+        health.SetHealth(50);
+        var potion = new Consumable("item", "", "Heal", 0, 0);
+
+        potion.Use(player);
+
+        Assert.That(health.Current, Is.EqualTo(50));
+    }
+
+    [Test]
+    public void SpeedBuffStopsPreviousCoroutineBeforeApplyingNewOneTest()
+    {
+        var berry = new Consumable("item", "", "Speed", 1f, 5);
+
+        berry.Use(player);  
+        var oldSpeed = player.runSpeed;
+
+        berry.Use(player); 
+
+        Assert.That(player.runSpeed, Is.EqualTo(oldSpeed + 1f));
+    }
+
+    [Test]
+    public void JumpBuffStopsPreviousCoroutineBeforeApplyingNewOneTest()
+    {
+        var fruit = new Consumable("item", "", "Jump", 2f, 5);
+
+        fruit.Use(player); 
+        var oldJump = player.jumpSpeed;
+
+        fruit.Use(player);          
+
+        Assert.That(player.jumpSpeed, Is.EqualTo(oldJump + 2f));
+    }
+
+
+    private IEnumerator WaitAndExecute(float time, Action callback)
+    {
+        yield return new WaitForSeconds(time);
+        callback?.Invoke();
     }
     
     public abstract class Item
@@ -109,20 +301,25 @@ public class ItemTestRunner
             CanStack = true;
         }
 
+
         public override void Use(object target)
         {
             if (target is PlayerController3D player)
             {
                 if (EffectType == "Speed")
                 {
-                    player.ApplySpeed(Amount, Duration); 
+                    player.ApplySpeed(Amount, Duration);
                 }
                 else if (EffectType == "Heal")
                 {
                     if (player.HealthComponent != null)
                     {
-                        player.HealthComponent.Heal((int)Amount); 
+                        player.HealthComponent.Heal((int)Amount);
                     }
+                }
+                else if (EffectType == "Jump")
+                {
+                    player.ApplyJumpBoost(Amount, Duration);
                 }
             }
         }
@@ -140,21 +337,82 @@ public class ItemTestRunner
         }
         public void Heal(int amount) 
         {
+            if(amount < 0) return;
             Current = Mathf.Min(maxHp, Current + amount); 
         }
     }
 
     public class PlayerController3D : MonoBehaviour
     {
-        public Health HealthComponent;
-        public bool HasPoison = false; 
-        
-        public float baseMoveSpeed = 5.0f;
-        public float currentMoveSpeed = 5.0f;
+        public Health HealthComponent; // needed right now for items to access health class easily
+        private Coroutine speedTimer; // time for temp speed buffs
+        private Coroutine jumpTimer; // time for temp jump buffs
+        public float runSpeed = 4f;      
+        public float sprintSpeed = 9f;    
+        public float crouchSpeed = 2f;    
+        public float jumpSpeed = 5.5f;
+
         
         public void ApplySpeed(float amount, int duration)
         {
-            currentMoveSpeed = baseMoveSpeed + amount;
+            if (speedTimer != null)
+            {
+                StopCoroutine(speedTimer);
+                speedTimer = null;
+            }
+
+            // Apply speed buff to all movement speeds
+            runSpeed += amount;
+            sprintSpeed += amount;
+            Debug.Log($"Speed was increased by {amount} for a total run speed of {runSpeed}");
+
+            if (duration > 0) // If duration is 0 then permanent speed buff
+            {
+                speedTimer = StartCoroutine(SpeedBuffCoroutine(amount, duration));
+            }
+        }
+
+        private IEnumerator SpeedBuffCoroutine(float amount, int duration)
+        {
+            // Wait for the duration time
+            yield return new WaitForSeconds(duration);
+
+            // Remove speed buff from all movement speeds
+            runSpeed -= amount;
+            sprintSpeed -= amount;
+
+            Debug.Log($"Temporary speed boost expired. Total run speed reset to {runSpeed}.");
+
+            speedTimer = null;
+        }
+
+        public void ApplyJumpBoost(float amount, int duration)
+        {
+            if (jumpTimer != null)
+            {
+                StopCoroutine(jumpTimer);
+                jumpTimer = null;
+            }
+            
+            jumpSpeed += amount;
+            Debug.Log($"Jumping speed was increased by {amount} for a total speed of {jumpSpeed}");
+
+            if (duration > 0) // If duration is 0 then permanent jump buff
+            {
+                jumpTimer = StartCoroutine(JumpBuffCoroutine(amount, duration));
+            }
+        }
+
+        private IEnumerator JumpBuffCoroutine(float amount, int duration)
+        {
+            // Wait for the duration time
+            yield return new WaitForSeconds(duration);
+
+            jumpSpeed -= amount;
+
+            Debug.Log($"Temporary jump speed boost expired. Total jump speed reset to {jumpSpeed}.");
+
+            jumpTimer = null;
         }
     }
 }

@@ -8,19 +8,35 @@ public class ItemSpawner : ObjectSpawner
 
         Debug.Log(testObject.GetComponent<ItemPickup>());
         if (testObject.GetComponent<ItemPickup>() != null) {
-            // Enemy.createEnemy
             // Debug.Log("True!");
             return true;
         } else {
             // Debug.Log("False!");
+            
             return false;
         }
     }
-    // Eventually will have a Chest object which will drop these items, but for the time being they will just spawn in place via normal means
+    
+    public override void Initialize() {
+        if (beenInitialized && spawnChoice != null) {
 
-    /*
-    public virtual void Initialize() {
-        
+            // Debug.Log("Spawning object!");
+            
+            GameObject item;
+
+            if (spawnAtTerrainHeight && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Terrain")))
+            {
+                item = Instantiate(spawnChoice, hit.point + constDisplace, Quaternion.identity);
+            } else {
+                item = Instantiate(spawnChoice, transform.position, Quaternion.identity);
+            }
+
+            if (item!=null) {
+                ItemPickup pickup = spawnChoice.GetComponent<ItemPickup>();
+                pickup.hudManager = GameObject.Find("Hud/HudManager").GetComponent<HUDManager>();
+            }
+                
+            Destroy(gameObject);
+        }
     }
-    */
 }

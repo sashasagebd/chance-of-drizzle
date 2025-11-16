@@ -12,8 +12,7 @@ public class LevelManager : MonoBehaviour
     async void Start() {
         await Task.Delay(100);
         // Debug.Log("Loading in objects...");
-
-        Debug.Log(GameObject.Find("Enemy Hub").name);
+        // Debug.Log(GameObject.Find("Enemy Hub").name);
 
         EnemySpawner.changeStrengthScaling(strengthScaling);
         EnemySpawner.changeEnemyHub(GameObject.Find("Enemy Hub").GetComponent<EnemyHub>());
@@ -38,7 +37,7 @@ public class LevelManager : MonoBehaviour
                 if (spawnerScript.SpawnerRandomize()) {
 
                     if (spawnerScript is EnemySpawner enemyScript) enemyScript.Initialize();
-                    // else if (spawnerScript is ItemSpawner itemScript) itemScript.Initialize();
+                    else if (spawnerScript is ItemSpawner itemScript) itemScript.Initialize();
                     else spawnerScript.Initialize();
 
                 } else Destroy(spawns);

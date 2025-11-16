@@ -1,15 +1,15 @@
-# Design Patterns in Audio System
+ Design Patterns in Audio System
 
 This document describes the design patterns implemented in the audio system.
 
-## Patterns Implemented
+Patterns Implemented
 
-### 1. Singleton Pattern 
-**Location**: `SoundManager.cs` (lines 51-67)
+1. Singleton Pattern
+2. Location: `SoundManager.cs` (lines 51-67)
 
-**Purpose**: Ensure only one instance of SoundManager exists and provide global access.
+Purpose: Ensure only one instance of SoundManager exists and provide global access.
 
-**Implementation**:
+Implementation:
 ```csharp
 static SoundManager _instance;
 public static SoundManager Instance
@@ -30,27 +30,26 @@ public static SoundManager Instance
 }
 ```
 
-**Benefits**:
+Benefits:
 - Single point of access for all audio operations
 - Prevents multiple instances (saves memory, prevents conflicts)
 - Global access without passing references
 - Lazy initialization (creates when needed)
 
-**Usage**:
+Usage:
 ```csharp
 SoundManager.Instance.PlayWeaponFire(position);
 ```
 
-**See Also**: `Patterns/SingletonPattern.cs` for detailed explanation and examples.
+`Patterns/SingletonPattern.cs` for detailed explanation and examples.
 
 ---
+2. Private Class Data Pattern 
+Location: `Patterns/PrivateClassDataPattern.cs`
 
-### 2. Private Class Data Pattern 
-**Location**: `Patterns/PrivateClassDataPattern.cs`
+Purpose: Restrict access to internal data by encapsulating it in a private data class.
 
-**Purpose**: Restrict access to internal data by encapsulating it in a private data class.
-
-**Implementation**:
+Implementation:
 ```csharp
 public class AudioSourceData
 {
@@ -65,13 +64,13 @@ public class AudioSourceData
 }
 ```
 
-**Benefits**:
+Benefits:
 - Prevents unauthorized access to internal data
 - Reduces coupling between classes
 - Makes data immutable or controlled access
 - Improves maintainability
 
-**Usage**:
+Usage:
 ```csharp
 // Create protected data
 AudioSourceData data = AudioSourceDataFactory.Create3D(0.8f, 1.2f);
@@ -83,8 +82,7 @@ ProtectedAudioSource source = new ProtectedAudioSource(audioSource, data);
 float volume = source.GetVolume(); // OK - read access
 // source.SetVolume(0.5f); // NOT POSSIBLE - data is protected
 ```
-
-**See Also**: `Patterns/PrivateClassDataPattern.cs` for full implementation.
+see : `Patterns/PrivateClassDataPattern.cs` for full implementation.
 
 ---
 
@@ -113,7 +111,7 @@ handler.PlayStatic(); // Calls AudioHandler.PlayStatic() - STATIC
 handler.PlayDynamic(); // Calls WeaponAudioHandler.PlayDynamic() - DYNAMIC
 ```
 
-**See Also**: `Patterns/StaticDynamicBinding.cs` for comprehensive examples.
+See: `Patterns/StaticDynamicBinding.cs` for comprehensive examples.
 
 ---
 

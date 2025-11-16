@@ -7,10 +7,11 @@ public class SpawnerChoice : MonoBehaviour
     private List<GameObject> eligibleSpawners = new List<GameObject>();
 
     void Awake() {
+        // Takes each child 
         foreach (Transform child in transform)
         {
             if (child!=null && child.GetComponent<ObjectSpawner>()!=null) {
-                Debug.Log("Adding child "+child.name);
+                // Debug.Log("Adding child "+child.name);
                 eligibleSpawners.Add(child.gameObject);
             }
         }
@@ -26,10 +27,17 @@ public class SpawnerChoice : MonoBehaviour
         int randIndex = Random.Range(0, eligibleSpawners.Count);
         GameObject designatedSpawner = eligibleSpawners[randIndex];
         if (designatedSpawner.GetComponent<ObjectSpawner>()!=null) {
-            designatedSpawner.GetComponent<ObjectSpawner>().Initialize();
+
+            ObjectSpawner spawnerScript = designatedSpawner.GetComponent<ObjectSpawner>();
+            
+            if (spawnerScript is EnemySpawner enemyScript) enemyScript.Initialize();
+            else if (spawnerScript is ItemSpawner itemScript) itemScript.Initialize();
+             else spawnerScript.Initialize();
+
             eligibleSpawners.Remove(designatedSpawner);
         }
 
+        // Debug.Log("SpawnerChoice is ago");
         Destroy(gameObject);
 
     }

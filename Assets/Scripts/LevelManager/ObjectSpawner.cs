@@ -69,20 +69,12 @@ public class ObjectSpawner : MonoBehaviour
         if (beenInitialized && spawnChoice != null) {
             Debug.Log("Spawning object!");
             
-            GameObject item;
-
             if (spawnAtTerrainHeight && Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Terrain")))
             {
-                item = Instantiate(spawnChoice, hit.point + constDisplace, Quaternion.identity);
+                Instantiate(spawnChoice, hit.point + constDisplace, Quaternion.identity);
             } else {
-                item = Instantiate(spawnChoice, transform.position, Quaternion.identity);
+                Instantiate(spawnChoice, transform.position, Quaternion.identity);
             }
-
-            if (item!=null && item.GetComponent<ItemPickup>()) {
-                ItemPickup pickup = spawnChoice.GetComponent<ItemPickup>();
-                pickup.hudManager = GameObject.Find("Hud/HudManager").GetComponent<HUDManager>();
-            }
-                
 
             Destroy(gameObject);
         }
