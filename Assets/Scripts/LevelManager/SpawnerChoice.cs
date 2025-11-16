@@ -7,10 +7,11 @@ public class SpawnerChoice : MonoBehaviour
     private List<GameObject> eligibleSpawners = new List<GameObject>();
 
     void Awake() {
+        // Takes each child 
         foreach (Transform child in transform)
         {
             if (child!=null && child.GetComponent<ObjectSpawner>()!=null) {
-                Debug.Log("Adding child "+child.name);
+                // Debug.Log("Adding child "+child.name);
                 eligibleSpawners.Add(child.gameObject);
             }
         }
