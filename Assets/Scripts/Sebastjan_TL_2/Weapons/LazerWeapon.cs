@@ -21,8 +21,14 @@ public class LazerWeapon : WeaponBase
         if (Physics.Raycast(origin, direction.normalized, out RaycastHit hit, range, hitMask))
         {
             end = hit.point;
+
+            // Check for Health component (player system)
             var hp = hit.collider.GetComponent<Health>();
             if (hp) hp.ApplyDamage(damage + PlayerController3D.damageBonus);
+
+            // Check for EnemyController component (enemy system)
+            var enemyController = hit.collider.GetComponent<EnemyController>();
+            if (enemyController) enemyController.takeDamage(damage + PlayerController3D.damageBonus);
         }
 
         if (line) StartCoroutine(FlashLine(origin, end));
