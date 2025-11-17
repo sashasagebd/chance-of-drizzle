@@ -9,7 +9,7 @@ public abstract class Item
 
 
     public abstract void Use(object target);
-    public virtual void TriggerVisualEffects(object target)
+    public virtual void TriggerVisualEffects(object target) //virtual method
     {
         if (target is PlayerController3D player)
         {

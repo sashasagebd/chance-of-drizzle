@@ -3,13 +3,13 @@ using System.Collections;
 
 public static class ItemFactory
 {
-    public static Item CreateItem(string id)
+    public static Item CreateItem(string id) //factory pattern
     {
         string lowerId = id.ToLowerInvariant();
         switch (id)
         {
             case "healpotion":
-                return new Consumable(
+                return new Consumable( //dynamic binding w/ 'new' keyword
                     name: "Healing Potion",
                     description: "Restores a small amount of health.",
                     effect: "Heal",

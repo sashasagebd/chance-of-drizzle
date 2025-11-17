@@ -7,7 +7,7 @@ using System;
 public sealed class Inventory
 {
     private static readonly Inventory instance = new Inventory();
-    public static Inventory Instance
+    public static Inventory Instance //singleton pattern
     {
         get { return instance; }
     }
