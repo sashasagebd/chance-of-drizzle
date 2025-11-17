@@ -1,12 +1,24 @@
-The LevelSoundManager automatically handles:
-Ambient loops when levels start
-Transition SFX when scenes load
-Scene-based sound behavior via SceneManager.sceneLoaded
-It persists between scenes and depends on SoundManager.
-It Should Be Spawned :
-Add LevelSoundManager.prefab to the first scene.
-It persists via DontDestroyOnLoad.
-Only one instance should exist.
-It Is Required :
-Required in all levels where ambient or transition audio should play.
-Requires SoundManager to already be loaded in the scene.
+Prefab: LevelSoundManager
+
+A persistent audio controller that automatically plays ambient audio and level-transition SFX whenever a new scene loads.
+
+How to Spawn
+Place LevelSoundManager in the first scene along with SoundManager.
+It uses DontDestroyOnLoad, so only one instance should exist.
+It should not be spawned manually during gameplay and must exist before level loading begins.
+
+Requirements
+Requires SoundManager to already be present
+Subscribes to SceneManager.sceneLoaded
+Should be initialized in Start(), not Awake()
+
+What It Does
+Automatically handles:
+Ambient loop playback when a level begins
+Transition sound when a scene loads
+Ambient stop/restart across levels
+Level-based audio rules (ex: only play ambience on scenes with “Level” in the name)
+
+Inspector booleans:
+playAmbientOnStart
+playTransitionSound
