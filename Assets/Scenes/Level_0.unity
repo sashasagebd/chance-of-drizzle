@@ -1930,7 +1930,7 @@ MonoBehaviour:
   ammoText: {fileID: 2072878046}
   iconContainer: {fileID: 700953404}
   bulletPrefab: {fileID: 3010172217413453092, guid: 58464191b67d3a24abebb2114b8fcfd8, type: 3}
-  inventory: {fileID: 0}
+  inventory: {fileID: 464824309}
   iconSize: {x: 30, y: 30}
   iconsPerRow: 20
   spacingX: 2

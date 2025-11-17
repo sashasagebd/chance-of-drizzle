@@ -22,8 +22,13 @@ public class Bullet : MonoBehaviour
         if (((1 << c.collider.gameObject.layer) & hitMask) == 0)
         { Despawn(); return; }
 
+        // Check for Health component (player system)
         var hp = c.collider.GetComponent<Health>();
         if (hp) hp.ApplyDamage(damage);
+
+        // Check for EnemyController component (enemy system)
+        var enemyController = c.collider.GetComponent<EnemyController>();
+        if (enemyController) enemyController.takeDamage(damage);
 
         Despawn();
     }
