@@ -29,7 +29,8 @@ public class Missile : Laser{
     if(this.frames < this.maxHomingFrames && this.frames > this.homingStartFrame){
       // Accelerate towards player
       Vector3 acceleration = (Laser.player.transform.position - this.position).normalized * this.homingStrength * this.movementSpeed;
-      this.direction += acceleration;
+      this.direction = this.direction.normalized * this.movementSpeed;
+      this.direction += acceleration * Time.deltaTime * 60f;
       this.direction = this.direction.normalized * this.movementSpeed * Time.deltaTime * 60f;
     }
     this.frames += Time.deltaTime * 60f;
