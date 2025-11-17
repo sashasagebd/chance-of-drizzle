@@ -147,7 +147,7 @@ public class EnemyHub : MonoBehaviour{
   public void addEnemy(Enemy enemy){
     enemies.Add(enemy);
   }
-  private Enemy spawnEnemy(Vector3 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
+  public Enemy spawnEnemy(Vector3 position, string type = "melee", float strengthScaling = 1f, int hiveMemberID = -1){
     Enemy enemy = Enemy.createEnemy(position, type, strengthScaling, hiveMemberID);
     return enemy;
   }
