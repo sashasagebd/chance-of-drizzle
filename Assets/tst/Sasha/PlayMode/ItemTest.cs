@@ -188,7 +188,7 @@ public class ItemTestRunner
     [Test]
     public void HealItemDoesNothingWithoutHealthComponentTest()
     {
-        player.HealthComponent = null; // remove component
+        player.HealthComponent = null; 
         health.SetHealth(50);
         
         var potion = new Consumable("item", "", "Heal", 20, 0);
@@ -203,7 +203,7 @@ public class ItemTestRunner
         var potion = new Consumable("item", "", "Heal", 20, 0);
 
         int initial = (int)health.Current;
-        potion.Use(new object()); // invalid target
+        potion.Use(new object());
 
         Assert.That((int)health.Current, Is.EqualTo(initial));
     }
