@@ -616,9 +616,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9c33c9919d74994a6c8c73d2196427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController3D
-  maxSpeed: 15
-  runSpeed: 6
-  sprintSpeed: 9
+  maxSpeed: 10
+  runSpeed: 3
+  sprintSpeed: 4.5
   crouchSpeed: 2
   jumpSpeed: 5.5
   gravity: -9.81
@@ -2665,10 +2665,10 @@ Terrain:
   m_TreeBillboardDistance: 5
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 40
+  m_DetailObjectDistance: 5
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 15
-  m_SplatMapDistance: 1000
+  m_HeightmapPixelError: 8
+  m_SplatMapDistance: 40
   m_HeightmapMinimumLODSimplification: 0
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
