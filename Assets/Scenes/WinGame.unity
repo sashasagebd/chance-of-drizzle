@@ -2206,8 +2206,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -181.9, y: 88}
-  m_SizeDelta: {x: 568.9432, y: 243.8655}
+  m_AnchoredPosition: {x: -190.20798, y: 117.15323}
+  m_SizeDelta: {x: 552.3272, y: 185.559}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &860298171
 MonoBehaviour:
@@ -2296,7 +2296,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 3.3276367}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2414,10 +2414,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1283132769}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c21b97312cc75a41be9ca17d8049c59, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a878105f41a979498b5c1bdddb09a24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: HudMenus::EndGameManager
-  winPanel: {fileID: 1085213118}
+  winPanel: {fileID: 570216674}
 --- !u!4 &1283132771
 Transform:
   m_ObjectHideFlags: 0
