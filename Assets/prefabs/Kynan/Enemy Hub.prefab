@@ -41,8 +41,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6045327542880266548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb95f4b2093660608aacb9dcd6b23ee9, type: 3}
+  m_Script: {fileID: 11500000, guid: d645ed57af47ab74e856c21db844aa82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHub
-  enemyTemplate: {fileID: 1765494066999471437, guid: 0714af87dd0ba31f18fe915f59c92a32, type: 3}
-  enemyBulletTemplate: {fileID: 4168602225618128106, guid: d1c8a23d69d555a63a3bb5cff7a38e95, type: 3}
+  enemyTemplate: {fileID: 0}
+  enemyBulletTemplate: {fileID: 0}
+  actualMinX: -47
+  actualMaxX: 47
+  actualMinZ: -47
+  actualMaxZ: 47

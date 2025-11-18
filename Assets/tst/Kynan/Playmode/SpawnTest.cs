@@ -10,7 +10,7 @@ public class SpawnTest{
   [UnitySetUp]
   public IEnumerator UnitySetup(){
     yield return new WaitForFixedUpdate();
-    SceneManager.LoadSceneAsync("SampleScene");
+    SceneManager.LoadSceneAsync("Level_0");
     yield return new WaitForSeconds(1f);
 
     GameObject enemyHub = GameObject.Find("Enemy Hub");

@@ -138,7 +138,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2551493656785838994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ea6dd3464d08477891051fdd7afefa1, type: 3}
+  m_Script: {fileID: 11500000, guid: 46f6f720277247f4d840437b9ad9b364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::ItemPickupAudio
   playPickupSound: 1
