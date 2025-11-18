@@ -439,7 +439,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1765494066999471437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11cde26e91016c088b3b2102513623e4, type: 3}
+  m_Script: {fileID: 11500000, guid: c43012bb3997ef74099831c9f1ec1fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Enemies::EnemyController
 --- !u!54 &8576069544747874332
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1765494066999471437}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 389747320dc554b09a8ab5fcba11740d, type: 3}
+  m_Script: {fileID: 11500000, guid: 16628109e3961b24c92bdbcad1aa1974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::EnemyAudio
   playAttackSound: 1

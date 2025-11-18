@@ -412,16 +412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0732d8be9853a4c9e1209658219048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::HealthHUD
-  health: {fileID: 464231701}
-  fillBar: {fileID: 2002333959}
-  chipBar: {fileID: 967780468}
-  damageFlash: {fileID: 1190637935}
-  smoothSpeed: 6
-  chipDelay: 0.3
-  chipSpeed: 2
-  flashDuration: 2
-  lowHealthThreshold: 0.25
-  lowHealthPulseSpeed: 5
 --- !u!1 &366073380
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,10 +1355,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 715358910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda74174842dd0e4996d100f56ed0e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 331f779d926e07446bff4f54b6537998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: HudMenus::PauseMenu
-  pauseMenuPanel: {fileID: 1767782926}
+  pauseMenuPanel: {fileID: 0}
   playerScript: {fileID: 0}
 --- !u!114 &715358913
 MonoBehaviour:
@@ -3659,9 +3649,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e13c69db8d174293be4c8456b053a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::WeaponAudio
-  playFireSound: 1
-  playReloadSound: 1
-  playDryFireSound: 1
 --- !u!1 &1488412419
 GameObject:
   m_ObjectHideFlags: 0

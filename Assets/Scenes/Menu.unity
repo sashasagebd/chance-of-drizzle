@@ -1099,7 +1099,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289066123}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 45.7}
   m_LocalScale: {x: 0.4261647, y: 0.4261647, z: 0.4261647}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1107,8 +1107,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -265, y: -189}
-  m_SizeDelta: {x: 1920, y: 1728}
+  m_AnchoredPosition: {x: -251.86221, y: 116.83261}
+  m_SizeDelta: {x: 1948.8047, y: 292.7209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &289066125
 MonoBehaviour:
@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 22.787369, z: 0, w: 1.2581328}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1356,10 +1356,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f12d9a303929e0849a32e0b34579aaae, type: 3}
+  m_Script: {fileID: 11500000, guid: e36b2174af7df5841aba6db4fa59f5da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::CameraShake
-  cameraTransform: {fileID: 330585546}
+  cameraTransform: {fileID: 0}
   shakeDuration: 0.1
   shakeMagnitude: 0.1
 --- !u!4 &346597516 stripped
@@ -6971,7 +6971,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656180532}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 2.19, y: 2.19, z: 2.19}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -7002,7 +7002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.03529412}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7035,7 +7035,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 656180532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4e44c77faf54b8eb57055675a5d172, type: 3}
+  m_Script: {fileID: 11500000, guid: c00df4d3fabed01478766424bb0de5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::UIAudio
   playClickSound: 1
@@ -7573,9 +7573,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c338b4793e002c42860f313be1c83bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::WaterRipplesOscillating
-  waterMaterial: {fileID: 2100000, guid: 739335d78e5b0b34da2e45c441d96765, type: 2}
-  amplitude: {x: 0.02, y: 0.02}
-  speed: {x: 0.2, y: 0.2}
 --- !u!1 &725596647
 GameObject:
   m_ObjectHideFlags: 0
@@ -7855,9 +7852,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c338b4793e002c42860f313be1c83bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::WaterRipplesOscillating
-  waterMaterial: {fileID: 2100000, guid: 739335d78e5b0b34da2e45c441d96765, type: 2}
-  amplitude: {x: 0.02, y: 0.02}
-  speed: {x: 0.2, y: 0.2}
 --- !u!4 &751835448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 108507113624698413, guid: eebb56c82efbd8d4bb0eb6bd925a0e9d, type: 3}
@@ -8179,7 +8173,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 834468245}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96a4f25876e0a9145b13db5a16f2c2d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 8234f04d62a24c744b25efe190f1a09c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::LightningStorm
   lightningLight: {fileID: 1984463105}
@@ -8193,10 +8187,7 @@ MonoBehaviour:
   maxFlashIntensity: 5
   cameraShake: {fileID: 330585548}
   thunderAudio: {fileID: 1336042147}
-  thunderClips:
-  - {fileID: 8300000, guid: 48316f2a3a4a52a448c547990884979a, type: 3}
-  - {fileID: 8300000, guid: 6f72553a0593354419c00c59a03115af, type: 3}
-  - {fileID: 8300000, guid: daee6d04cdbf35644804788b2b2092cb, type: 3}
+  thunderClips: []
   minThunderDelay: 0.1
   maxThunderDelay: 0.5
 --- !u!1 &835418153
@@ -8282,7 +8273,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 898163865}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: OnBackClick
         m_Mode: 1
@@ -8390,7 +8381,7 @@ GameObject:
   - component: {fileID: 898163862}
   - component: {fileID: 898163861}
   - component: {fileID: 898163860}
-  - component: {fileID: 898163865}
+  - component: {fileID: 898163864}
   m_Layer: 5
   m_Name: TitleScreen
   m_TagString: Untagged
@@ -8448,7 +8439,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 330585545}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -8483,7 +8474,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &898163865
+--- !u!114 &898163864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8492,9 +8483,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 898163859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d940f5aef34b2e84aa8d5de066d2ba24, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bb5bd862a3ca484a85a86b25fc0d5a7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuController
+  m_EditorClassIdentifier: HudMenus::MenuController
   mainMenuPanel: {fileID: 656180532}
   settingsPanel: {fileID: 2139292601}
   loadPanel: {fileID: 725596647}
@@ -9129,7 +9120,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 898163865}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
         m_MethodName: OnBackClick
         m_Mode: 1
@@ -9262,8 +9253,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 898163865}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 898163864}
+        m_TargetAssemblyTypeName: MenuController, HudMenus
         m_MethodName: OnLoadClick
         m_Mode: 1
         m_Arguments:
@@ -9715,13 +9706,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1189419516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa84fba91b5fc5e48866c29a56493029, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d3a9c175eeb01549bea825d46a4b08c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::FlickerLight
   flickerLight: {fileID: 1189419518}
-  minIntensity: 100
-  maxIntensity: 300
-  flickerSpeed: 5
+  minIntensity: 2
+  maxIntensity: 5
+  flickerSpeed: 0.05
 --- !u!1 &1222834908
 GameObject:
   m_ObjectHideFlags: 0
@@ -9952,8 +9943,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 898163865}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 898163864}
+        m_TargetAssemblyTypeName: MenuController, HudMenus
         m_MethodName: OnSettingsClick
         m_Mode: 1
         m_Arguments:
@@ -10949,7 +10940,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 898163865}
+      - m_Target: {fileID: 898163864}
         m_TargetAssemblyTypeName: MenuController, HudMenus
         m_MethodName: OnStartClick
         m_Mode: 1
@@ -11123,85 +11114,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 76.27841, y: -19.43102, z: -246.99077}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1476832167
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1476832170}
-  - component: {fileID: 1476832169}
-  - component: {fileID: 1476832168}
-  m_Layer: 0
-  m_Name: EventSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1476832168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476832167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
-  m_SendPointerHoverToParent: 1
-  m_MoveRepeatDelay: 0.5
-  m_MoveRepeatRate: 0.1
-  m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_DeselectOnBackgroundClick: 1
-  m_PointerBehavior: 0
-  m_CursorLockBehavior: 0
-  m_ScrollDeltaPerTick: 6
---- !u!114 &1476832169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476832167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
-  m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
-  m_DragThreshold: 10
---- !u!4 &1476832170
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476832167}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13161,13 +13073,92 @@ MonoBehaviour:
   m_GameObject: {fileID: 1957907029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1770d4f79beb1f2439c8c673cfa4c9df, type: 3}
+  m_Script: {fileID: 11500000, guid: fe9b0e882db4fb5468d38a83e877db55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::AudioSettingsController
   mixer: {fileID: 24100000, guid: 2656b1435394cb64496f74ed055a7960, type: 2}
   masterSlider: {fileID: 1809502673}
   musicSlider: {fileID: 784481284}
   sfxSlider: {fileID: 677731998}
+--- !u!1 &1963738280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1963738283}
+  - component: {fileID: 1963738282}
+  - component: {fileID: 1963738281}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1963738281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963738280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
+--- !u!114 &1963738282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963738280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1963738283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1963738280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984463104
 GameObject:
   m_ObjectHideFlags: 0
@@ -13546,8 +13537,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 898163865}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 898163864}
+        m_TargetAssemblyTypeName: MenuController, HudMenus
         m_MethodName: OnExitClick
         m_Mode: 1
         m_Arguments:
@@ -14073,7 +14064,7 @@ SceneRoots:
   - {fileID: 1439620632}
   - {fileID: 658680913}
   - {fileID: 1957907031}
-  - {fileID: 1476832170}
+  - {fileID: 1963738283}
   - {fileID: 991415472}
   - {fileID: 1652366338}
   - {fileID: 1379806916175793042}
