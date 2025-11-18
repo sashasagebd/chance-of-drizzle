@@ -2894,7 +2894,7 @@ Transform:
   m_GameObject: {fileID: 886505783}
   serializedVersion: 2
   m_LocalRotation: {x: 0.064592585, y: 0.0000000010538851, z: -6.82156e-11, w: 0.99791175}
-  m_LocalPosition: {x: -30.198013, y: 7.1631193, z: 4.000532}
+  m_LocalPosition: {x: 3.802, y: 2.163119, z: -1.9994729}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5039,7 +5039,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368314836}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0732d8be9853a4c9e1209658219048, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ccf94fb9963ee547a3bf33365469063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::HealthHUD
   health: {fileID: 821246432}
@@ -5049,7 +5049,7 @@ MonoBehaviour:
   smoothSpeed: 6
   chipDelay: 0.3
   chipSpeed: 2
-  flashDuration: 2
+  flashDuration: 0.15
   lowHealthThreshold: 0.25
   lowHealthPulseSpeed: 5
 --- !u!4 &1396221693 stripped
@@ -5200,7 +5200,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1501685211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda74174842dd0e4996d100f56ed0e5e, type: 3}
+  m_Script: {fileID: 11500000, guid: 331f779d926e07446bff4f54b6537998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: HudMenus::PauseMenu
   pauseMenuPanel: {fileID: 638173043}

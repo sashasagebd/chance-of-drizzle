@@ -1099,7 +1099,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 289066123}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 45.7}
   m_LocalScale: {x: 0.4261647, y: 0.4261647, z: 0.4261647}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 1443.3888}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1359,9 +1359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f12d9a303929e0849a32e0b34579aaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::CameraShake
-  cameraTransform: {fileID: 330585546}
-  shakeDuration: 0.1
-  shakeMagnitude: 0.1
 --- !u!4 &346597516 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1576488453971394810, guid: a778b631c6253a04899cb31bad047c81, type: 3}
@@ -6971,7 +6968,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 656180532}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 2.19, y: 2.19, z: 2.19}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -7035,7 +7032,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 656180532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4e44c77faf54b8eb57055675a5d172, type: 3}
+  m_Script: {fileID: 11500000, guid: c00df4d3fabed01478766424bb0de5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::UIAudio
   playClickSound: 1
@@ -7573,9 +7570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c338b4793e002c42860f313be1c83bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::WaterRipplesOscillating
-  waterMaterial: {fileID: 2100000, guid: 739335d78e5b0b34da2e45c441d96765, type: 2}
-  amplitude: {x: 0.02, y: 0.02}
-  speed: {x: 0.2, y: 0.2}
 --- !u!1 &725596647
 GameObject:
   m_ObjectHideFlags: 0
@@ -7855,9 +7849,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c338b4793e002c42860f313be1c83bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::WaterRipplesOscillating
-  waterMaterial: {fileID: 2100000, guid: 739335d78e5b0b34da2e45c441d96765, type: 2}
-  amplitude: {x: 0.02, y: 0.02}
-  speed: {x: 0.2, y: 0.2}
 --- !u!4 &751835448 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 108507113624698413, guid: eebb56c82efbd8d4bb0eb6bd925a0e9d, type: 3}
@@ -8182,23 +8173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96a4f25876e0a9145b13db5a16f2c2d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::LightningStorm
-  lightningLight: {fileID: 1984463105}
-  minInterval: 8
-  maxInterval: 20
-  minFlashesPerBolt: 1
-  maxFlashesPerBolt: 3
-  flashDuration: 0.08
-  flashDelay: 0.1
-  minFlashIntensity: 2
-  maxFlashIntensity: 5
-  cameraShake: {fileID: 330585548}
-  thunderAudio: {fileID: 1336042147}
-  thunderClips:
-  - {fileID: 8300000, guid: 48316f2a3a4a52a448c547990884979a, type: 3}
-  - {fileID: 8300000, guid: 6f72553a0593354419c00c59a03115af, type: 3}
-  - {fileID: 8300000, guid: daee6d04cdbf35644804788b2b2092cb, type: 3}
-  minThunderDelay: 0.1
-  maxThunderDelay: 0.5
 --- !u!1 &835418153
 GameObject:
   m_ObjectHideFlags: 0
@@ -8492,7 +8466,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 898163859}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d940f5aef34b2e84aa8d5de066d2ba24, type: 3}
+  m_Script: {fileID: 11500000, guid: 3bb5bd862a3ca484a85a86b25fc0d5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuController
   mainMenuPanel: {fileID: 656180532}
@@ -9718,10 +9692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa84fba91b5fc5e48866c29a56493029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::FlickerLight
-  flickerLight: {fileID: 1189419518}
-  minIntensity: 100
-  maxIntensity: 300
-  flickerSpeed: 5
 --- !u!1 &1222834908
 GameObject:
   m_ObjectHideFlags: 0
@@ -9953,7 +9923,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 898163865}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+        m_TargetAssemblyTypeName: MenuController, HudMenus
         m_MethodName: OnSettingsClick
         m_Mode: 1
         m_Arguments:
@@ -13164,10 +13134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1770d4f79beb1f2439c8c673cfa4c9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::AudioSettingsController
-  mixer: {fileID: 24100000, guid: 2656b1435394cb64496f74ed055a7960, type: 2}
-  masterSlider: {fileID: 1809502673}
-  musicSlider: {fileID: 784481284}
-  sfxSlider: {fileID: 677731998}
 --- !u!1 &1984463104
 GameObject:
   m_ObjectHideFlags: 0
@@ -13905,7 +13871,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139292601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

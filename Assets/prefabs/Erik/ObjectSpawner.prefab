@@ -155,10 +155,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6936177971569817953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c684f9407edfe740b4ffa613eceb713, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c9c78eccb89b9d4f811284a8d1035a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSpawner
-  spawnerPriority: 1
+  spawnerRandomChance: 0
+  spawnerPriorityMin: 1
   spawnerPriorityMax: 1
-  spawnCount: 0
+  spawnAtTerrainHeight: 1
+  constDisplace: {x: 0, y: 0, z: 0}
   toSpawn: []

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3931120557227813014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bce2e8ca0d75e45f2bba3bc8b200d383, type: 3}
+  m_Script: {fileID: 11500000, guid: b14c5700353bc4543b812f65061bc194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::GoalPoint
 --- !u!1 &5550404715937758891

@@ -155,6 +155,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6936177971569817953}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f268e7a5f060169488505d361272ec0e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c64752a8b271584a8ad2f6cf61f19af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
+  spawnerRandomChance: 0
+  spawnerPriorityMin: 1
+  spawnerPriorityMax: 1
+  spawnAtTerrainHeight: 1
+  constDisplace: {x: 0, y: 0, z: 0}
+  toSpawn: []
+  multipleEnemies: 0
+  enemyHive: 0
+  enemyCountMin: 1
+  enemyCountMax: 1
+  enemyDistanceVariance: 1
+  enemyType: []
