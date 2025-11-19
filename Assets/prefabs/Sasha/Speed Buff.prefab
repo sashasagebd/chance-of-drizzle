@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   hudManager: {fileID: 0}
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 02e4de20d8c06554fb7c111b423ad826, type: 3}
   iconDuration: 3
   itemID: speedupgrade
 --- !u!65 &6900804626828138764

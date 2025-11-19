@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   hudManager: {fileID: 0}
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 570685b18de447542b63524f4ea28d13, type: 3}
   iconDuration: 3
   itemID: healpotion
 --- !u!114 &8944069241447360561

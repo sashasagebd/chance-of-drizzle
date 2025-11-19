@@ -9,27 +9,27 @@ using UnityEngine;
 public class PlayerAnimationController : MonoBehaviour
 {
     [Header("References")]
-    public PlayerController3D playerController;
-    public CharacterController characterController;
+    [SerializeField] private PlayerController3D playerController;
+    [SerializeField] private CharacterController characterController;
 
     [Header("Animation Settings")]
     [Tooltip("Smoothing speed for velocity parameters")]
-    public float velocityDampTime = 0.1f;
+    [SerializeField] private float velocityDampTime = 0.1f;
 
     [Tooltip("Speed threshold to trigger idle animation")]
-    public float idleSpeedThreshold = 0.1f;
+    [SerializeField] private float idleSpeedThreshold = 0.1f;
 
     [Tooltip("Duration of shoot animation overlay")]
-    public float shootAnimationDuration = 0.3f;
+    [SerializeField] private float shootAnimationDuration = 0.3f;
 
     [Tooltip("Use aiming pose when shooting (true) or just trigger shoot animation (false)")]
-    public bool aimWhenShooting = true;
+    [SerializeField] private bool aimWhenShooting = true;
 
     [Tooltip("Animation speed multiplier for running")]
-    public float runAnimationSpeed = 1.25f;
+    [SerializeField] private float runAnimationSpeed = 1.25f;
 
     [Tooltip("Animation speed multiplier for sprinting")]
-    public float sprintAnimationSpeed = 1.0f;
+    [SerializeField] private float sprintAnimationSpeed = 1.0f;
 
     private Animator _animator;
     private bool _isGrounded;

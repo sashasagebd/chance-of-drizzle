@@ -32,10 +32,13 @@ public class ItemSpawner : ObjectSpawner
             }
 
             if (item!=null) {
-                ItemPickup pickup = spawnChoice.GetComponent<ItemPickup>();
-                pickup.hudManager = GameObject.Find("Hud/HudManager").GetComponent<HUDManager>();
+                ItemPickup pickup = item.GetComponent<ItemPickup>();
+                if(pickup != null)
+                {
+                    pickup.hudManager = GameObject.Find("Hud/HudManager").GetComponent<HUDManager>();
+                }
             }
-                
+            
             Destroy(gameObject);
         }
     }

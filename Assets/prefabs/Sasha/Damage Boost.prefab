@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assets::ItemPickup
   hudManager: {fileID: 0}
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: d2aa09e1ccfe3f646834f9db06151f73, type: 3}
   iconDuration: 3
   itemID: damageupgrade
 --- !u!65 &3481653693840839505

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4069396510946773850}
   - component: {fileID: 1410366806213880533}
+  - component: {fileID: 5649920387044385344}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
@@ -49,6 +50,11 @@ MonoBehaviour:
   fireRate: 6
   damage: 10
   muzzle: {fileID: 9216233305297095552}
+  muzzleFlash: {fileID: 0}
+  hitEffect: {fileID: 0}
+  tracerEffect: {fileID: 0}
+  raycastOrigin: {fileID: 0}
+  raycastDestination: {fileID: 0}
   ammo: 0
   range: 50
   hitMask:
@@ -56,6 +62,21 @@ MonoBehaviour:
     m_Bits: 0
   line: {fileID: 0}
   lineTime: 0.05
+--- !u!114 &5649920387044385344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6238920856967331562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426fa0cf6bf11154790936071af5cf07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::WeaponAudio
+  playFireSound: 1
+  playReloadSound: 1
+  playDryFireSound: 1
 --- !u!1001 &2478503892849514833
 PrefabInstance:
   m_ObjectHideFlags: 0

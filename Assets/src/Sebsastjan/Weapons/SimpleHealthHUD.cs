@@ -5,17 +5,17 @@ using UnityEngine.UI;
 public class SimpleHealthHUD : MonoBehaviour
 {
     [Header("UI References")]
-    public TextMeshProUGUI healthText;  // Drag your HealthText here
-    public Slider healthSlider;         // Drag your Health Slider here
-    public Image sliderFillImage;       // Drag the Fill image from the slider here
+    [SerializeField] private TextMeshProUGUI healthText;  // Drag your HealthText here
+    [SerializeField] private Slider healthSlider;         // Drag your Health Slider here
+    [SerializeField] private Image sliderFillImage;       // Drag the Fill image from the slider here
 
     [Header("Player Reference")]
-    public Health playerHealth;         // Drag your player's Health component here
+    [SerializeField] private Health playerHealth;         // Drag your player's Health component here
 
     [Header("Colors")]
-    public Color highHealthColor = Color.green;     // > 50% health
-    public Color mediumHealthColor = Color.yellow;  // 25-50% health
-    public Color lowHealthColor = Color.red;        // < 25% health
+    [SerializeField] private Color highHealthColor = Color.green;     // > 50% health
+    [SerializeField] private Color mediumHealthColor = Color.yellow;  // 25-50% health
+    [SerializeField] private Color lowHealthColor = Color.red;        // < 25% health
 
     void Start()
     {

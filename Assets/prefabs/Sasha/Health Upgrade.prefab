@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   hudManager: {fileID: 0}
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: ff23332e77acd7647985ffa6e1597c76, type: 3}
   iconDuration: 3
   itemID: healthupgrade
 --- !u!65 &580057745142846050

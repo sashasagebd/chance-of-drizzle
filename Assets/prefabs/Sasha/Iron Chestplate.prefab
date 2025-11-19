@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1459384319986161838}
   - component: {fileID: 366138281222198972}
   - component: {fileID: 4478771909940872032}
+  - component: {fileID: 3622847055114516928}
   m_Layer: 0
   m_Name: Iron Chestplate
   m_TagString: Untagged
@@ -127,4 +128,17 @@ MonoBehaviour:
   hudManager: {fileID: 0}
   itemIcon: {fileID: 0}
   iconDuration: 3
-  itemID: 
+  itemID: ironchestplate
+--- !u!114 &3622847055114516928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5889777597284629996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46f6f720277247f4d840437b9ad9b364, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::ItemPickupAudio
+  playPickupSound: 1

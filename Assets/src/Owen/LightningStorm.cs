@@ -4,24 +4,24 @@ using System.Collections;
 public class LightningStorm : MonoBehaviour
 {
     [Header("Lightning Settings")]
-    public Light lightningLight;              
-    public float minInterval = 5f;           
-    public float maxInterval = 15f;           
-    public int minFlashesPerBolt = 1;        
-    public int maxFlashesPerBolt = 4;       
-    public float flashDuration = 0.08f;       
-    public float flashDelay = 0.1f;          
-    public float minFlashIntensity = 2f;     
-    public float maxFlashIntensity = 5f;    
+    [SerializeField] private Light lightningLight;              
+    [SerializeField] private float minInterval = 5f;           
+    [SerializeField] private float maxInterval = 15f;           
+    [SerializeField] private int minFlashesPerBolt = 1;        
+    [SerializeField] private int maxFlashesPerBolt = 4;       
+    [SerializeField] private float flashDuration = 0.08f;       
+    [SerializeField] private float flashDelay = 0.1f;          
+    [SerializeField] private float minFlashIntensity = 2f;     
+    [SerializeField] private float maxFlashIntensity = 5f;    
 
     [Header("Camera Shake Settings")]
-    public CameraShake cameraShake;         
+    [SerializeField] private CameraShake cameraShake;         
 
     [Header("Audio Settings")]
-    public AudioSource thunderAudio;         
-    public AudioClip[] thunderClips;         
-    public float minThunderDelay = 0.1f;    
-    public float maxThunderDelay = 0.5f;    
+    [SerializeField] private AudioSource thunderAudio;         
+    [SerializeField] private AudioClip[] thunderClips;         
+    [SerializeField] private float minThunderDelay = 0.1f;    
+    [SerializeField] private float maxThunderDelay = 0.5f;    
 
     private float nextFlashTime;
 
@@ -36,7 +36,7 @@ public class LightningStorm : MonoBehaviour
     {
         if (Time.time >= nextFlashTime)
         {
-            StartCoroutine(Strike());
+            StartCoroutine(Strike()); //Iterator stepping through patterns
             ScheduleNextStrike();
         }
     }
@@ -46,21 +46,23 @@ public class LightningStorm : MonoBehaviour
         nextFlashTime = Time.time + Random.Range(minInterval, maxInterval);
     }
 
+    //Iterator strike
+
     IEnumerator Strike()
     {
         int flashes = Random.Range(minFlashesPerBolt, maxFlashesPerBolt + 1);
 
         for (int i = 0; i < flashes; i++)
         {
-       
+       //flash amount
             float randomIntensity = Random.Range(minFlashIntensity, maxFlashIntensity);
             lightningLight.intensity = randomIntensity;
 
-         
+         //shake
             if (cameraShake != null)
                 cameraShake.Shake();
 
-           
+          //audio selection 
             if (i == 0 && thunderAudio != null && thunderClips.Length > 0)
             {
                 float delay = Random.Range(minThunderDelay, maxThunderDelay);

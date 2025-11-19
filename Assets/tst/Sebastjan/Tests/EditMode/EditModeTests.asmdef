@@ -1,19 +1,18 @@
 {
-    "name": "Tests",
-    "rootNamespace": "",
+    "name": "EditModeTestsSebastjan",
+    "rootNamespace": "Tests.EditMode",
     "references": [
-        "Assembly-CSharp"
-    ],
-    "optionalUnityReferences": [
-        "TestAssemblies"
+        "GUID:b30d146b04d75e64482f3a7fc6a0ca85"
     ],
     "includePlatforms": [
         "Editor"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [
         "UNITY_INCLUDE_TESTS"

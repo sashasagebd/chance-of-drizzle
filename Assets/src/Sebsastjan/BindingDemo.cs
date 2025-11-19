@@ -8,13 +8,13 @@ using UnityEngine.InputSystem;
 public class BindingDemo : MonoBehaviour
 {
     [Header("Visual Feedback - Gun Muzzle Flash")]
-    public ParticleSystem muzzleFlash; // Assign your weapon's muzzle flash here
-    public ParticleSystem muzzleFlash2; // Assign your weapon's muzzle flash here
+    [SerializeField] private ParticleSystem muzzleFlash; // Assign your weapon's muzzle flash here
+    [SerializeField] private ParticleSystem muzzleFlash2; // Assign your weapon's muzzle flash here
 
 
     [Header("Controls")]
     [Tooltip("Switch between Fire and Ice damage")]
-    public bool useFire = true;
+    [SerializeField] private bool useFire = true;
 
     private DamageEffect effect;
     private ParticleSystem.MainModule muzzleMain;
