@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class FlickerLight : MonoBehaviour
 {
-    public Light flickerLight; // Assign your point/spot light
-    public float minIntensity = 2f;
-    public float maxIntensity = 5f;
-    public float flickerSpeed = 0.05f;
+    [SerializeField] private Light flickerLight;
+    [SerializeField] private float minIntensity = 2f;
+    [SerializeField] private float maxIntensity = 5f;
+    [SerializeField] private float flickerSpeed = 0.05f;
 
     void Update()
     {

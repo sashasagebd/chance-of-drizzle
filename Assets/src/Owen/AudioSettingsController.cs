@@ -5,21 +5,21 @@ using UnityEngine.UI;
 public class AudioSettingsController : MonoBehaviour
 {
     [Header("Mixer Reference")]
-    public AudioMixer mixer;
+    [SerializeField] private AudioMixer mixer;
 
     [Header("Sliders")]
-    public Slider masterSlider;
-    public Slider musicSlider;
-    public Slider sfxSlider;
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
 
     private void Start()
     {
-        // save and defaults
-        masterSlider.value = PlayerPrefs.GetFloat("MasterVol", 20f);
+        // save player values or defaults to 20
+        masterSlider.value = PlayerPrefs.GetFloat("MasterVol", 20f); 
         musicSlider.value  = PlayerPrefs.GetFloat("MusicVol", 20f);
         sfxSlider.value    = PlayerPrefs.GetFloat("SFXVol", 20f);
 
-        // Apply to mixer
+        //set mixer
         SetMaster(masterSlider.value);
         SetMusic(musicSlider.value);
         SetSFX(sfxSlider.value);

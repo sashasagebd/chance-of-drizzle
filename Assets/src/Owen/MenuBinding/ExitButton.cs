@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class ExitButton : MonoBehaviour
+public class ExitButton : MenuAction
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void Execute()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        LogClick();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
         
     }
 }

@@ -25,9 +25,8 @@ public class MenuControllerPlayModeTests
         menuController.InitializeMenu();
     }
 
-    // =========================
     // Functional Tests
-    // =========================
+
 
     [UnityTest]
     public IEnumerator Functional_OnlyMainActive()
@@ -88,9 +87,6 @@ public class MenuControllerPlayModeTests
         Assert.IsTrue(loadPanel.activeSelf);
     }
 
-    // =========================
-    // Stress / Repeated Interaction
-    // =========================
 
     [UnityTest]
     public IEnumerator Stress_RapidSwitching100Times()
@@ -150,9 +146,7 @@ public class MenuControllerPlayModeTests
         Assert.IsFalse(loadPanel.activeSelf);
     }
 
-    // =========================
-    // Boundary / Null Handling
-    // =========================
+
 
  [UnityTest]
 public IEnumerator Functional_SettingsLoadSettings()
@@ -232,9 +226,6 @@ private int CountActivePanels()
 }
 
 
-    // =========================
-    // Combined Edge Case
-    // =========================
 
     [UnityTest]
     public IEnumerator Negative_RepeatedFullCycle()
@@ -257,7 +248,7 @@ private int CountActivePanels()
     {
         int count = 0;
 
-        while (count < 500) // simulate stress without infinite loop
+        while (count < 500) 
         {
             menuController.OnSettingsClick();
             menuController.OnLoadClick();

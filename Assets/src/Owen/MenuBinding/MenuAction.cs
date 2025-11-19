@@ -15,4 +15,6 @@ public abstract class MenuAction : MonoBehaviour
         Debug.Log($"Button clicked: {this.name}");
 }
 
+
+
 }

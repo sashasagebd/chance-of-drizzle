@@ -25,12 +25,12 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class ShowSliderMappedValue : MonoBehaviour
 {
-    public Slider slider;
+    [SerializeField] private Slider slider;
     private Text lbl;
 
     [Header("Display range")]
-    public int displayMin = 1;
-    public int displayMax = 10;
+    [SerializeField] private int displayMin = 1;
+    [SerializeField] private int displayMax = 10;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class ShowSliderMappedValue : MonoBehaviour
     {
         if (lbl != null && slider != null)
         {
-            //cleanup slider numbers more
+            // clean up slider numbers
             float mappedValue = Mathf.Lerp(displayMin, displayMax, 
                 (value - slider.minValue) / (slider.maxValue - slider.minValue));
             

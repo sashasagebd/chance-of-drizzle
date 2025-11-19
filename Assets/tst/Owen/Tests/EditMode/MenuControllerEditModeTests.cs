@@ -25,9 +25,8 @@ public class MenuControllerEditModeTests
         _menuController.InitializeMenu();
     }
 
-    // =========================
+
     // Functional Tests
-    // =========================
 
     [Test]
     public void Functional_OnlyMainActive()
@@ -88,10 +87,8 @@ public class MenuControllerEditModeTests
         Assert.IsTrue(_loadPanel.activeSelf);
     }
 
-    // =========================
     // Boundary Tests
-    // =========================
-
+ 
     [Test]
     public void Boundary_PanelsDontCrash()
     {
@@ -173,9 +170,6 @@ public class MenuControllerEditModeTests
         Assert.IsFalse(_loadPanel.activeSelf);
     }
 
-    // =========================
-    // Negative / Edge Case Tests
-    // =========================
 
     [Test]
     public void Negative_AssignInvalidPanels()
