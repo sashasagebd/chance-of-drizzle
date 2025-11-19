@@ -293,16 +293,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e0732d8be9853a4c9e1209658219048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::HealthHUD
-  health: {fileID: 464231701}
-  fillBar: {fileID: 2002333959}
-  chipBar: {fileID: 967780468}
-  damageFlash: {fileID: 1190637935}
-  smoothSpeed: 6
-  chipDelay: 0.3
-  chipSpeed: 2
-  flashDuration: 2
-  lowHealthThreshold: 0.25
-  lowHealthPulseSpeed: 5
 --- !u!4 &346931170 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8937097626328854455, guid: 2bbd47208d949b045aa0d52633f3cb4e, type: 3}
@@ -1115,8 +1105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda74174842dd0e4996d100f56ed0e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: HudMenus::PauseMenu
-  pauseMenuPanel: {fileID: 1767782926}
-  playerScript: {fileID: 0}
 --- !u!114 &715358913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2625,12 +2613,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1493797886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c698acde8b281b3cc923f7f8087ed448, type: 3}
+  m_Script: {fileID: 11500000, guid: efd81c1fa2001374b9ce68eb54dba2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  loadItems: 1
-  loadEnemies: 1
-  level: 1
+  loadItems: 0
+  loadEnemies: 0
+  level: 0
 --- !u!154 &1493797888
 TerrainCollider:
   m_ObjectHideFlags: 0
