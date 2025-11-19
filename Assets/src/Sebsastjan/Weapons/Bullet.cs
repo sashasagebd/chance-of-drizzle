@@ -12,6 +12,9 @@ public class Bullet : MonoBehaviour
 
     public void Fire(Vector3 velocity)
     {
+        // Ensure Rigidbody is initialized (in case Fire is called before Awake)
+        if (_rb == null) _rb = GetComponent<Rigidbody>();
+
         _rb.linearVelocity = velocity;
         CancelInvoke(); Invoke(nameof(Despawn), lifetime);
     }

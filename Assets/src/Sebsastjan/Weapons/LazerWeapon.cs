@@ -4,10 +4,10 @@ using UnityEngine;
 public class LazerWeapon : WeaponBase
 {
     [Header("Lazer")]
-    public float range = 50f;
-    public LayerMask hitMask;       // set to Hittable in Inspector
-    public LineRenderer line;       // optional laser line
-    public float lineTime = 0.05f;
+    [SerializeField] private float range = 50f;
+    [SerializeField] private LayerMask hitMask;       // set to Hittable in Inspector
+    [SerializeField] private LineRenderer line;       // optional laser line
+    [SerializeField] private float lineTime = 0.05f;
     private WeaponAudio weaponAudio;
 
     protected override bool DoFire(Vector3 origin, Vector3 direction)

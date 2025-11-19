@@ -1,0 +1,23 @@
+{
+    "name": "PlayModeTestsSebastjan",
+    "rootNamespace": "Tests.PlayMode",
+    "references": [
+        "GUID:b30d146b04d75e64482f3a7fc6a0ca85"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

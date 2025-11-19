@@ -6,18 +6,18 @@ using System.Collections.Generic;
 public class AmmoHUD : MonoBehaviour
 {
     [Header("UI Elements")]
-    public TextMeshProUGUI ammoText;        // Text counter
-    public Transform iconContainer;         // Parent for bullet icons
-    public GameObject bulletPrefab;         // Bullet icon prefab
+    [SerializeField] private TextMeshProUGUI ammoText;        // Text counter
+    [SerializeField] private Transform iconContainer;         // Parent for bullet icons
+    [SerializeField] private GameObject bulletPrefab;         // Bullet icon prefab
 
     [Header("Weapon Inventory")]
-    public WeaponInventory inventory;       // Reference to your inventory
+    [SerializeField] private WeaponInventory inventory;       // Reference to your inventory
 
     [Header("Icon Settings")]
-    public Vector2 iconSize = new Vector2(16, 16);  // Size of each bullet icon
-    public int iconsPerRow = 10;                     // Max bullets per row
-    public float spacingX = 2f;                      // Horizontal spacing
-    public float spacingY = 2f;                      // Vertical spacing
+    [SerializeField] private Vector2 iconSize = new Vector2(16, 16);  // Size of each bullet icon
+    [SerializeField] private int iconsPerRow = 10;                     // Max bullets per row
+    [SerializeField] private float spacingX = 2f;                      // Horizontal spacing
+    [SerializeField] private float spacingY = 2f;                      // Vertical spacing
 
     private WeaponBase _current;
     private List<Image> bulletIcons = new List<Image>();

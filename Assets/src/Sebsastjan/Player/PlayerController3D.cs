@@ -18,17 +18,17 @@ public class PlayerController3D : MonoBehaviour
     public Transform cam;             // Assign your Cinemachine virtual camera's follow target or main camera
 
     [Header("Crouch")]
-    public float standingHeight = 2f;       // Normal CharacterController height
-    public float crouchingHeight = 1f;      // Crouching CharacterController height
-    public float crouchTransitionSpeed = 10f; // How fast to transition between crouch states
+    [SerializeField] private float standingHeight = 2f;       // Normal CharacterController height
+    [SerializeField] private float crouchingHeight = 1f;      // Crouching CharacterController height
+    [SerializeField] private float crouchTransitionSpeed = 10f; // How fast to transition between crouch states
 
     [Header("Weapon")]
-    public WeaponInventory inventory;
-    public Transform muzzle;  // Fallback muzzle if weapon doesn't have one
+    public WeaponInventory inventory; // Kynan needs it for AIPlayer
+    public Transform muzzle;  // Fallback muzzle if weapon doesn't have one (Kynan needs it for AIPlayer)
 
     [Header("Animation")]
-    public PlayerAnimationController animationController;  // Reference to animation controller
-    public CharacterAiming characterAiming;  // Reference to character aiming (for rig weight control)
+    [SerializeField] private PlayerAnimationController animationController;  // Reference to animation controller
+    [SerializeField] private CharacterAiming characterAiming;  // Reference to character aiming (for rig weight control)
 
     CharacterController _controller;
     PlayerInput _playerInput;
@@ -39,7 +39,7 @@ public class PlayerController3D : MonoBehaviour
     public WeaponBase WeaponComponent; // needed for items to access weapon base class easily
     private Coroutine speedTimer; // time for temp speed buffs
     private Coroutine jumpTimer; // time for temp jump buffs
-    public float baseDefense = 0;
+    [SerializeField] private float baseDefense = 0;
     public float currentDefense { get; private set; } = 0;
     public readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
     public static int damageBonus = 0; // additional damage from items
@@ -54,7 +54,7 @@ public class PlayerController3D : MonoBehaviour
     // Public accessors for animation system
     public bool IsCrouching => _isCrouching;
     public bool IsSprinting { get; private set; }
-    public Vector3 CurrentVelocity => _controller.velocity;
+    public Vector3 CurrentVelocity => _controller != null ? _controller.velocity : Vector3.zero;
 
     void Awake()
     {
@@ -62,21 +62,29 @@ public class PlayerController3D : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
 
         // Cache actions by name (must match your asset)
-        _moveAction = _playerInput.actions["Move"];
-        _jumpAction = _playerInput.actions["Jump"];
-        _fireAction = _playerInput.actions["Fire"];
-        _reloadAction = _playerInput.actions["Reload"];
-        _prevAction = _playerInput.actions["Previous"];
-        _nextAction = _playerInput.actions["Next"];
+        // Only set up input if PlayerInput component exists (allows for testing)
+        if (_playerInput != null)
+        {
+            _moveAction = _playerInput.actions["Move"];
+            _jumpAction = _playerInput.actions["Jump"];
+            _fireAction = _playerInput.actions["Fire"];
+            _reloadAction = _playerInput.actions["Reload"];
+            _prevAction = _playerInput.actions["Previous"];
+            _nextAction = _playerInput.actions["Next"];
 
-        // Sprint and Crouch actions (will need to add these to Input Actions asset)
-        _sprintAction = _playerInput.actions.FindAction("Sprint");
-        _crouchAction = _playerInput.actions.FindAction("Crouch");
+            // Sprint and Crouch actions (will need to add these to Input Actions asset)
+            _sprintAction = _playerInput.actions.FindAction("Sprint");
+            _crouchAction = _playerInput.actions.FindAction("Crouch");
+        }
 
         // Initialize crouch state - store the initial center configuration from Inspector
-        _initialCenter = _controller.center;
-        _currentHeight = standingHeight;
-        _controller.height = standingHeight;
+        // Only if CharacterController exists (allows for testing)
+        if (_controller != null)
+        {
+            _initialCenter = _controller.center;
+            _currentHeight = standingHeight;
+            _controller.height = standingHeight;
+        }
 
         if (cam == null)
         {
@@ -96,6 +104,9 @@ public class PlayerController3D : MonoBehaviour
 
     void Update()
     {
+        // Early return if required components are missing (allows for testing without full setup)
+        if (_controller == null || _moveAction == null) return;
+
         // ----- Crouch Input -----
         if (_crouchAction != null && _crouchAction.triggered)
         {
