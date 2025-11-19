@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class AudioSettingsController : MonoBehaviour
 {
     [Header("Mixer Reference")]
-    public AudioMixer mixer;
+    [SerializeField] private AudioMixer mixer;
 
     [Header("Sliders")]
-    public Slider masterSlider;
-    public Slider musicSlider;
-    public Slider sfxSlider;
+    [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
 
     private void Start()
     {

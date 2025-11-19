@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 public class EndGameManager : MonoBehaviour
 {
     [Header("UI Panels (Optional)")]
-    public GameObject winPanel;
+    [SerializeField] private GameObject winPanel;
 
     void Start()
     {
-  
         if (winPanel != null)
             winPanel.SetActive(true);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
