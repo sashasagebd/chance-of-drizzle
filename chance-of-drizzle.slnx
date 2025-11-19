@@ -1,7 +1,7 @@
 ﻿<Solution>
   <Project Path="Assets.csproj" />
-  <Project Path="Playmode.csproj" />
   <Project Path="HudMenus.csproj" />
+  <Project Path="Playmode.csproj" />
   <Project Path="PlayModeTestsOwen.csproj" />
   <Project Path="ItemTests.csproj" />
   <Project Path="Tests.csproj" />
