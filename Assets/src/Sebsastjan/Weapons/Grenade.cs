@@ -5,15 +5,15 @@ public class Grenade : MonoBehaviour
 {
     [Header("Damage")]
     public int damage = 10;
-    public float explosionRadius = 6.5f; // Medium radius (5-8 units)
+    [SerializeField] private float explosionRadius = 6.5f; // Medium radius (5-8 units)
     public LayerMask hitMask; // Layers that can be damaged
 
     [Header("Timing")]
-    public float explosionTimer = 3f; // Time before explosion in seconds
+    [SerializeField] private float explosionTimer = 3f; // Time before explosion in seconds
 
     [Header("Visual Effects")]
     public ParticleSystem explosionEffect; // Explosion particle effect (can use hitEffect from weapon)
-    public GameObject explosionPrefab; // Optional prefab to spawn on explosion
+    [SerializeField] private GameObject explosionPrefab; // Optional prefab to spawn on explosion
 
     private Rigidbody _rb;
     private float _spawnTime;

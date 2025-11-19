@@ -6,13 +6,13 @@ public class ProjectileWeapon : WeaponBase
     public GameObject bulletPrefab;      // assign your Bullet prefab
     public float muzzleSpeed = 60f;      // m/s
     public bool useGravity = false;      // toggle if you want drop
-    public LayerMask bulletHitMask;      // same as bullet.hitMask
+    [SerializeField] private LayerMask bulletHitMask;      // same as bullet.hitMask
 
     [Header("Grenade Launcher Mode")]
-    public bool isGrenadeLauncher = false; // Enable arc trajectory calculation
-    public float maxRange = 50f;         // Maximum range for grenade launcher
-    public float minLaunchAngle = 30f;   // Minimum launch angle in degrees
-    public float maxLaunchAngle = 75f;   // Maximum launch angle in degrees
+    [SerializeField] private bool isGrenadeLauncher = false; // Enable arc trajectory calculation
+    [SerializeField] private float maxRange = 50f;         // Maximum range for grenade launcher
+    [SerializeField] private float minLaunchAngle = 30f;   // Minimum launch angle in degrees
+    [SerializeField] private float maxLaunchAngle = 75f;   // Maximum launch angle in degrees
 
     private WeaponAudio weaponAudio;
     private GameObject lastFiredProjectile; // Track last projectile for tracer
@@ -48,6 +48,7 @@ public class ProjectileWeapon : WeaponBase
         }
 
         var go = Object.Instantiate(bulletPrefab, spawnPosition, rotation);
+        go.SetActive(true); // Ensure bullet is active (in case prefab was inactive)
         lastFiredProjectile = go; // Store reference for tracer
 
         var bullet = go.GetComponent<Bullet>();

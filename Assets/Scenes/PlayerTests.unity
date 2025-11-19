@@ -261,6 +261,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2012133544}
   m_LocalEulerAnglesHint: {x: -84.778, y: 138.362, z: -240.863}
+--- !u!198 &451674388 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5768772322454200894, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+  m_PrefabInstance: {fileID: 1134339538}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &464660124 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4069396510946773850, guid: 3add884c1c1944ea8a860f4afd9de2bc, type: 3}
@@ -501,6 +506,7 @@ GameObject:
   - component: {fileID: 907599323}
   - component: {fileID: 907599334}
   - component: {fileID: 907599333}
+  - component: {fileID: 907599335}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -780,6 +786,21 @@ MonoBehaviour:
   weaponAimingRig: {fileID: 274964245}
   aimTransitionSpeed: 5
   returnToPoseDelay: 1
+--- !u!114 &907599335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907599322}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b08822f6012b5743a81dfdeb24bdbc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::BindingDemo
+  muzzleFlash: {fileID: 1875821079}
+  muzzleFlash2: {fileID: 451674388}
+  useFire: 1
 --- !u!1 &930311734
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +849,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5ee23c5ab0fa42059f8e0601447d092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::BindingDemo
+  muzzleFlash: {fileID: 0}
+  muzzleFlash2: {fileID: 0}
+  useFire: 1
+--- !u!114 &982530843 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3117677742473545284, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+  m_PrefabInstance: {fileID: 1134339538}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 982530837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbed4edadfd54fe78f0679266ced301, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assets::LazerWeapon
 --- !u!1 &985544992
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,13 +1100,17 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7849346261657633085, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
+      propertyPath: 'weapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1005003594}
+    - target: {fileID: 7849346261657633085, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
       propertyPath: 'weapons.Array.data[1]'
       value: 
-      objectReference: {fileID: 1868373908}
+      objectReference: {fileID: 982530843}
     - target: {fileID: 7849346261657633085, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
       propertyPath: 'weapons.Array.data[2]'
       value: 
-      objectReference: {fileID: 1005003594}
+      objectReference: {fileID: 1868373908}
     - target: {fileID: 7908520553662091364, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="20" result="Failed(Child)" total="20" passed="15" failed="5" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:32Z" duration="13.1135957">
+  <test-suite type="TestSuite" id="1111" name="chance-of-drizzle" fullname="chance-of-drizzle" runstate="Runnable" testcasecount="87" result="Failed" site="Child" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:32Z" duration="13.113596" total="20" passed="15" failed="5" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1104" name="PlayModeTestsSebastjan.dll" fullname="/Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Library/ScriptAssemblies/PlayModeTestsSebastjan.dll" runstate="Runnable" testcasecount="20" result="Failed" site="Child" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:32Z" duration="13.102021" total="20" passed="15" failed="5" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="42266" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1105" name="Tests" fullname="Tests" runstate="Runnable" testcasecount="20" result="Failed" site="Child" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:32Z" duration="13.095751" total="20" passed="15" failed="5" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1106" name="PlayMode" fullname="Tests.PlayMode" runstate="Runnable" testcasecount="20" result="Failed" site="Child" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:32Z" duration="13.087511" total="20" passed="15" failed="5" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestFixture" id="1081" name="HealthDeathEventTests" fullname="Tests.PlayMode.HealthDeathEventTests" classname="Tests.PlayMode.HealthDeathEventTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:19Z" duration="0.184643" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1085" name="Test02_DeathEvent_ExactlyZeroDamage" fullname="Tests.PlayMode.HealthDeathEventTests.Test02_DeathEvent_ExactlyZeroDamage" methodname="Test02_DeathEvent_ExactlyZeroDamage" classname="Tests.PlayMode.HealthDeathEventTests" runstate="Runnable" seed="14969630" result="Passed" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:19Z" duration="0.046538" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[TestPlayer took 100 damage but armor defended 0% so only 100 damage taken. CURRENT HP: 0
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+]]></output>
+            </test-case>
+            <test-case id="1083" name="Test02_DeathEvent_FiresOnlyOnce" fullname="Tests.PlayMode.HealthDeathEventTests.Test02_DeathEvent_FiresOnlyOnce" methodname="Test02_DeathEvent_FiresOnlyOnce" classname="Tests.PlayMode.HealthDeathEventTests" runstate="Runnable" seed="458366100" result="Passed" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:19Z" duration="0.048279" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[TestPlayer took 60 damage but armor defended 0% so only 60 damage taken. CURRENT HP: 40
+TestPlayer took 50 damage but armor defended 0% so only 50 damage taken. CURRENT HP: 0
+]]></output>
+            </test-case>
+            <test-case id="1084" name="Test02_DeathEvent_NoEventWhenNotDead" fullname="Tests.PlayMode.HealthDeathEventTests.Test02_DeathEvent_NoEventWhenNotDead" methodname="Test02_DeathEvent_NoEventWhenNotDead" classname="Tests.PlayMode.HealthDeathEventTests" runstate="Runnable" seed="1589207306" result="Passed" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:19Z" duration="0.041388" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[TestPlayer took 50 damage but armor defended 0% so only 50 damage taken. CURRENT HP: 50
+TestPlayer took 30 damage but armor defended 0% so only 30 damage taken. CURRENT HP: 20
+]]></output>
+            </test-case>
+            <test-case id="1082" name="Test02_DeathEvent_TriggersOnZeroHealth" fullname="Tests.PlayMode.HealthDeathEventTests.Test02_DeathEvent_TriggersOnZeroHealth" methodname="Test02_DeathEvent_TriggersOnZeroHealth" classname="Tests.PlayMode.HealthDeathEventTests" runstate="Runnable" seed="1657735946" result="Passed" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:19Z" duration="0.033295" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[TestPlayer took 100 damage but armor defended 0% so only 100 damage taken. CURRENT HP: 0
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1086" name="VisualStressTests" fullname="Tests.PlayMode.VisualStressTests" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:30Z" duration="11.360448" total="6" passed="2" failed="4" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1088" name="StressTest_ConcurrentActions" fullname="Tests.PlayMode.VisualStressTests.StressTest_ConcurrentActions" methodname="StressTest_ConcurrentActions" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" seed="1939411376" result="Passed" start-time="2025-11-19 05:33:19Z" end-time="2025-11-19 05:33:23Z" duration="4.369400" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[=== STARTING CONCURRENT ACTIONS STRESS TEST ===
+Watch: Player will move, jump, and change states rapidly
+[1.0s] Actions performed: 50
+[2.0s] Actions performed: 100
+[3.0s] Actions performed: 150
+=== CONCURRENT ACTIONS STRESS TEST COMPLETE ===
+Total actions: 151
+Actions per second: 50.3
+]]></output>
+            </test-case>
+            <test-case id="1089" name="StressTest_ExtremeFireRate" fullname="Tests.PlayMode.VisualStressTests.StressTest_ExtremeFireRate" methodname="StressTest_ExtremeFireRate" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" seed="77873532" result="Failed" label="Error" start-time="2025-11-19 05:33:23Z" end-time="2025-11-19 05:33:24Z" duration="0.401546" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object]]></message>
+                <stack-trace><![CDATA[  at Bullet.Fire (UnityEngine.Vector3 velocity) [0x00000] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/Bullet.cs:15 
+  at ProjectileWeapon.DoFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x00168] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/ProjectileWeapon.cs:78 
+  at WeaponBase.TryFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x0002c] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/WeaponBase.cs:56 
+  at Tests.PlayMode.VisualStressTests+<StressTest_ExtremeFireRate>d__11.MoveNext () [0x000a5] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/tst/Sebastjan/Tests/PlayMode/VisualStressTests.cs:277 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@40b8da2bd3e9/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44 ]]></stack-trace>
+              </failure>
+              <output><![CDATA[=== STARTING EXTREME FIRE RATE STRESS TEST ===
+Watch the scene view - bullets will spawn rapidly!
+WARNING: 100 bullets per second for 3 seconds = 300 bullets!
+]]></output>
+            </test-case>
+            <test-case id="1091" name="StressTest_MaximumFireRateLimit" fullname="Tests.PlayMode.VisualStressTests.StressTest_MaximumFireRateLimit" methodname="StressTest_MaximumFireRateLimit" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" seed="920216164" result="Failed" label="Error" start-time="2025-11-19 05:33:24Z" end-time="2025-11-19 05:33:24Z" duration="0.305187" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object]]></message>
+                <stack-trace><![CDATA[  at Bullet.Fire (UnityEngine.Vector3 velocity) [0x00000] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/Bullet.cs:15 
+  at ProjectileWeapon.DoFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x00168] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/ProjectileWeapon.cs:78 
+  at WeaponBase.TryFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x0002c] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/WeaponBase.cs:56 
+  at Tests.PlayMode.VisualStressTests+<StressTest_MaximumFireRateLimit>d__13.MoveNext () [0x00084] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/tst/Sebastjan/Tests/PlayMode/VisualStressTests.cs:400 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@40b8da2bd3e9/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44 ]]></stack-trace>
+              </failure>
+              <output><![CDATA[=== STARTING MAXIMUM FIRE RATE LIMIT TEST ===
+Testing absolute maximum achievable fire rate
+]]></output>
+            </test-case>
+            <test-case id="1092" name="StressTest_MovementAndRapidFire_Combined" fullname="Tests.PlayMode.VisualStressTests.StressTest_MovementAndRapidFire_Combined" methodname="StressTest_MovementAndRapidFire_Combined" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" seed="1994553133" result="Failed" label="Error" start-time="2025-11-19 05:33:24Z" end-time="2025-11-19 05:33:24Z" duration="0.286918" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object]]></message>
+                <stack-trace><![CDATA[  at Bullet.Fire (UnityEngine.Vector3 velocity) [0x00000] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/Bullet.cs:15 
+  at ProjectileWeapon.DoFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x00168] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/ProjectileWeapon.cs:78 
+  at WeaponBase.TryFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x0002c] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/WeaponBase.cs:56 
+  at Tests.PlayMode.VisualStressTests+<StressTest_MovementAndRapidFire_Combined>d__14.MoveNext () [0x0016f] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/tst/Sebastjan/Tests/PlayMode/VisualStressTests.cs:477 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@40b8da2bd3e9/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44 ]]></stack-trace>
+              </failure>
+              <output><![CDATA[=== STARTING ULTIMATE COMBINED STRESS TEST ===
+Watch: Player moves + rotates + fires rapidly = CHAOS!
+]]></output>
+            </test-case>
+            <test-case id="1090" name="StressTest_RapidFireWithDirectionChanges" fullname="Tests.PlayMode.VisualStressTests.StressTest_RapidFireWithDirectionChanges" methodname="StressTest_RapidFireWithDirectionChanges" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" seed="1492011298" result="Failed" label="Error" start-time="2025-11-19 05:33:24Z" end-time="2025-11-19 05:33:24Z" duration="0.282230" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object]]></message>
+                <stack-trace><![CDATA[  at Bullet.Fire (UnityEngine.Vector3 velocity) [0x00000] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/Bullet.cs:15 
+  at ProjectileWeapon.DoFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x00168] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/ProjectileWeapon.cs:78 
+  at WeaponBase.TryFire (UnityEngine.Vector3 origin, UnityEngine.Vector3 direction) [0x0002c] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/src/Sebsastjan/Weapons/WeaponBase.cs:56 
+  at Tests.PlayMode.VisualStressTests+<StressTest_RapidFireWithDirectionChanges>d__12.MoveNext () [0x00120] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/tst/Sebastjan/Tests/PlayMode/VisualStressTests.cs:352 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@40b8da2bd3e9/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44 ]]></stack-trace>
+              </failure>
+              <output><![CDATA[=== STARTING RAPID FIRE + DIRECTION CHANGE STRESS TEST ===
+Watch: Bullets will fire in random directions at high rate
+[0.00s] Direction changed to (-0.88, 0.03, -0.47)
+]]></output>
+            </test-case>
+            <test-case id="1087" name="StressTest_RapidInputChanges" fullname="Tests.PlayMode.VisualStressTests.StressTest_RapidInputChanges" methodname="StressTest_RapidInputChanges" classname="Tests.PlayMode.VisualStressTests" runstate="Runnable" seed="2103388131" result="Passed" start-time="2025-11-19 05:33:24Z" end-time="2025-11-19 05:33:30Z" duration="5.706307" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[=== STARTING INPUT STRESS TEST ===
+Watch the player object - it will rapidly change movement direction
+[1.0s] Input changes: 20, Distance moved: 0.15m
+[1.9s] Input changes: 40, Distance moved: 0.36m
+[2.9s] Input changes: 60, Distance moved: 0.64m
+[3.9s] Input changes: 80, Distance moved: 1.01m
+[5.0s] Input changes: 100, Distance moved: 1.35m
+=== INPUT STRESS TEST COMPLETE ===
+Total input changes: 100
+Total distance moved: 1.35m
+Average changes per second: 20.0
+]]></output>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1093" name="WeaponSystemPlayModeTests" fullname="Tests.PlayMode.WeaponSystemPlayModeTests" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" testcasecount="10" result="Failed" site="Child" start-time="2025-11-19 05:33:30Z" end-time="2025-11-19 05:33:32Z" duration="1.535095" total="10" passed="9" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1095" name="Test08_FireRateLimiting_AllowsFireAfterCooldown" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test08_FireRateLimiting_AllowsFireAfterCooldown" methodname="Test08_FireRateLimiting_AllowsFireAfterCooldown" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="620755526" result="Passed" start-time="2025-11-19 05:33:30Z" end-time="2025-11-19 05:33:30Z" duration="0.199979" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1097" name="Test08_FireRateLimiting_DoesNotAffectAmmo" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test08_FireRateLimiting_DoesNotAffectAmmo" methodname="Test08_FireRateLimiting_DoesNotAffectAmmo" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="1838067201" result="Passed" start-time="2025-11-19 05:33:30Z" end-time="2025-11-19 05:33:30Z" duration="0.040846" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1094" name="Test08_FireRateLimiting_PreventsRapidFire" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test08_FireRateLimiting_PreventsRapidFire" methodname="Test08_FireRateLimiting_PreventsRapidFire" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="1034101273" result="Passed" start-time="2025-11-19 05:33:30Z" end-time="2025-11-19 05:33:30Z" duration="0.042288" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1096" name="Test08_FireRateLimiting_RespectsDifferentFireRates" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test08_FireRateLimiting_RespectsDifferentFireRates" methodname="Test08_FireRateLimiting_RespectsDifferentFireRates" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="1047715860" result="Passed" start-time="2025-11-19 05:33:30Z" end-time="2025-11-19 05:33:31Z" duration="0.649566" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1100" name="Test17_WeaponFireEvent_MultipleSubscribers" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test17_WeaponFireEvent_MultipleSubscribers" methodname="Test17_WeaponFireEvent_MultipleSubscribers" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="1927281948" result="Passed" start-time="2025-11-19 05:33:31Z" end-time="2025-11-19 05:33:31Z" duration="0.041840" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1099" name="Test17_WeaponFireEvent_OnAmmoChangedOnReload" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test17_WeaponFireEvent_OnAmmoChangedOnReload" methodname="Test17_WeaponFireEvent_OnAmmoChangedOnReload" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="1044635086" result="Passed" start-time="2025-11-19 05:33:31Z" end-time="2025-11-19 05:33:31Z" duration="0.041293" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1098" name="Test17_WeaponFireEvent_OnAmmoChangedTriggers" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test17_WeaponFireEvent_OnAmmoChangedTriggers" methodname="Test17_WeaponFireEvent_OnAmmoChangedTriggers" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="318002126" result="Failed" start-time="2025-11-19 05:33:31Z" end-time="2025-11-19 05:33:31Z" duration="0.043169" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[  Event should report correct remaining ammo
+  Expected: 9
+  But was:  11
+]]></message>
+                <stack-trace><![CDATA[at Tests.PlayMode.WeaponSystemPlayModeTests+<Test17_WeaponFireEvent_OnAmmoChangedTriggers>d__9.MoveNext () [0x000bb] in /Users/sebastjanbas/Seba/Programiranje/Unity Projects/383-Chance-of-Drizzle/chance-of-drizzle/Assets/tst/Sebastjan/Tests/PlayMode/WeaponSystemPlayModeTests.cs:182
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@40b8da2bd3e9/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1102" name="Test18_DryFire_MultipleDryFireAttempts" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test18_DryFire_MultipleDryFireAttempts" methodname="Test18_DryFire_MultipleDryFireAttempts" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="796000006" result="Passed" start-time="2025-11-19 05:33:31Z" end-time="2025-11-19 05:33:32Z" duration="0.369160" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1103" name="Test18_DryFire_ReloadAfterDryFire" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test18_DryFire_ReloadAfterDryFire" methodname="Test18_DryFire_ReloadAfterDryFire" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="786882830" result="Passed" start-time="2025-11-19 05:33:32Z" end-time="2025-11-19 05:33:32Z" duration="0.054272" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1101" name="Test18_DryFire_TriggersWhenOutOfAmmo" fullname="Tests.PlayMode.WeaponSystemPlayModeTests.Test18_DryFire_TriggersWhenOutOfAmmo" methodname="Test18_DryFire_TriggersWhenOutOfAmmo" classname="Tests.PlayMode.WeaponSystemPlayModeTests" runstate="Runnable" seed="401112259" result="Passed" start-time="2025-11-19 05:33:32Z" end-time="2025-11-19 05:33:32Z" duration="0.040895" asserts="0">
+              <properties>
+                <property name="_JOINTYPE" value="UnityCombinatorial" />
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <output><![CDATA[Saving results to: /Users/sebastjanbas/Library/Application Support/Team 2 Studios/chance-of-drizzle/TestResults.xml
+]]></output>
+            </test-case>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

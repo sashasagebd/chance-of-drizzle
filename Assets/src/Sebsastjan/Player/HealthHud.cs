@@ -5,18 +5,18 @@ using System.Collections;
 public class HealthHUD : MonoBehaviour
 {
     [Header("References")]
-    public Health health;           
-    public Image fillBar;        
-    public Image chipBar;            
-    public CanvasGroup damageFlash;   
+    [SerializeField] private Health health;
+    [SerializeField] private Image fillBar;
+    [SerializeField] private Image chipBar;
+    [SerializeField] private CanvasGroup damageFlash;
 
     [Header("Settings")]
-    public float smoothSpeed = 6f;       
-    public float chipDelay = 0.3f;       
-    public float chipSpeed = 2f;      
-    public float flashDuration = 0.15f;  
-    public float lowHealthThreshold = 0.25f;
-    public float lowHealthPulseSpeed = 5f;
+    [SerializeField] private float smoothSpeed = 6f;
+    [SerializeField] private float chipDelay = 0.3f;
+    [SerializeField] private float chipSpeed = 2f;
+    [SerializeField] private float flashDuration = 0.15f;
+    [SerializeField] private float lowHealthThreshold = 0.25f;
+    [SerializeField] private float lowHealthPulseSpeed = 5f;
 
     private float targetFill = 1f;
 
