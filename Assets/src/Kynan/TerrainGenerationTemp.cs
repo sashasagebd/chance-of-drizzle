@@ -47,7 +47,8 @@ public class TerrainGenerationTemp : MonoBehaviour{
     }
 
     GameObject goal = GameObject.Find("Goal");
-    goal.transform.position = new Vector3(goalPosition.x, hub.getHeight(new Vector2(goalPosition.x, goalPosition.y)) + 2f, goalPosition.y);
+    goalPosition = new Vector2(goalPosition.y, goalPosition.x);
+    goal.transform.position = new Vector3(goalPosition.x, hub.getHeight(goalPosition) + 2f, goalPosition.y);
     print(goalPosition);
 
     float px = -goalPosition.x;
