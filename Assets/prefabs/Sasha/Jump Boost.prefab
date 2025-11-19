@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemPickup
   hudManager: {fileID: 0}
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 3a3a50d5bec788041b90be1cd12d5b09, type: 3}
   iconDuration: 3
   itemID: jumpboost
 --- !u!114 &1666829967099833847
