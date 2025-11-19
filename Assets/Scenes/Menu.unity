@@ -1805,6 +1805,7 @@ GameObject:
   - component: {fileID: 526133482}
   - component: {fileID: 526133484}
   - component: {fileID: 526133485}
+  - component: {fileID: 526133486}
   m_Layer: 0
   m_Name: DynamicMenu
   m_TagString: Untagged
@@ -1893,6 +1894,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: HudMenus::LoadPanel
   panelManager: {fileID: 526133482}
+--- !u!114 &526133486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 526133479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1d975e67a54c142b5faa64c512fdb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: HudMenus::ExitButton
 --- !u!1 &532528749
 GameObject:
   m_ObjectHideFlags: 0
@@ -14031,9 +14044,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MenuController, HudMenus
-        m_MethodName: OnExitClick
+      - m_Target: {fileID: 526133486}
+        m_TargetAssemblyTypeName: ExitButton, HudMenus
+        m_MethodName: Execute
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
