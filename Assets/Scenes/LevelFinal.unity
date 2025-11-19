@@ -2653,7 +2653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHp: 100
   destroyOnDeath: 0
-  healthHUD: {fileID: 0}
+  healthHUD: {fileID: 1368314838}
 --- !u!114 &821246433
 MonoBehaviour:
   m_ObjectHideFlags: 0
