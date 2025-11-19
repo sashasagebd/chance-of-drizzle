@@ -36,7 +36,7 @@ public class LightningStorm : MonoBehaviour
     {
         if (Time.time >= nextFlashTime)
         {
-            StartCoroutine(Strike());
+            StartCoroutine(Strike()); //Iterator stepping through patterns
             ScheduleNextStrike();
         }
     }
@@ -45,6 +45,8 @@ public class LightningStorm : MonoBehaviour
     {
         nextFlashTime = Time.time + Random.Range(minInterval, maxInterval);
     }
+
+    //Iterator strike
 
     IEnumerator Strike()
     {

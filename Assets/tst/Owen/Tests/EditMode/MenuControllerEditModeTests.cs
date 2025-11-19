@@ -25,6 +25,10 @@ public class MenuControllerEditModeTests
         _menuController.InitializeMenu();
     }
 
+    // =========================
+    // Functional Tests
+    // =========================
+
     [Test]
     public void Functional_OnlyMainActive()
     {
@@ -65,6 +69,30 @@ public class MenuControllerEditModeTests
     }
 
     [Test]
+    public void Functional_MultipleSettingsClicks()
+    {
+        _menuController.OnSettingsClick();
+        _menuController.OnSettingsClick(); // clicking again
+        Assert.IsTrue(_settingsPanel.activeSelf);
+        Assert.IsFalse(_mainMenuPanel.activeSelf);
+        Assert.IsFalse(_loadPanel.activeSelf);
+    }
+
+    [Test]
+    public void Functional_SequentialPanelSwitch()
+    {
+        _menuController.OnSettingsClick();
+        _menuController.OnLoadClick();
+        Assert.IsFalse(_mainMenuPanel.activeSelf);
+        Assert.IsFalse(_settingsPanel.activeSelf);
+        Assert.IsTrue(_loadPanel.activeSelf);
+    }
+
+    // =========================
+    // Boundary Tests
+    // =========================
+
+    [Test]
     public void Boundary_PanelsDontCrash()
     {
         var controllerObject = new GameObject("MenuControllerBoundary");
@@ -76,11 +104,11 @@ public class MenuControllerEditModeTests
 
         menu.InitializeMenu();
 
-        Assert.Pass("null panels without crashing.");
+        Assert.Pass("Null panels do not crash the controller.");
     }
 
     [Test]
-    public void Boundary_Multiple()
+    public void Boundary_MultipleActivePanels()
     {
         var mainMenuPanel = new GameObject("MainMenuPanel");
         var settingsPanel = new GameObject("SettingsPanel");
@@ -97,18 +125,92 @@ public class MenuControllerEditModeTests
         menu.loadPanel = loadPanel;
 
         menu.OnSettingsClick();
-        Assert.IsFalse(mainMenuPanel.activeSelf, "Main menu should be inactive after SettingsClick.");
-        Assert.IsTrue(settingsPanel.activeSelf, "Settings panel should be active after SettingsClick.");
-        Assert.IsFalse(loadPanel.activeSelf, "Load panel should be inactive after SettingsClick.");
+        Assert.IsFalse(mainMenuPanel.activeSelf);
+        Assert.IsTrue(settingsPanel.activeSelf);
+        Assert.IsFalse(loadPanel.activeSelf);
 
         menu.OnLoadClick();
-        Assert.IsFalse(mainMenuPanel.activeSelf, "Main menu should be inactive after LoadClick.");
-        Assert.IsFalse(settingsPanel.activeSelf, "Settings panel should be inactive after LoadClick.");
-        Assert.IsTrue(loadPanel.activeSelf, "Load panel should be active after LoadClick.");
+        Assert.IsFalse(mainMenuPanel.activeSelf);
+        Assert.IsFalse(settingsPanel.activeSelf);
+        Assert.IsTrue(loadPanel.activeSelf);
 
         menu.OnBackClick();
-        Assert.IsTrue(mainMenuPanel.activeSelf, "Main menu should be active after BackClick.");
-        Assert.IsFalse(settingsPanel.activeSelf, "Settings panel should be inactive after BackClick.");
-        Assert.IsFalse(loadPanel.activeSelf, "Load panel should be inactive after BackClick.");
+        Assert.IsTrue(mainMenuPanel.activeSelf);
+        Assert.IsFalse(settingsPanel.activeSelf);
+        Assert.IsFalse(loadPanel.activeSelf);
+    }
+
+    [Test]
+    public void Boundary_BackOnMainDoesNothing()
+    {
+        _menuController.OnBackClick();
+        Assert.IsTrue(_mainMenuPanel.activeSelf);
+        Assert.IsFalse(_settingsPanel.activeSelf);
+        Assert.IsFalse(_loadPanel.activeSelf);
+    }
+
+    [Test]
+    public void Functional_MultipleBackFromLoad()
+    {
+    _menuController.OnLoadClick();
+    _menuController.OnBackClick();
+    _menuController.OnBackClick();
+    _menuController.OnBackClick();
+
+    Assert.IsTrue(_mainMenuPanel.activeSelf, "Main menu should stay active.");
+    Assert.IsFalse(_settingsPanel.activeSelf, "Settings panel should remain inactive.");
+    Assert.IsFalse(_loadPanel.activeSelf, "Load panel should remain inactive.");
+    }
+
+    [Test]
+    public void Boundary_MultipleBackClicks()
+    {
+        _menuController.OnSettingsClick();
+        _menuController.OnBackClick();
+        _menuController.OnBackClick(); // clicking again
+        Assert.IsTrue(_mainMenuPanel.activeSelf);
+        Assert.IsFalse(_settingsPanel.activeSelf);
+        Assert.IsFalse(_loadPanel.activeSelf);
+    }
+
+    // =========================
+    // Negative / Edge Case Tests
+    // =========================
+
+    [Test]
+    public void Negative_AssignInvalidPanels()
+    {
+        _menuController.mainMenuPanel = null;
+        _menuController.settingsPanel = null;
+        _menuController.loadPanel = null;
+        Assert.DoesNotThrow(() => _menuController.InitializeMenu());
+    }
+
+    [Test]
+    public void Negative_RepeatedSettingsClick()
+    {
+        _menuController.OnSettingsClick();
+        _menuController.OnSettingsClick();
+        _menuController.OnSettingsClick();
+        Assert.IsTrue(_settingsPanel.activeSelf);
+    }
+
+    [Test]
+    public void Negative_RepeatedLoadClick()
+    {
+        _menuController.OnLoadClick();
+        _menuController.OnLoadClick();
+        Assert.IsTrue(_loadPanel.activeSelf);
+    }
+
+    [Test]
+    public void Negative_BackAfterMultipleSwitches()
+    {
+        _menuController.OnSettingsClick();
+        _menuController.OnLoadClick();
+        _menuController.OnBackClick();
+        Assert.IsTrue(_mainMenuPanel.activeSelf);
+        Assert.IsFalse(_settingsPanel.activeSelf);
+        Assert.IsFalse(_loadPanel.activeSelf);
     }
 }
