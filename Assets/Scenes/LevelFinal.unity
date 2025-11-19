@@ -1756,8 +1756,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 654, y: 368.84363}
+  m_AnchoredPosition: {x: -12, y: -18}
+  m_SizeDelta: {x: 1133.0002, y: 900.62177}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &638173045
 MonoBehaviour:
@@ -2894,7 +2894,7 @@ Transform:
   m_GameObject: {fileID: 886505783}
   serializedVersion: 2
   m_LocalRotation: {x: 0.064592585, y: 0.0000000010538851, z: -6.82156e-11, w: 0.99791175}
-  m_LocalPosition: {x: 3.802, y: 2.163119, z: -1.9994729}
+  m_LocalPosition: {x: -30.198011, y: 7.1631193, z: 4.000532}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3186,7 +3186,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.31066895, y: 2.0022278}
-  m_SizeDelta: {x: 1269.4803, y: 683.6623}
+  m_SizeDelta: {x: 1527.98, y: 1004}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &948619072
 CanvasGroup:
@@ -5025,11 +5025,11 @@ RectTransform:
   - {fileID: 1070809128}
   m_Father: {fileID: 649629975}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 600, y: 332}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1368314838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5183,7 +5183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1501685214}
   - component: {fileID: 1501685212}
-  - component: {fileID: 1501685213}
+  - component: {fileID: 1501685215}
   m_Layer: 5
   m_Name: HudManager
   m_TagString: Untagged
@@ -5205,20 +5205,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: HudMenus::PauseMenu
   pauseMenuPanel: {fileID: 638173043}
   playerScript: {fileID: 821246434}
---- !u!114 &1501685213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501685211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7a7556138db404d8e20b6cc5814fb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assets::HUDManager
-  iconParent: {fileID: 995346418}
-  itemIconPrefab: {fileID: 5374940674283816565, guid: 48252768c94a8c34bbf9c30e8ddb1665, type: 3}
 --- !u!224 &1501685214
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5236,9 +5222,23 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 449, y: 342}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1501685215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501685211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c52f7512a575e4b819abcf10830a2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: HudMenus::HUDManager
+  iconParent: {fileID: 0}
+  itemIconPrefab: {fileID: 5374940674283816565, guid: 48252768c94a8c34bbf9c30e8ddb1665, type: 3}
 --- !u!1 &1516429957
 GameObject:
   m_ObjectHideFlags: 0
