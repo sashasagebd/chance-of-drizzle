@@ -34,11 +34,24 @@ public class GoalPoint : MonoBehaviour{
     return perpendicularDistance < 0.25f;
   }
 
+  /*
+  private static void canLevelBeLoaded(string exitName) {
+    int sceneCount = SceneManager.sceneCountBuildInSettings;
+    for (int i=0; i<sceneCount; i++) {
+      string path = SceneUtility.GetScenePathByBuildIndex(i);
+      string name = Path.GetFileNameWithoutExtension(path);
+
+      if (name == sceneId)
+        return true;
+    }
+  }
+  */
+
   // Following function written by Erik
   public static void setExitDestination(string exitName) {
     if (Application.CanStreamedLevelBeLoaded(exitName)) levelExitID = exitName;
     else { 
-      Debug.LogWarning("Level exit has been set to invalid value! Defaulted to WinGame");
+      Debug.LogWarning("Level exit has been set to invalid value " + exitName + " Defaulted to WinGame");
       levelExitID="WinGame";
     }
   }
