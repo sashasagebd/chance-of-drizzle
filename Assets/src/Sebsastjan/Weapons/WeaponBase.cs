@@ -3,11 +3,14 @@ using UnityEngine;
 
 public abstract class WeaponBase : MonoBehaviour
 {
-    [Header("Stats")] public int magazineSize = 12;
+    [Header("Stats")]
+    // PUBLIC: Configured via Unity Inspector for weapon balancing
+    public int magazineSize = 12;
     public float fireRate = 6f;
     public int damage = 10;
 
     [Header("Visual")]
+    // PUBLIC: Accessed by PlayerController3D to determine bullet spawn position for firing
     public Transform muzzle; // Bullet spawn point for this weapon - PUBLIC: accessed by PlayerController3D
     [SerializeField] protected ParticleSystem muzzleFlash; // Muzzle flash particle effect
     [SerializeField] protected ParticleSystem hitEffect;
@@ -15,11 +18,13 @@ public abstract class WeaponBase : MonoBehaviour
     [SerializeField] private Transform raycastOrigin;
     [SerializeField] private Transform raycastDestination;
 
-    [Header("Runtime")] public int ammo;
+    [Header("Runtime")]
+    // PUBLIC: Accessed by UI (AmmoHUD) to display current ammo count
+    public int ammo;
     float _nextFireTime;
     private WeaponAudio weaponAudio;
 
-    // notify HUD when ammo changes
+    // PUBLIC: Event subscribed by UI (AmmoHUD) to update ammo display when ammo changes
     public event Action<int, int> OnAmmoChanged;
 
     // Raycast visualization
@@ -32,6 +37,7 @@ public abstract class WeaponBase : MonoBehaviour
         OnAmmoChanged?.Invoke(ammo, magazineSize);
     }
 
+    // PUBLIC: Called by PlayerController3D when player presses reload input
     public void Reload() {
         if (weaponAudio == null)
             weaponAudio = GetComponent<WeaponAudio>();
@@ -42,6 +48,7 @@ public abstract class WeaponBase : MonoBehaviour
     }
 
     /// <summary>
+    /// PUBLIC: Called by PlayerController3D and AI (AIPlayer) to fire weapon
     /// Attempts to fire the weapon. Returns true if the weapon successfully fired.
     /// </summary>
     public bool TryFire(Vector3 origin, Vector3 direction)

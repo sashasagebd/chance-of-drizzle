@@ -3,8 +3,11 @@ using UnityEngine;
 public class ProjectileWeapon : WeaponBase
 {
     [Header("Projectile")]
+    // PUBLIC: Configured via Unity Inspector to specify which projectile prefab to spawn
     public GameObject bulletPrefab;      // assign your Bullet prefab
+    // PUBLIC: Configured via Unity Inspector for projectile velocity tuning
     public float muzzleSpeed = 60f;      // m/s
+    // PUBLIC: Configured via Unity Inspector to enable/disable physics gravity on projectiles
     public bool useGravity = false;      // toggle if you want drop
     [SerializeField] private LayerMask bulletHitMask;      // same as bullet.hitMask
 
@@ -180,6 +183,7 @@ public class ProjectileWeapon : WeaponBase
         return Mathf.Min(angle1, angle2);
     }
 
+    // PUBLIC: Called by ProjectileTracer to track grenade trajectory for visual effects
     public GameObject GetLastFiredProjectile()
     {
         return lastFiredProjectile;

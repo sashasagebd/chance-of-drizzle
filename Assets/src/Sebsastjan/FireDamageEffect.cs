@@ -11,12 +11,13 @@ public class FireDamageEffect : DamageEffect
         // effectColor = Color.red;
     }
 
-    // Override NON-VIRTUAL method - this will NOT be called when the static type is DamageEffect
+    // PUBLIC: Override NON-VIRTUAL method - demonstrates static vs dynamic binding for educational purposes
     public new string GetBasicInfo()
     {
         return $"Fire class says: {effectName} - IT'S HOT!";
     }
 
+    // PUBLIC: Override provides fire-specific color (educational demonstration of polymorphism)
     public override Color GetColor()
     {
         return Color.green;

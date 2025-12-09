@@ -9,6 +9,7 @@ public class ProjectileTracer : MonoBehaviour
     private TrailRenderer activeTracer;
     private GameObject trackedProjectile;
 
+    // PUBLIC: Called by ProjectileWeapon to create tracer effect that follows projectile trajectory
     public void StartTracking(GameObject projectile, TrailRenderer tracerPrefab, Vector3 startPosition)
     {
         if (tracerPrefab == null) return;

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class PlayerController3D : MonoBehaviour
 {
     [Header("Movement")]
+    // PUBLIC: Configured via Unity Inspector for gameplay tuning
     public float maxSpeed = 15f;
     public float runSpeed = 4f;         // Running speed (default) - reduced from 6f
     public float sprintSpeed = 9f;      // Sprint speed (when holding shift)
@@ -15,6 +16,7 @@ public class PlayerController3D : MonoBehaviour
     public float gravity = -9.81f;
 
     [Header("Camera Reference")]
+    // PUBLIC: Assigned via Unity Inspector to link player movement with camera direction
     public Transform cam;             // Assign your Cinemachine virtual camera's follow target or main camera
 
     [Header("Crouch")]
@@ -23,7 +25,9 @@ public class PlayerController3D : MonoBehaviour
     [SerializeField] private float crouchTransitionSpeed = 10f; // How fast to transition between crouch states
 
     [Header("Weapon")]
+    // PUBLIC: Accessed by AI system (AIPlayer) for enemy targeting and Inspector configuration
     public WeaponInventory inventory; // Kynan needs it for AIPlayer
+    // PUBLIC: Accessed by AI system (AIPlayer) and weapon system for bullet spawn position
     public Transform muzzle;  // Fallback muzzle if weapon doesn't have one (Kynan needs it for AIPlayer)
 
     [Header("Animation")]
@@ -35,13 +39,18 @@ public class PlayerController3D : MonoBehaviour
     InputAction _moveAction, _jumpAction, _fireAction, _reloadAction, _nextAction, _prevAction, _sprintAction, _crouchAction;
 
     [Header("Items")]
+    // PUBLIC: Accessed by an item system (Consumable, ItemPickup) to modify player health
     public Health HealthComponent; // needed right now for items to access health class easily
+    // PUBLIC: Accessed by an item system to apply weapon modifications and buffs
     public WeaponBase WeaponComponent; // needed for items to access weapon base class easily
     private Coroutine speedTimer; // time for temp speed buffs
     private Coroutine jumpTimer; // time for temp jump buffs
     [SerializeField] private float baseDefense = 0;
+    // PUBLIC: Read by Health class to calculate damage reduction from armor
     public float currentDefense { get; private set; } = 0;
+    // PUBLIC: Accessed by item system (Armor) to manage equipped armor pieces
     public readonly Dictionary<string, Armor> equippedArmor = new Dictionary<string, Armor>();
+    // PUBLIC: Static variable accessed by weapon system (Bullet, Grenade, LazerWeapon) to add bonus damage
     public static int damageBonus = 0; // additional damage from items
 
     Vector3 _velocity; // for gravity
@@ -51,7 +60,7 @@ public class PlayerController3D : MonoBehaviour
     private float _currentHeight;  // For smooth crouch transitions
     private Vector3 _initialCenter; // Store the initial center configuration
 
-    // Public accessors for animation system
+    // PUBLIC: Accessors for animation system (PlayerAnimationController) to sync animations with player state
     public bool IsCrouching => _isCrouching;
     public bool IsSprinting { get; private set; }
     public Vector3 CurrentVelocity => _controller != null ? _controller.velocity : Vector3.zero;
@@ -222,6 +231,7 @@ public class PlayerController3D : MonoBehaviour
         }
     }
 
+    // PUBLIC: Called by item system (Consumable) to apply temporary or permanent speed buffs
     public void ApplySpeed(float amount, int duration)
     {
         if (speedTimer != null)
@@ -255,6 +265,7 @@ public class PlayerController3D : MonoBehaviour
         speedTimer = null;
     }
 
+    // PUBLIC: Called by item system (Consumable) to apply temporary or permanent jump height buffs
     public void ApplyJumpBoost(float amount, int duration)
     {
         if (jumpTimer != null)
@@ -285,6 +296,7 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
+    // PUBLIC: Called by item system (ItemPickup) to equip armor and manage armor slots
     public bool EquipArmor(Armor newArmor, out Armor replacedArmor)
     {
         replacedArmor = null;

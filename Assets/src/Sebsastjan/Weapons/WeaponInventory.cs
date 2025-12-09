@@ -4,9 +4,11 @@ using UnityEngine;
 public class WeaponInventory : MonoBehaviour
 {
     [Tooltip("Assign in order (0,1,2...). Items can be children of FP_WeaponRig).")]
+    // PUBLIC: Configured via Unity Inspector to define which weapons the player has
     public List<WeaponBase> weapons = new List<WeaponBase>();
 
     private int CurrentIndex { get; set; } = 0;
+    // PUBLIC: Accessed by PlayerController3D and AmmoHUD to get currently selected weapon
     public WeaponBase Current => (weapons.Count > 0 && CurrentIndex >= 0) ? weapons[CurrentIndex] : null;
 
     void Start() { Select(CurrentIndex); }
@@ -22,6 +24,8 @@ public class WeaponInventory : MonoBehaviour
         CurrentIndex = index;
     }
 
+    // PUBLIC: Called by PlayerController3D when player presses next weapon input
     public void Next() { if (weapons.Count > 0) Select( (CurrentIndex + 1) % weapons.Count ); }
+    // PUBLIC: Called by PlayerController3D when player presses previous weapon input
     public void Prev() { if (weapons.Count > 0) Select( (CurrentIndex - 1 + weapons.Count) % weapons.Count ); }
 }

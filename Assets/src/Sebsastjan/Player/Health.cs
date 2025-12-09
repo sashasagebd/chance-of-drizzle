@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    // PUBLIC: Configured via Unity Inspector for gameplay balancing
     public float maxHp = 100f;
     [SerializeField] private bool destroyOnDeath = false;
+
+    // PUBLIC: Read by UI systems (HealthHUD) and items to display/check current health
     public float Current { get; private set; }
+
+    // PUBLIC: Event for other systems (ReloadOnDeath, MenuController) to respond to death
     public event Action OnDied;
+
+    // PUBLIC: Event for UI systems (HealthHUD) to update health display when health changes
     public event Action<float, float> OnHealthChanged; // (current, max)
     private PlayerController3D playerController; // need for accessing armor modifier
     private bool _isDead = false;
@@ -23,6 +30,7 @@ public class Health : MonoBehaviour
             healthHUD.ApplyHealthChange(maxHp, maxHp);
     }
 
+    // PUBLIC: Called by weapons (Bullet, Grenade, LazerWeapon) and hazards to damage entities
     public void ApplyDamage(float amount)
     {
         if (_isDead) return; // Don't apply damage if already dead
@@ -60,6 +68,7 @@ public class Health : MonoBehaviour
             SoundManager.Instance?.PlayPlayerDamage(.5f); // play hit sound
     }
 
+    // PUBLIC: Called by items (Consumable) to restore player health
     public void Heal(int amount)
     {
         float oldHp = Current;
@@ -73,6 +82,7 @@ public class Health : MonoBehaviour
         OnHealthChanged?.Invoke(Current, maxHp);
     }
 
+    // PUBLIC: Called by items to permanently increase max health capacity
     public void IncreaseMaxHealth(int amount)
     {
         maxHp += amount;
@@ -83,6 +93,7 @@ public class Health : MonoBehaviour
         OnHealthChanged?.Invoke(Current, maxHp);
     }
 
+    // PUBLIC: Called by items and tests to directly set health value
     public void SetHealth(int value)
     {
         float oldHp = Current;
