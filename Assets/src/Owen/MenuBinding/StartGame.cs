@@ -6,6 +6,6 @@ public class StartGame : MenuAction
     public override void Execute()
     {
         LogClick();
-        SceneManager.LoadScene("LevelFinal");
+        SceneManager.LoadScene("Level1");
     }
 }

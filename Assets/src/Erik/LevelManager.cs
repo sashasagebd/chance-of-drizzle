@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,10 +10,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float strengthScaling = 0.1f;
     [SerializeField] protected List<string> exitDestinations = new List<string> {"WinRoom"};
 
+    static private List<string> playedLevels = new List<string>();
+
     async void Start() {
         await Task.Delay(100);
         // Debug.Log("Loading in objects...");
         // Debug.Log(GameObject.Find("Enemy Hub").name);
+
+        trackPlayedLevels();
 
         EnemySpawner.changeStrengthScaling(strengthScaling);
         EnemySpawner.changeEnemyHub(GameObject.Find("Enemy Hub").GetComponent<EnemyHub>());
@@ -49,5 +54,12 @@ public class LevelManager : MonoBehaviour
                 Destroy(spawns);
             }
         }
+    }
+
+    static void trackPlayedLevels() {
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (!playedLevels.Contains(currentScene))
+        playedLevels.Add(currentScene);
+        Debug.Log(currentScene);
     }
 }
