@@ -45,7 +45,7 @@ public class HealthHUD : MonoBehaviour
         }
     }
 
-    // Call this when health changes
+    // PUBLIC: Called by Health class when health changes to update UI display
     public void ApplyHealthChange(float oldHp, float newHp)
     {
         float oldPercent = Mathf.Clamp01(oldHp / health.maxHp);

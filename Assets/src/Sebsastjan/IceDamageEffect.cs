@@ -11,12 +11,13 @@ public class IceDamageEffect : DamageEffect
         // effectColor = Color.cyan;
     }
 
-    // Override NON-VIRTUAL method - this will NOT be called when the static type is DamageEffect
+    // PUBLIC: Override NON-VIRTUAL method - demonstrates static vs dynamic binding for educational purposes
     public new string GetBasicInfo()
     {
         return $"Ice class says: {effectName} - IT'S COLD!";
     }
 
+    // PUBLIC: Provides ice-specific color (educational demonstration, should use override instead of new)
     public new Color GetColor()
     {
         return Color.cyan;

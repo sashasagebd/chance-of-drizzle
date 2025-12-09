@@ -4,14 +4,17 @@ using UnityEngine;
 public class Grenade : MonoBehaviour
 {
     [Header("Damage")]
+    // PUBLIC: Set by weapon (ProjectileWeapon) when grenade is spawned, includes damage bonuses
     public int damage = 10;
     [SerializeField] private float explosionRadius = 6.5f; // Medium radius (5-8 units)
+    // PUBLIC: Set by weapon (ProjectileWeapon) to specify which layers can be damaged by explosion
     public LayerMask hitMask; // Layers that can be damaged
 
     [Header("Timing")]
     [SerializeField] private float explosionTimer = 3f; // Time before explosion in seconds
 
     [Header("Visual Effects")]
+    // PUBLIC: Set by weapon (ProjectileWeapon) via SetExplosionEffect() to define explosion visual
     public ParticleSystem explosionEffect; // Explosion particle effect (can use hitEffect from weapon)
     [SerializeField] private GameObject explosionPrefab; // Optional prefab to spawn on explosion
 
@@ -25,6 +28,7 @@ public class Grenade : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
     }
 
+    // PUBLIC: Called by weapon (ProjectileWeapon) to launch grenade with arc trajectory
     public void Fire(Vector3 velocity)
     {
         _rb.linearVelocity = velocity;
@@ -33,6 +37,7 @@ public class Grenade : MonoBehaviour
     }
 
     /// <summary>
+    /// PUBLIC: Called by weapon (ProjectileWeapon) to assign explosion particle effect
     /// Set the explosion effect to use (called from weapon)
     /// </summary>
     public void SetExplosionEffect(ParticleSystem effect)

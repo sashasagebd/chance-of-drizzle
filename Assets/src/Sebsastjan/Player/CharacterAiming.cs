@@ -41,6 +41,7 @@ public class CharacterAiming : MonoBehaviour
     }
 
     /// <summary>
+    /// PUBLIC: Called by PlayerController3D when weapon fires to trigger aiming animation
     /// Call this when the weapon is fired to transition to aiming pose
     /// </summary>
     public void OnWeaponFired()
@@ -58,7 +59,7 @@ public class CharacterAiming : MonoBehaviour
             StopCoroutine(returnToPoseCoroutine);
         }
 
-        // Start new coroutine to return to pose after delay
+        // Start a new coroutine to return to pose after delay
         returnToPoseCoroutine = StartCoroutine(ReturnToPoseAfterDelay());
     }
 

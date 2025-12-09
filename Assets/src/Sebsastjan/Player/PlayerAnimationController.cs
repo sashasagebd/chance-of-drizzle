@@ -168,6 +168,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     /// <summary>
+    /// PUBLIC: Called by PlayerController3D to trigger shoot animation when a weapon fires
     /// Call this method when the player shoots
     /// </summary>
     public void TriggerShootAnimation()
@@ -181,6 +182,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     /// <summary>
+    /// PUBLIC: Accessed by debug UI and tools to display current animation state
     /// Gets current animation state for debugging
     /// </summary>
     public string GetCurrentState()
@@ -207,7 +209,7 @@ public class PlayerAnimationController : MonoBehaviour
     }
 
     /// <summary>
-    /// Debug visualization in Scene view
+    /// Debug visualization in the Scene view
     /// </summary>
     void OnDrawGizmosSelected()
     {

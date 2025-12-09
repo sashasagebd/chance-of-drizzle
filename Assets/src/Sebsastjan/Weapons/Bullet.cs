@@ -3,13 +3,17 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Bullet : MonoBehaviour
 {
+    // PUBLIC: Set by weapon (ProjectileWeapon) when bullet is spawned, includes damage bonuses
     public int damage = 10;
+    // PUBLIC: Configured via Unity Inspector to control how long bullet exists before despawning
     public float lifetime = 3f;
+    // PUBLIC: Set by weapon (ProjectileWeapon) to specify which layers the bullet can damage
     public LayerMask hitMask; // include Hittable, exclude Weapon & Projectile
     Rigidbody _rb;
 
     void Awake() => _rb = GetComponent<Rigidbody>();
 
+    // PUBLIC: Called by weapon (ProjectileWeapon) to launch bullet with specified velocity
     public void Fire(Vector3 velocity)
     {
         // Ensure Rigidbody is initialized (in case Fire is called before Awake)
