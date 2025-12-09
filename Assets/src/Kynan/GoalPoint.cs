@@ -47,6 +47,7 @@ public class GoalPoint : MonoBehaviour{
   }
   */
   private static bool canLevelBeLoaded(string exitName) {
+    
     return true;
   }
 

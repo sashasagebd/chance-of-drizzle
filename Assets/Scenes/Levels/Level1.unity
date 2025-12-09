@@ -7300,6 +7300,18 @@ PrefabInstance:
       propertyPath: 'exitDestinations.Array.data[0]'
       value: Level2
       objectReference: {fileID: 0}
+    - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
+      propertyPath: 'exitDestinations.Array.data[1]'
+      value: Level3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
+      propertyPath: 'exitDestinations.Array.data[2]'
+      value: Level4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
+      propertyPath: 'exitDestinations.Array.data[3]'
+      value: Level5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
