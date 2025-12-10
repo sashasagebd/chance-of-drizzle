@@ -1825,6 +1825,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f8bebff4c4158419ab4003e8e44d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: HudMenus::StartGame
+  startDestinations:
+  - Level1
+  - Level2
+  - Level3
 --- !u!4 &526133481
 Transform:
   m_ObjectHideFlags: 0

@@ -47,8 +47,16 @@ public class GoalPoint : MonoBehaviour{
   }
   */
   private static bool canLevelBeLoaded(string exitName) {
-    
-    return true;
+
+    for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+    {
+        string levelPath = SceneUtility.GetScenePathByBuildIndex(i);
+        string levelName = System.IO.Path.GetFileNameWithoutExtension(levelPath);
+
+        if (levelName == exitName)
+          return true;
+    }
+    return false;
   }
 
   // Following function written by Erik
