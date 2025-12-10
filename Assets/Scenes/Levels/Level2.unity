@@ -3194,6 +3194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5ee23c5ab0fa42059f8e0601447d092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assets::BindingDemo
+  muzzleFlash: {fileID: 0}
+  muzzleFlash2: {fileID: 0}
+  useFire: 1
 --- !u!114 &488809796 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3117677742473545284, guid: 1d18f2757d70d6546af90938dbbc1d98, type: 3}
@@ -11843,11 +11846,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
       propertyPath: exitDestinations.Array.size
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
       propertyPath: 'exitDestinations.Array.data[0]'
+      value: Level1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
+      propertyPath: 'exitDestinations.Array.data[1]'
       value: Level3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
+      propertyPath: 'exitDestinations.Array.data[2]'
+      value: Level4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8643127263795774626, guid: 8340c693b44df33469a6b62439c4e923, type: 3}
+      propertyPath: 'exitDestinations.Array.data[3]'
+      value: Level5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
