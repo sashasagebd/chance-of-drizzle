@@ -160,7 +160,7 @@ namespace Tests.PlayMode
             int eventCallCount = 0;
             weapon.ammo = 5;
 
-            weapon.OnAmmoChanged += (ammo, magazineSize) =>
+            weapon.OnAmmoChanged += (ammo, magazineSize, reserve) =>
             {
                 eventCallCount++;
             };
@@ -180,8 +180,8 @@ namespace Tests.PlayMode
             int subscriber1Calls = 0;
             int subscriber2Calls = 0;
 
-            weapon.OnAmmoChanged += (a, m) => subscriber1Calls++;
-            weapon.OnAmmoChanged += (a, m) => subscriber2Calls++;
+            weapon.OnAmmoChanged += (a, m, r) => subscriber1Calls++;
+            weapon.OnAmmoChanged += (a, m, r) => subscriber2Calls++;
 
             // Act
             weapon.TryFire(Vector3.zero, Vector3.forward);

@@ -115,7 +115,7 @@ namespace Tests.PlayMode
             if (bulletPrefab != null) Object.Destroy(bulletPrefab);
 
             // Clean up any spawned bullets
-            var bullets = Object.FindObjectsOfType<Bullet>();
+            var bullets = Object.FindObjectsByType<Bullet>(FindObjectsSortMode.None);
             foreach (var bullet in bullets)
             {
                 Object.Destroy(bullet.gameObject);
@@ -292,7 +292,7 @@ namespace Tests.PlayMode
                     // Log every 50 bullets
                     if (bulletsFired % 50 == 0)
                     {
-                        int activeBullets = Object.FindObjectsOfType<Bullet>().Length;
+                        int activeBullets = Object.FindObjectsByType<Bullet>(FindObjectsSortMode.None).Length;
                         Debug.Log($"[{elapsed:F2}s] Fired: {bulletsFired} | Active bullets: {activeBullets} | Fire rate: {bulletsFired / elapsed:F1}/s");
                     }
                 }
@@ -302,7 +302,7 @@ namespace Tests.PlayMode
             }
 
             // Final statistics
-            int finalBulletCount = Object.FindObjectsOfType<Bullet>().Length;
+            int finalBulletCount = Object.FindObjectsByType<Bullet>(FindObjectsSortMode.None).Length;
             float actualFireRate = bulletsFired / testDuration;
             float successRate = (bulletsFired / (float)fireAttempts) * 100f;
 
@@ -368,7 +368,7 @@ namespace Tests.PlayMode
                 elapsed += Time.deltaTime;
             }
 
-            int activeBullets = Object.FindObjectsOfType<Bullet>().Length;
+            int activeBullets = Object.FindObjectsByType<Bullet>(FindObjectsSortMode.None).Length;
             float avgFireRate = bulletsFired / testDuration;
 
             Debug.Log($"=== RAPID FIRE + DIRECTION STRESS TEST COMPLETE ===");
@@ -488,7 +488,7 @@ namespace Tests.PlayMode
                 // Log progress
                 if (elapsed > 0 && Mathf.FloorToInt(elapsed) != Mathf.FloorToInt(elapsed - Time.deltaTime))
                 {
-                    int activeBullets = Object.FindObjectsOfType<Bullet>().Length;
+                    int activeBullets = Object.FindObjectsByType<Bullet>(FindObjectsSortMode.None).Length;
                     Debug.Log($"[{Mathf.FloorToInt(elapsed)}s] Bullets: {bulletsFired} | Moves: {movementActions} | Active: {activeBullets}");
                 }
 
@@ -497,7 +497,7 @@ namespace Tests.PlayMode
             }
 
             float distanceMoved = Vector3.Distance(startPosition, playerObject.transform.position);
-            int finalBulletCount = Object.FindObjectsOfType<Bullet>().Length;
+            int finalBulletCount = Object.FindObjectsByType<Bullet>(FindObjectsSortMode.None).Length;
 
             Debug.Log($"=== ULTIMATE STRESS TEST COMPLETE ===");
             Debug.Log($"Bullets fired: {bulletsFired} ({bulletsFired / testDuration:F1}/s)");
