@@ -8,6 +8,9 @@ public abstract class WeaponBase : MonoBehaviour
     public int magazineSize = 12;
     public float fireRate = 6f;
     public int damage = 10;
+    public int maxReserveAmmo = 120; // Maximum reserve ammunition
+    public string weaponName = "Weapon"; // Display name for HUD
+    public GameObject weaponIconPrefab; // 3D prefab or sprite to display in HUD
 
     [Header("Visual")]
     // PUBLIC: Accessed by PlayerController3D to determine bullet spawn position for firing
@@ -21,11 +24,13 @@ public abstract class WeaponBase : MonoBehaviour
     [Header("Runtime")]
     // PUBLIC: Accessed by UI (AmmoHUD) to display current ammo count
     public int ammo;
+    public int reserveAmmo; // Current reserve ammunition
     float _nextFireTime;
     private WeaponAudio weaponAudio;
 
     // PUBLIC: Event subscribed by UI (AmmoHUD) to update ammo display when ammo changes
-    public event Action<int, int> OnAmmoChanged;
+    // Parameters: current ammo in magazine, magazine size, reserve ammo
+    public event Action<int, int, int> OnAmmoChanged;
 
     // Raycast visualization
     private Ray ray;
@@ -34,16 +39,27 @@ public abstract class WeaponBase : MonoBehaviour
     protected virtual void Awake()
     {
         ammo = magazineSize;
-        OnAmmoChanged?.Invoke(ammo, magazineSize);
+        reserveAmmo = maxReserveAmmo;
+        OnAmmoChanged?.Invoke(ammo, magazineSize, reserveAmmo);
     }
 
-    // PUBLIC: Called by PlayerController3D when player presses reload input
+    /// <summary>
+    /// PUBLIC: Called by PlayerController3D when player presses reload input.
+    /// Reloads the weapon from reserve ammo using CoD-style mechanics.
+    /// </summary>
     public void Reload() {
         if (weaponAudio == null)
             weaponAudio = GetComponent<WeaponAudio>();
         weaponAudio?.OnWeaponReload(transform.position);
-        ammo = magazineSize;
-        OnAmmoChanged?.Invoke(ammo, magazineSize);
+
+        // CoD-style reload: consume from reserve ammo
+        int ammoNeeded = magazineSize - ammo; // How much we need to fill the magazine
+        int ammoToReload = Mathf.Min(ammoNeeded, reserveAmmo); // Take from reserve, but not more than we have
+
+        ammo += ammoToReload;
+        reserveAmmo -= ammoToReload;
+
+        OnAmmoChanged?.Invoke(ammo, magazineSize, reserveAmmo);
         OnReloaded();
     }
 
@@ -64,7 +80,7 @@ public abstract class WeaponBase : MonoBehaviour
         if (DoFire(origin, direction))
         {
             ammo--;
-            OnAmmoChanged?.Invoke(ammo, magazineSize); // 🔔 update HUD
+            OnAmmoChanged?.Invoke(ammo, magazineSize, reserveAmmo); // 🔔 update HUD
             _nextFireTime = Time.time + 1f / Mathf.Max(0.01f, fireRate);
             OnFired();
             return true;
