@@ -8,7 +8,6 @@ public class LazerWeapon : WeaponBase
     [SerializeField] private LayerMask hitMask;       // set to Hittable in Inspector
     [SerializeField] private LineRenderer line;       // optional laser line
     [SerializeField] private float lineTime = 0.05f;
-    private WeaponAudio weaponAudio;
 
     protected override bool DoFire(Vector3 origin, Vector3 direction)
     {
