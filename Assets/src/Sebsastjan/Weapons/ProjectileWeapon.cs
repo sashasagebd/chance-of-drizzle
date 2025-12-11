@@ -17,7 +17,6 @@ public class ProjectileWeapon : WeaponBase
     [SerializeField] private float minLaunchAngle = 30f;   // Minimum launch angle in degrees
     [SerializeField] private float maxLaunchAngle = 75f;   // Maximum launch angle in degrees
 
-    private WeaponAudio weaponAudio;
     private GameObject lastFiredProjectile; // Track last projectile for tracer
     private ProjectileTracer projectileTracer;
 

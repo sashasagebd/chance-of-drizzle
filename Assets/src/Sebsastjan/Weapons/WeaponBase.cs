@@ -26,7 +26,7 @@ public abstract class WeaponBase : MonoBehaviour
     public int ammo;
     public int reserveAmmo; // Current reserve ammunition
     float _nextFireTime;
-    private WeaponAudio weaponAudio;
+    protected WeaponAudio weaponAudio;
 
     // PUBLIC: Event subscribed by UI (AmmoHUD) to update ammo display when ammo changes
     // Parameters: current ammo in magazine, magazine size, reserve ammo

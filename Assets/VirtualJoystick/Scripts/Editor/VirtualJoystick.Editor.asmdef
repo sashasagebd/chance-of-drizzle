@@ -1,0 +1,18 @@
+{
+    "name": "VirtualJoystick.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b30d146b04d75e64482f3a7fc6a0ca85"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
